@@ -12,7 +12,6 @@ media/
 staticfiles/
 
 # Byte-compiled / optimized / DLL files
-__pycache__/
 *.py[cod]
 *$py.class
 
@@ -93,7 +92,6 @@ celerybeat-schedule
 *.sage.py
 
 # dotenv
-.env
 
 # virtualenv
 .venv
@@ -113,3 +111,20 @@ ENV/
 # mypy
 .mypy_cache/
 
+# Python virtual environments
+myenv/
+lbienv/
+/myenv
+
+# Large files and media
+*.wav
+*.mp3
+*.ogg
+*.flac
+*.aiff
+*.zip
+*.tar
+*.gz
+
+# Django static and media folders
+static/home/music/
