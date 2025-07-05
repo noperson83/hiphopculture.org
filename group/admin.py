@@ -1,0 +1,52 @@
+from django.contrib import admin
+
+from .models import Group, Genre, Album
+
+@admin.register(Group)
+class GroupAdmin(admin.ModelAdmin):
+    list_display = ('group_name',
+                    'group_url', 
+                    'logo',
+                    'button',
+                    'summary', 
+                    'date_of_contact',
+                    'date_of_contract',
+                    'ytd_revenue',
+                    'total_revenue',
+                    'first_name', 
+                    'last_name', 
+                    'contact_email',
+                    'contact_phone',
+                    'facebook_url',
+                    'instagram_url',
+                    'twitter_url',
+                    'billing_top_address',
+                    'billing_address',
+                    'billing_address_city', 
+                    'billing_address_state', 
+                    'billing_address_zipcode')
+    fieldsets = (('Personal info', {'fields': ('first_name', 
+                                    'last_name', 
+                                    'contact_email',
+                                    'contact_phone',
+                                    'facebook_url',
+                                    'instagram_url',
+                                    'twitter_url',
+                                    'billing_top_address',
+                                    'billing_address',
+                                    'billing_address_city', 
+                                    'billing_address_state', 
+                                    'billing_address_zipcode',)}),
+                ('Group', {'fields': ('group_name',
+                                    'group_url', 
+                                    'logo',
+                                    'button',
+                                    'summary',)}),
+                ('Other', {'fields': ('date_of_contact',
+                                    'date_of_contract',
+                                    'ytd_revenue',
+                                    'total_revenue')}),
+                )
+
+admin.site.register(Genre)
+admin.site.register(Album)

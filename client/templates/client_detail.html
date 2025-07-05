@@ -1,0 +1,81 @@
+{% extends "home/base.html" %}
+
+{% block title %}<title>Client details</title>{% endblock %}
+{% block breadcrumb %} / <a href="{% url 'client' %}">Client</a> / detail view
+  {% if request.user.staff %} /<a href="{% url 'create-client' %}"> add a new client</a>{% else %}{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-8">  
+    <div class="card mb-3">
+      <div class="card-header" style="background-color:rgb(10, 212, 26);">
+        <h4>{{ client_detail.company_name }} {{client_detail.job_title}}
+          {% if request.user.staff %}
+            <div class="add_jobsite"><a href="{% url 'update-client' client_detail.id %}"> edit </a></div>
+          {% else %}
+          {% endif %}</h4>
+        <h6>{{ client_detail.company_url|urlize }}</h6>
+      </div>
+      <div class="card-body" style="background-color:rgb(212, 212, 212);">
+        <div class="row">
+          <div class="col-lg-4"> 
+            <strong>
+              Contact:<br>
+              <h5>{{ client_detail.first_name }} {{ client_detail.last_name }}</h5>
+                <h6>{{ client_detail.contact_email }}</h6>
+                <h6>{{ client_detail.contact_phone }}</h6>
+            </strong>
+          </div>
+          <div class="col-lg-4"> 
+            <strong>
+              Billing address:<br>
+              <h4>
+              {{ client_detail.billing_address }}<br>
+              {{ client_detail.billing_address_city }}, {{ client_detail.state }} {{ client_detail.billing_address_zipcode }}
+              </h4>
+            </strong>
+          </div>
+          <div class="col-lg-4"> 
+            {% if client_detail.logo %}<strong>Image:</strong> 
+            <br><img style="max-width:200px;" src="{{ client_detail.logo.url|default_if_none:'#' }}" class="">{% else %}{% endif %}
+          </div>
+        </div>
+      </div>
+      <hr class="my-0">
+      <div class="card-body small bg-faded" style="background-color:rgb(196, 196, 196);">
+        <strong>Summary:</strong> 
+          <br>{{ client_detail.summary }}
+      </div>
+      <div class="card-footer small text-muted" style="background-color:rgb(41, 41, 41);">
+        <strong>Date of contract:</strong> {{ client_detail.date_of_contract }} - Date of contact: {{ client_detail.date_of_contact }}
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card mb-3">
+      <div class="card-header" style="background-color:rgb(0, 119, 255);">
+        <h3>Job site list
+          {% if request.user.staff %}
+            <div class="add_jobsite"><a href="{% url 'create-jobsite-from' client=client_detail.pk %}">add</a></div>
+          {% else %}
+          {% endif %}
+        </h3>
+      </div>
+      <div class="card-body bg-faded">
+        {% if client_job_list %}
+        <ul>
+          {% for jobsite in client_job_list %}
+          <li>
+            <a href="{{ jobsite.get_absolute_url }}">{{ jobsite.job_title }}</a> {{ jobsite.signed_contract }}
+          </li>
+          {% endfor %}
+        {% else %}
+          <p>There are no job sites with this client.</p>
+        {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}   

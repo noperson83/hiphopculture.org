@@ -1,0 +1,140 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% block title %}<title id="songTitle2">Music Home - Press Play</title>{% endblock %}
+{% block breadcrumb %} / <a href="{% url 'music:music' %}">Music</a> / List
+  {% if request.user.is_staff %} /<a href="{% url 'music:create-music' %}"> add a new music</a>{% else %}{% endif %}
+{% endblock %}
+{% block scripter %}
+    <script src="{% static 'home/js/musicplayer.js' %}"></script>      
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="container-music">
+    <div class="business-card-music">
+        <section id="music-player">
+            <div class="music-player">
+              <audio id="audioPlayer" controls hidden>
+                  <source id="audioSource" src="{{ music_list.0.audio_file.url}}" type="audio/mpeg">
+                  Your browser does not support the audio element.
+              </audio>
+            <div class="card-header">
+              <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search playlist..." />
+              </div>
+              <div class="undersearch">
+                <div id="songAlbum">{{ music_list.0.group_album }}</div>
+                <div id="songArtist">{{ music_list.0.group_album.group }}</div>
+              </div>
+              {% if music_list.0.album_art %}
+                <div class="image-container">
+                  <img src="{% static '/home/css/racordspinclear.png' %}" class="image-front">
+                  <img id="songArt" src="{{ music_list.0.album_art.url }}" alt="Back Image" class="image-back">
+                </div>
+              {% else %}
+                <div class="image-container">
+                  <img src="{% static '/home/css/racordspinclear.png' %}" class="image-front">
+                  <img id="songArt" src="music_list.0.group_album.cover_art.url" alt="Back Image" class="image-back">
+                </div>
+              {% endif %}
+              <div class="radiocontainer">
+                <div class="back-layer"></div>
+                <div class="middle-layer">
+                    <div class="controls">
+                      <div class="radio-left"><button id="prevBtn"><i style="margin:  0 0 7px 40px;" class="fas fa-backward"></i></button></div>
+                      <div class="radio-play"><button id="playPauseBtn" style="font-size: x-large; margin: 0 3px 7px 0;"><i class="fas fa-play"></i></button></div>
+                      <div class="radio-right"><button id="nextBtn"><i style="margin: 0 44px 7px 0;" class="fas fa-forward"></i></button></div>
+                    </div>
+                </div>
+                <div class="top-layer">
+                  <h1>
+                    <div id="songTitle" style="text-shadow: 0 0 black;">
+                    {{ music_list.0.title|slice:":29" }}{% if music_list.0.title|length > 29 %}...{% endif %}
+                    </div>
+                  </h1>
+                  <div class="custom-audio-player">
+                      <span id="currentTime">0:00</span> / <span id="duration">0:00</span>
+                      <input type="range"  class="custom-range" id="seekBar" value="0" max="100">
+                  </div>
+                  <div class="custom-audio-player">
+                      Volume<input type="range"  class="custom-range" id="volumeBar" min="0" max="1" step="0.1" value="1">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="playlist">    
+                {% if music_list %}
+                    <ul id="playlist">
+                        {% for song in music_list %}
+                          {% if song.audio_file %}
+                          <div class="track">
+                              <div class="track-info">
+                                  <div class="details" style="width:100%;">
+                                      <p class="track-title">
+                                        <li data-src="{{ song.audio_file.url }}" songTitle="{{ song.title }}" songAlbum="{{ song.group_album }}" songArtist="{{ song.group_album.group }}" songArt="{{ song.group_album.cover_art.url }}">
+                                        {{ song.track_number }} - {{ song.title }} ▶
+                                        </li>
+                                      </p>                             
+                                      <p style="font-size:small;" class="track-artist">{{ song.group_album }} - {{ song.group_album.group }}</p>
+                                  </div>
+                                  <div class="buttons">
+                                      <a style="color:brown" href="{% url 'music:music-detail' song.pk %}">Song Details</a>
+                                  </div>
+                              </div>
+                          </div>
+                          {% else %}
+                          <li>{{ song.title }} &raquo; {{ song.group_album }} - {{ song.group_album.group }} - {{ song.track_number  }} Sorry, no audio file!</li>
+                          {% endif %} 
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                There are no SONGS to list sorry!
+                {% endif %} 
+            </div>  
+            <div class="music-player-bott">
+            </div>
+        </div>
+    </section>
+    </div>
+    <div class="business-card-music">
+      <table width="100%" cellspacing="0" style="border-radius: 8%;">
+        <tbody>
+        {% if album_list %}
+          {% for album in album_list %}
+              <tr>
+                {% if album.cover_art %}
+                  <td style="width: 150px;">
+                    <a class="album-art" style="color:black;font-weight:bold;" href="#" onclick="searchAlbum('{{ album.title }}')">
+                        <img src="{{ album.cover_art.url }}" alt="Album Art">
+                    </a> 
+                  </td>
+                {% else %}
+                  <td style="width: 150px;">
+                    <a class="album-art" style="color:black;font-weight:bold;" href="#" onclick="searchAlbum('{{ album.title }}')">
+                        <img src="{% static '/home/images/LMNlogo.jpg' %}" alt="Album Art">
+                    </a> 
+                  </td>
+                {% endif %}
+                <td>
+                  <div class="album-card">
+                    <a style="color:black;font-weight:bold;" href="{% url 'group:album-detail' album.id %}">
+                      <h2>{{ album.title }}</h2>{{ album.group.group_name }}
+                    </a> 
+                  </div>
+                </td>
+              </tr>
+          {% endfor %}
+          {% else %}
+          <tr>
+              <td>There are no  </td>
+              <td>album </td>
+              <td>to list sorry!  </td>
+          </tr>
+        {% endif %} 
+        </tbody>
+      </table>
+    </div>
+</div>
+{% endblock %} 
+
+   

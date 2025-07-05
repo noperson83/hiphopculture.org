@@ -1,0 +1,55 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% block title %}<title>Artist Registration</title>{% endblock %}
+
+{% block content %}
+<div class="container2">
+    <div class="card-login">
+        <header class="dashboard-header">
+            <h1>Welcome, {{ artist.get_full_name }}</h1>
+            <nav>
+                <a href="{% url 'munkz:artist-detail' user.id %}" class="logout-btn">My Public Profile</a>
+                <a href="{% url 'munkz:artist-edit' artist.id %}" class="logout-btn">Edit Profile</a>
+                <a href="{% url 'music:upload-mp3' %}" class="logout-btn">Upload Music</a>
+                <a href="{% url 'munkz:artist-logout' %}" class="logout-btn">Logout</a>
+            </nav>                
+        </header>
+
+        <main class="dashboard-container">
+            <section class="profile-section">
+                <div class="profile-card">
+                    {% if artist.profile_pic %}
+                        <img src="{{ artist.profile_pic.url }}" alt="Profile Picture" class="profile-pic">
+                    {% else %}
+                        <img src="" alt="Profile Picture" class="profile-pic">
+                    {% endif %}
+                    
+                    <h2>{{ artist.get_full_name }}</h2>
+                    <p><strong>Bio:</strong> {{ artist.bio|default:"No bio provided" }}</p>
+                    <p><strong>Website:</strong> <a href="{{ artist.website }}" target="_blank">{{ artist.website }}</a></p>
+                    <p><strong>Phone:</strong> {{ artist.phone_number }}</p>
+                    
+                    <div class="social-links">
+                        {% if artist.facebook_url %} <a href="{{ artist.facebook_url }}" target="_blank"><i class="fab fa-facebook"></i></a> {% endif %}
+                        {% if artist.instagram_url %} <a href="{{ artist.instagram_url }}" target="_blank"><i class="fab fa-instagram"></i></a> {% endif %}
+                        {% if artist.twitter_url %} <a href="{{ artist.twitter_url }}" target="_blank"><i class="fab fa-twitter"></i></a> {% endif %}
+                        {% if artist.youtube_url %} <a href="{{ artist.youtube_url }}" target="_blank"><i class="fab fa-youtube"></i></a> {% endif %}
+                        {% if artist.spotify_url %} <a href="{{ artist.spotify_url }}" target="_blank"><i class="fab fa-spotify"></i></a> {% endif %}
+                    </div>
+                </div>
+            </section>
+
+            <section class="dashboard-widgets">
+                <div class="widget">
+                    <h3>Upcoming Events</h3>
+                    <p>Calendar integration coming soon.</p>
+                </div>
+                <div class="widget">
+                    <h3>Task Management</h3>
+                    <p>Task management features coming soon.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+</div>
+{% endblock %}

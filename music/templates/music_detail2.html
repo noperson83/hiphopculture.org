@@ -1,0 +1,123 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% block title %}<title>music details</title>{% endblock %}
+{% block breadcrumb %} / <a href="{% url 'music:music' %}">music</a> / detail view
+  {% if request.user.staff %} /<a href="{% url 'music:create-music' %}"> add a new music</a>{% else %}{% endif %}
+{% endblock %}
+
+{% block content %}
+
+<a href="{% url 'music:analyze_audio' music_detail.id %}">
+<div class="business-card">
+  <div class="song-details">
+    <div class="card-header">
+        <table>
+            <tr>
+                {% if music_detail.album_art %}
+                <td>
+                    <div class="image-container">
+                        <img src="{% static '/home/css/racordspinclear.png' %}" class="image-front">
+                        <img src="{{ music_detail.album_art.url }}" alt="Back Image" class="image-back">
+                    </div>
+                </td>
+                {% else %}
+                <td>
+                    <div class="image-container">
+                        <img src="{% static '/home/css/racordspinclear.png' %}" class="image-front">
+                        <img src="{% static '/home/images/LMNlogo.jpg' %}" alt="Back Image" class="image-back">
+                    </div>
+                </td>
+                {% endif %}
+                <td>
+                    <h4><strong>{{ music_detail.title }}</strong><br><strong>{{music_detail.group_album}}</strong></h4><br>
+                    <audio controls>
+                        <source src="{{ music_detail.audio_file.url }}" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </td>
+            </tr>
+        </table>
+    </div>
+      <table>
+          <tr>
+              Meta Data
+          </tr>
+          <tr>
+              <td><strong>Genre:</strong></td>
+              <td>{{ music_detail.get_genre_display }}</td>
+          </tr>
+          <tr>
+              <td><strong>Year:</strong></td>
+              <td>{{ music_detail.year }}</td>
+          </tr>
+          <tr>
+              <td><strong>Track Number:</strong></td>
+              <td>{{ music_detail.track_number }}</td>
+          </tr>
+          <tr>
+              <td><strong>Disc Number:</strong></td>
+              <td>{{ music_detail.disc_number }}</td>
+          </tr>
+          <tr>
+              <td><strong>Album Artist:</strong></td>
+              <td>{{ music_detail.album_artist }}</td>
+          </tr>
+          <tr>
+              <td><strong>Composer:</strong></td>
+              <td>{{ music_detail.composer }}</td>
+          </tr>
+          <tr>
+              <td><strong>Publisher:</strong></td>
+              <td>{{ music_detail.publisher }}</td>
+          </tr>
+          <tr>
+              <td><strong>Original Artist:</strong></td>
+              <td>{{ music_detail.original_artist }}</td>
+          </tr>
+          <tr>
+              <td><strong>Encoded by:</strong></td>
+              <td>{{ music_detail.encoded_by }}</td>
+          </tr>
+          <tr>
+              <td><strong>BPM:</strong></td>
+              <td>{{ music_detail.bpm }}</td>
+          </tr>
+          <tr>
+              <td><strong>Comment:</strong></td>
+              <td>{{ music_detail.comment }}</td>
+          </tr>
+          <tr>
+              <td><strong>User Description:</strong></td>
+              <td>{{ music_detail.discript }}</td>
+          </tr>
+          <tr>
+              <td><strong>Published Date:</strong></td>
+              <td>{{ music_detail.up_date }}</td>
+          </tr>
+      </table>
+  </div>
+  <div class="statistics">
+      <table>
+          <tr>
+              <td><strong>Heard:</strong></td>
+              <td>{{ music_detail.heard }}</td>
+          </tr>
+          <tr>
+              <td><strong>Likes:</strong></td>
+              <td>{{ music_detail.likes }}</td>
+          </tr>
+          <tr>
+              <td><strong>Dislikes:</strong></td>
+              <td>{{ music_detail.nots }}</td>
+          </tr>
+          <tr>
+              <td><strong>Downloads:</strong></td>
+              <td>{{ music_detail.dls }}</td>
+          </tr>
+      </table>
+  </div>
+
+</div>
+
+
+{% endblock %}   

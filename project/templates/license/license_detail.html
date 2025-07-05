@@ -1,0 +1,152 @@
+{% extends "home/base.html" %}
+
+{% load static %}
+{% block title %}<title>Project license</title>{% endblock %}
+{% block breadcrumb %} / License Info{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-8">  
+    <div class="card mb-3">
+      <div class="card-header" style="background-color:rgb(10, 212, 26);">
+        <h4>License - {{ license_detail.license }}
+          {% if request.user.staff %}
+            <div class="add_jobsite"><a href="{% url 'update-project-license' pk=license_detail.id %}"> edit </a></div>
+          {% else %}
+          {% endif %}</h4><b>Project:</b>&nbsp; <a href="{% url 'project-detail' license_detail.project.job_num %}">{{ license_detail.project.job_num }} - {{license_detail.project.job_name}} </a>
+      </div>
+      <div class="form-group">
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+              <div class="form-row">
+                &nbsp;<b>License:</b>&nbsp;{{ license_detail.license }}
+              </div>
+              {% if license_detail.license.pic_link %}
+              <div class="form-row">
+                &nbsp; <a href="{{ license_detail.license.pic_link }}">&nbsp;<img style="width:100%;" src="{{ license_detail.license.pic_link }}">  </a> 
+              </div>
+              {% endif %}
+            </div>
+            <div class="col" style="margin-top: 10px;">
+              <div class="form-row">
+                &nbsp;<b>Task:</b>&nbsp;{{ license_detail.task }}
+              </div>
+              {% if license_detail.license.install_link %}
+              <div class="form-row">
+                &nbsp; <a href="{{ license_detail.license.install_link }}">&nbsp;Installation Manuel</a>  
+              </div>
+              {% endif %}
+            </div>
+          </div>
+          <hr>
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+              &nbsp;<b>Purchase date:</b>&nbsp;
+                {{ license_detail.purchased_date|date:"Y-m-d" }}
+            </div>
+            <div class="col" style="margin-top: 10px;">
+              &nbsp;<b>Onsite date:</b>&nbsp;
+                {{ license_detail.onsite_date|date:"Y-m-d" }}
+            </div>
+            <div class="col" style="margin-top: 10px;">
+              &nbsp;<b>Installed date:</b>&nbsp;
+                {{ license_detail.installed_date|date:"Y-m-d" }}
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+            &nbsp;<b>Part Number:</b>&nbsp;
+              {{ license_detail.license.dist_part_num }}</div>
+          </div>
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+            &nbsp;<b>Quantity:</b>&nbsp;
+              {{ license_detail.qty }}</div>
+          </div>
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+            &nbsp;<b>Cost:</b>&nbsp;
+              {{ license_detail.cost }}</div>
+          </div>
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+            &nbsp;<b>Total:</b>&nbsp;
+              {{ license_detail.total }}</div>
+          </div>
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+            &nbsp;<b>license Status:</b>&nbsp;
+            {{ license_detail.get_license_status_display }}</div>
+          </div>
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+            &nbsp;<b>Last modified:</b>&nbsp;
+            {{ license_detail.lastmodification }}</div>
+          </div>
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+            &nbsp;<b>Date of creation:</b>&nbsp;
+            {{ license_detail.dateofcreation }}</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+            &nbsp;<b>Distributor:</b>&nbsp;
+              {% for distributer in license_detail.license.dist.all %}
+                {{ distributer.name }}
+              {% endfor %}</div>
+          </div>
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+            &nbsp;<b>Manufacturer:</b>&nbsp;
+              {{ license_detail.license.dmfg }}</div>
+          </div>
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+            &nbsp;<b>Overview:</b>&nbsp;
+              {{ license_detail.license.overview }}</div>
+          </div>
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+            &nbsp;<b>Specifications:</b>&nbsp;
+              {{ license_detail.license.specifications }}</div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+  <div class="col-lg-4">
+    <div class="card mb-3">
+      <div class="card-header" style="background-color:rgb(0, 119, 255);">
+        <h3>Project licenses
+          {% if request.user.staff %}
+            <div class="add_jobsite"><a href="{% url 'create-project-license' proj=license_detail.project.job_num tas=0 %}">add</a></div>
+          {% else %}
+          {% endif %}
+        </h3>
+      </div>
+      <div class="card-body bg-faded">
+        {% if other_licenses %}
+        <ul>
+          {% for others in other_licenses %}
+            <li><a href="{% url 'project-license-detail' id=others.pk %}"> {{ others.license.part_disc }} </a></li>
+          {% endfor %}
+        {% else %}
+          <p>There are no licenses for this project, please add one.</p>
+        {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+{% block scripter %} 
+<script src="{% static 'home/js/sb-admin-datatables.min.js' %}"></script>
+<script src="{% static 'home/vendor/datatables/jquery.dataTables.js' %}"></script>
+<script src="{% static 'home/vendor/datatables/dataTables.bootstrap4.js' %}"></script> 
+{% endblock %}

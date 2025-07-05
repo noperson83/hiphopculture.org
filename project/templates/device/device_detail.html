@@ -1,0 +1,152 @@
+{% extends "home/base.html" %}
+
+{% load static %}
+{% block title %}<title>Project Device</title>{% endblock %}
+{% block breadcrumb %} / Device Info{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-8">  
+    <div class="card mb-3">
+      <div class="card-header" style="background-color:rgb(10, 212, 26);">
+        <h4>Device - {{ device_detail.device }}
+          {% if request.user.staff %}
+            <div class="add_jobsite"><a href="{% url 'update-project-device' pk=device_detail.id %}"> edit </a></div>
+          {% else %}
+          {% endif %}</h4><b>Project:</b>&nbsp; <a href="{% url 'project-detail' device_detail.project.job_num %}">{{ device_detail.project.job_num }} - {{device_detail.project.job_name}} </a>
+      </div>
+      <div class="form-group">
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+              <div class="form-row">
+                &nbsp;<b>Device:</b>&nbsp;{{ device_detail.device }}
+              </div>
+              {% if device_detail.device.pic_link %}
+              <div class="form-row">
+                &nbsp; <a href="{{ device_detail.device.pic_link }}">&nbsp;<img style="width:100%;" src="{{ device_detail.device.pic_link }}">  </a> 
+              </div>
+              {% endif %}
+            </div>
+            <div class="col" style="margin-top: 10px;">
+              <div class="form-row">
+                &nbsp;<b>Task:</b>&nbsp;{{ device_detail.task }}
+              </div>
+              {% if device_detail.device.install_link %}
+              <div class="form-row">
+                &nbsp; <a href="{{ device_detail.device.install_link }}">&nbsp;Installation Manuel</a>  
+              </div>
+              {% endif %}
+            </div>
+          </div>
+          <hr>
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+              &nbsp;<b>Purchase date:</b>&nbsp;
+                {{ device_detail.purchased_date|date:"Y-m-d" }}
+            </div>
+            <div class="col" style="margin-top: 10px;">
+              &nbsp;<b>Onsite date:</b>&nbsp;
+                {{ device_detail.onsite_date|date:"Y-m-d" }}
+            </div>
+            <div class="col" style="margin-top: 10px;">
+              &nbsp;<b>Installed date:</b>&nbsp;
+                {{ device_detail.installed_date|date:"Y-m-d" }}
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+            &nbsp;<b>Part Number:</b>&nbsp;
+              {{ device_detail.device.dist_part_num }}</div>
+          </div>
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+            &nbsp;<b>Quantity:</b>&nbsp;
+              {{ device_detail.qty }}</div>
+          </div>
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+            &nbsp;<b>Cost:</b>&nbsp;
+              {{ device_detail.cost }}</div>
+          </div>
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+            &nbsp;<b>Total:</b>&nbsp;
+              {{ device_detail.total }}</div>
+          </div>
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+            &nbsp;<b>Device Status:</b>&nbsp;
+            {{ device_detail.get_device_status_display }}</div>
+          </div>
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+            &nbsp;<b>Last modified:</b>&nbsp;
+            {{ device_detail.lastmodification }}</div>
+          </div>
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+            &nbsp;<b>Date of creation:</b>&nbsp;
+            {{ device_detail.dateofcreation }}</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+            &nbsp;<b>Distributor:</b>&nbsp;
+              {% for distributer in device_detail.device.dist.all %}
+                {{ distributer.name }}
+              {% endfor %}</div>
+          </div>
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+            &nbsp;<b>Manufacturer:</b>&nbsp;
+              {{ device_detail.device.dmfg }}</div>
+          </div>
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+            &nbsp;<b>Overview:</b>&nbsp;
+              {{ device_detail.device.overview }}</div>
+          </div>
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+            &nbsp;<b>Specifications:</b>&nbsp;
+              {{ device_detail.device.specifications }}</div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+  <div class="col-lg-4">
+    <div class="card mb-3">
+      <div class="card-header" style="background-color:rgb(0, 119, 255);">
+        <h3>Project Devices
+          {% if request.user.staff %}
+            <div class="add_jobsite"><a href="{% url 'create-project-device' proj=device_detail.project.job_num tas=0 %}">add</a></div>
+          {% else %}
+          {% endif %}
+        </h3>
+      </div>
+      <div class="card-body bg-faded">
+        {% if other_devices %}
+        <ul>
+          {% for others in other_devices %}
+            <li><a href="{% url 'project-device-detail' id=others.pk %}"> {{ others.device.part_disc }} </a></li>
+          {% endfor %}
+        {% else %}
+          <p>There are no devices for this project, please add one.</p>
+        {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+{% block scripter %} 
+<script src="{% static 'home/js/sb-admin-datatables.min.js' %}"></script>
+<script src="{% static 'home/vendor/datatables/jquery.dataTables.js' %}"></script>
+<script src="{% static 'home/vendor/datatables/dataTables.bootstrap4.js' %}"></script> 
+{% endblock %}

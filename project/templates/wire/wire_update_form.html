@@ -1,0 +1,77 @@
+{% extends "home/base.html" %}
+
+{% block title %}<title>Wire update</title> {% endblock %}
+{% block breadcrumb %} / Wire / Update Wire{% endblock %}
+
+{% block content %}
+
+{% if request.user.staff %}
+<div class="col-lg-6">
+  <div class="card mb-3">
+    <div class="card-header" style="background-color:rgb(0, 119, 255);">
+      <h3>Update Wire{% if request.user.admin %}<div class="add_jobsite"><a href="{% url 'delete-project-wire' wire.id %}"> delete </a></div>{% else %}{% endif %}</h3>
+    </div>
+    </div>
+    <form class="form-control" method="post">{% csrf_token %}
+        <div class="form-group">
+          <div class="form-row" style="margin-top: 10px;"><label for="id_project">&nbsp; <b>Project:</b></label> {{ form.project.errors }}
+            <select class="form-control" name="project" required="" id="id_project">
+                {% for project in form.project   %}
+                  {{ project }}
+                {% endfor %}
+            </select>
+          </div>
+          <div class="form-row" style="margin-top: 10px;"><label for="id_wire">&nbsp; <b>Wire:</b></label> {{ form.wire.errors }}
+            <select class="form-control" name="wire" required="" id="id_wire">
+                {% for wire in form.wire   %}
+                  {{ wire }}
+                {% endfor %}
+            </select>
+          </div>
+          <div class="form-row" style="margin-top: 10px;"><label for="id_task">&nbsp; <b>Task:</b></label> {{ form.task.errors }}
+            <select class="form-control" name="task" required="" id="id_task">
+                {% for task in form.task %}
+                  {{ task }}
+                {% endfor %}
+            </select>
+          </div>
+          <hr>
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+              <label for="id_purchased_date">&nbsp;Purchase date:</label> {{ form.purchased_date.errors }}
+              <input class="form-control" type="date" name="purchased_date" id="id_purchased_date" value="{{ wire.purchased_date|date:"Y-m-d" }}" aria-describedby="nameHelp">
+            </div>
+            <div class="col" style="margin-top: 10px;">
+              <label for="id_onsite_date">&nbsp; Onsite date:</label> {{ form.onsite_date.errors }}
+              <input class="form-control" type="date" name="onsite_date" id="id_onsite_date" value="{{ wire.onsite_date|date:"Y-m-d" }}" aria-describedby="nameHelp">
+            </div>
+            <div class="col" style="margin-top: 10px;">
+              <label for="id_installed_date">&nbsp; Installed date:</label> {{ form.installed_date.errors }}
+              <input class="form-control" type="date" name="installed_date" id="id_installed_date" value="{{ wire.installed_date|date:"Y-m-d" }}" aria-describedby="nameHelp">
+            </div>
+            </div>
+            <div class="form-row" style="margin-top: 10px;">
+              <label for="id_qty">&nbsp; Length:</label> 
+              <input class="form-control" type="number" name="length" id="id_length" value="{{ wire.length }}" aria-describedby="nameHelp">
+            </div>
+            <div class="form-row" style="margin-top: 10px;">
+              <label for="id_cost_per_foot">&nbsp; Cost per foot:</label>
+              <input class="form-control" type="number" name="cost_per_foot" id="id_cost_per_foot" step="0.01" value="{{ wire.cost_per_foot }}" aria-describedby="nameHelp">
+            </div>
+            <div class="form-row" style="margin-top: 10px;">
+              <label for="id_wire_status">&nbsp; Wire Status:</label> 
+            <select class="form-control" name="wire_status" required="" id="id_wire_status">
+                {% for wire_status in form.wire_status %}
+                  {{ wire_status }}
+                {% endfor %}
+            </select>
+            </div>
+          </div>
+      <input style="margin-bottom: 10px;" class="btn btn-primary btn-block" type="submit" value="Update" />
+    </form>
+  </div>
+</div>
+{% else %}
+Your not allowed to view this page..
+{% endif %} 
+{% endblock %} 

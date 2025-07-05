@@ -1,0 +1,11 @@
+<ul>
+    {% for event in events %}
+      <li>
+        <strong>{{ event.title }}</strong><br>
+        {{ event.start|date:"M d, Y H:i" }} - {{ event.end|date:"H:i" }}
+      </li>
+    {% empty %}
+      <li>No upcoming events</li>
+    {% endfor %}
+  </ul>
+  

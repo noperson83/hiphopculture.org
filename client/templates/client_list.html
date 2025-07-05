@@ -1,0 +1,53 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% block title %}<title>Client List</title>{% endblock %}
+{% block styler %}<link href="{% static 'home/vendor/datatables/dataTables.bootstrap4.css' %}" rel="stylesheet" type="text/css"> {% endblock %}
+{% block breadcrumb %} / <a href="{% url 'client' %}">Client</a> / <a href="{% url 'clients-list' %}">list</a>
+  {% if request.user.staff %} /<a href="{% url 'create-client' %}"> add a new client</a>{% else %}{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="table-responsive">
+  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+    <thead>
+      <tr>
+        <th style="font-weight: inherit;">Client <i class="fa fa-id-card-o"></i> </th>
+        <th style="font-weight: inherit;"><i class="fa fa-fw fa-user"></i> </th>
+        <th style="font-weight: inherit;"><i class="fa fa-phone"></i> </th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th style="min-width:64px; font-weight: inherit;">Client <i class="fa fa-id-card-o"></i> </th>
+        <th style="font-weight: inherit;"><i class="fa fa-fw fa-user"></i> </th>
+        <th style="min-width:120px; font-weight: inherit;"><i class="fa fa-phone"></i> </th>
+      </tr>
+    </tfoot>
+    <tbody>
+          {% if client_list %}
+          {% for client in client_list %}
+              <tr>
+                <td><a style="color:black;font-weight:bold;" href="{{ client.get_absolute_url }}">{{ client.company_name }}</a> </td>
+                <td><a style="color:black;font-weight:bold;" href="{{ client.get_absolute_url }}">{{ client.first_name }} {{ client.last_name }}</a> </td>
+                <td><a style="color:black;font-weight:bold;" href="tel:{{ client.contact_phone }}">{{ client.contact_phone }}</a> </td>
+              </tr>
+          {% endfor %}
+          {% else %}
+          <tr>
+              <td>There are no  </td>
+              <td>clients </td>
+              <td>to list sorry!</td>
+          </tr>
+    <p>There are no nopes in this planet.</p>
+  {% endif %} 
+    </tbody>
+  </table>
+</div>
+{% endblock %} 
+
+{% block scripter %} 
+<script src="{% static 'home/js/sb-admin-datatables.min.js' %}"></script>
+<script src="{% static 'home/vendor/datatables/jquery.dataTables.js' %}"></script>
+<script src="{% static 'home/vendor/datatables/dataTables.bootstrap4.js' %}"></script> 
+{% endblock %}
+   

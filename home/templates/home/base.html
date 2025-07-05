@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>   <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZGD1GLB8BV"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-ZGD1GLB8BV');
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="LabMunkzInk" content="">
+    {% block title %}<title>The Lab Munkz Music Website</title>{% endblock %}
+    <link rel="shortcut icon" href="">
+    <meta name="author" content="Dr. Nope">
+    <link rel="stylesheet" href="{% static 'home/css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'home/css/shop.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+<body>     
+    {% include 'home/navbar.html' %}
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <main>
+    {% block content %}{% endblock %}
+    </main>
+    {% include 'home/footer.html' %}
+    <!-- Page level plugin JavaScript-->    
+    {% block scripter %}{% endblock %}
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,94 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% block title %}<title>Music Home</title>{% endblock %}
+{% block breadcrumb %} / <a href="{% url 'music:music' %}">Music</a> / List
+  {% if request.user.is_staff %} /<a href="{% url 'music:create-music' %}"> add a new music</a>{% else %}{% endif %}
+{% endblock %}
+
+{% block scripter %}
+    <script src="{% static 'home/js/albumplayer.js' %}"></script>
+{% endblock %}
+{% block content %}
+  <div style="text-align: center;">
+    
+      <h2></h2></button>
+  </div>
+  <!-- Music player and playlist content here -->
+  <section id="music-player">
+      <div class="music-player">
+          <audio id="audioPlayer" controls hidden>
+              <source id="audioSource" src="{{ music_list.0.audio_file.url}}" type="audio/mpeg">
+              Your browser does not support the audio element.
+          </audio>
+          <div class="controls">    
+              <button id="songAlbum">{{ music_list.0.group_album }}</button> by <button id="songArtist">{{ music_list.0.group_album.group }}
+              <button id="songTitle">{{ music_list.0.title}}</button>
+          </div>
+          <div class="controls">  
+              <button id="prevBtn">Prev</button>
+              <button id="playPauseBtn">Play</button>
+              <button id="nextBtn">Next</button>
+          </div>
+          <div class="custom-audio-player">
+              <span id="currentTime">0:00</span> / <span id="duration">0:00</span>
+              <input type="range"  class="custom-range" id="seekBar" value="0" max="100">
+              Volume<input type="range"  class="custom-range" id="volumeBar" min="0" max="1" step="0.1" value="1">
+          </div>
+          <div class="playlist">    
+              {% if music_list %}
+                  <ul id="playlist">
+                      {% for song in music_list %}
+                        {% if song.audio_file %}
+                      <li data-src="{{ song.audio_file.url }}" songTitle="{{ song.title }}">{{ song.title }} &raquo; {{ song.group_album }} by {{ song.group_album.group }}</li>
+                        {% else %}
+                        There are no audio file to list sorry!
+                        {% endif %} 
+                      {% endfor %}
+                  </ul>
+              {% else %}
+              There are no SONGS to list sorry!
+              {% endif %} 
+            </div>  
+          <div class="music-player-bott">
+              {{ music_list.0.group_album.release_date }} <br> {{ music_list.0.group_album.duration }}
+          </div>
+      </div>
+  </section>
+  </div>
+  <div class="business-card">
+  <table width="100%" cellspacing="0" style="border-radius: 8%;">
+      {% if music_list %}
+      {% for music in music_list %}
+      <tr>
+        {% if music.album_art %}
+        <td style="width: 150px;">
+          <a class="music-art" href="{% url 'music:music-detail' music.id %}">
+              <img src="{{ music.album_art.url }}" alt="Button Art">
+          </a> 
+        </td>
+      {% else %}
+        <td style="width: 150px;">
+          <a class="music-art" href="{% url 'music:music-detail' music.id %}">
+              <img src="{% static '/home/images/LMNlogo.jpg' %}" alt="Album Art">
+          </a> 
+        </td>
+      {% endif %}
+      <td>
+        <div class="album-card">
+          <a href="{% url 'music:music-detail' music.id %}"><h2>{{ music.title }}</h2></a>
+          <a href="{% url 'group:album-detail' music.group_album.id %}">{{ music.group_album }}</a>
+        </div>
+      </td>
+      </tr>
+      {% endfor %}
+      {% else %}
+      <tr style="background-color: white;">
+          <td>There are no  </td>
+          <td>musics </td>
+          <td>to list sorry!</td>
+      </tr>
+      {% endif %} 
+  </table>
+{% endblock %} 
+
+   

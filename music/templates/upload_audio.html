@@ -1,0 +1,31 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% block title %}<title>Upload</title>{% endblock %}
+{% block scripter %}
+    <script src="{% static 'home/js/albumplayer.js' %}"></script>
+{% endblock %}
+{% block content %}
+<div class="business-card">
+  <div class="song-details">
+    <div class="card-header">
+        <div class="container">
+            <h1>Upload Audio File</h1>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+            l    {{ form.as_p }}
+                <button type="submit">Upload</button>
+            </form>
+            <div class="message">
+                <p>Please select an audio file (e.g., MP3) to upload and analyze.</p>
+            </div>
+        </div>
+    </div>
+    <div id="video-presentation">
+      C
+    </div>
+    <div class="statistics">
+      X
+    </div>
+  </div>
+</div>
+{% endblock %}   

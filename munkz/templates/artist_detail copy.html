@@ -1,0 +1,142 @@
+{% extends "home/base.html" %}
+
+{% block title %}<title>Artist Profile</title>{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="profile-banner">
+    {% if artist_detail.cover_photo %}
+      <img src="{{ artist_detail.cover_photo.url }}" alt="Cover Photo" class="cover-photo">
+    {% endif %}
+    <div class="profile-pic-container">
+      {% if artist_detail.profile_pic %}
+        <img src="{{ artist_detail.profile_pic.url }}" alt="Profile Picture" class="profile-pic">
+      {% endif %}
+    </div>
+  </div>
+  <div class="card-login">
+    <div class="container">
+      <h2>{{ artist_detail.get_full_name }}</h2>
+      <p><strong>Bio:</strong> {{ artist_detail.bio|default:"No bio provided" }}</p>
+      <p><strong>Website:</strong> <a href="{{ artist_detail.website }}" target="_blank">{{ artist_detail.website }}</a></p>
+      <p><strong>Social Links:</strong></p>
+      <div class="social-links">
+          {% if artist_detail.facebook_url %} <a href="{{ artist_detail.facebook_url }}" target="_blank"><i class="fab fa-facebook"></i></a> {% endif %}
+          {% if artist_detail.instagram_url %} <a href="{{ artist_detail.instagram_url }}" target="_blank"><i class="fab fa-instagram"></i></a> {% endif %}
+          {% if artist_detail.twitter_url %} <a href="{{ artist_detail.twitter_url }}" target="_blank"><i class="fab fa-twitter"></i></a> {% endif %}
+          {% if artist_detail.youtube_url %} <a href="{{ artist_detail.youtube_url }}" target="_blank"><i class="fab fa-youtube"></i></a> {% endif %}
+          {% if artist_detail.spotify_url %} <a href="{{ artist_detail.spotify_url }}" target="_blank"><i class="fab fa-spotify"></i></a> {% endif %}
+      </div>   
+    </div>
+  </div>
+  <section id="group">
+    <div class="profile-container">
+      {% if artist_detail.group.logo %}<img class="profile-img" src="{{ artist_detail.group.logo.url|default_if_none:'#' }}" class="profile-img">{% endif %}
+      <div class="profile-info">
+          <h2>{{ artist_detail.group.group_name }}</h2>
+          <p>{{ artist_detail.group.group_url|urlize }}</p>
+          <p>{{ artist_detail.group.billing_address_city }}, {{ artist_detail.group.billing_address_state }}</p>
+      </div>
+      <div class="profile-links">
+        <a href="{{ artist_detail.group.facebook_url|default_if_none:'none' }}">Facebook</a> |
+        <a href="{{ artist_detail.group.instagram_url|default_if_none:'none' }}">Twitter</a> |
+        <a href="{{ artist_detail.group.twitter_url|default_if_none:'none' }}">Instagram</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="dashboard-sections">
+    <div class="calendar">
+      <h3>Upcoming Events</h3>
+      <ul>
+        {% for event in events %}
+          <li>
+            <strong>{{ event.title }}</strong><br>
+            {{ event.start|date:"M d, Y H:i" }} - {{ event.end|date:"H:i" }}
+          </li>
+        {% empty %}
+          <li>No upcoming events</li>
+        {% endfor %}
+      </ul>
+    </div>      
+    
+    <div class="artist-gallery">
+      <h3>Gallery</h3>
+      <div class="gallery-grid">
+        {% for image in artist_detail.gallery_images.all %}
+          <img src="{{ image.url }}" class="gallery-image">
+        {% endfor %}
+      </div>
+    </div>
+    
+    <div class="music-player">
+      <h3>Latest Tracks</h3>
+      {% for track in artist_detail.tracks.all %}
+        <div class="track">
+          <p>{{ track.title }}</p>
+          <audio controls>
+            <source src="{{ track.audio_file.url }}" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+      {% endfor %}
+    </div>
+    
+    <div class="blog-feed">
+      <h3>Recent Posts</h3>
+      {% for post in artist_detail.blog_posts.all %}
+        <div class="post">
+          <h4>{{ post.title }}</h4>
+          <p>{{ post.content|truncatewords:20 }}</p>
+          <a href="{{ post.get_absolute_url }}">Read More</a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% if request.user.is_authenticated %}  
+    <a href="{% url 'munkz:artist-dashboard' %}">Dashboard</a>
+  {% else %}
+    <a href="{% url 'login' %}">Login</a>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+  .profile-header {
+    text-align: center;
+  }
+  .cover-photo {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+  }
+  .profile-pic-container {
+    margin-top: -50px;
+  }
+  .profile-pic {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid white;
+  }
+  .dashboard-sections {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+  }
+  .gallery-image {
+    width: 100%;
+    border-radius: 5px;
+  }
+  .blog-feed .post {
+    margin-bottom: 10px;
+  }
+</style>
+{% endblock %}

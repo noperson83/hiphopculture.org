@@ -1,0 +1,135 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% block scripter %}
+    <script src="{% static 'home/js/albumplayer.js' %}"></script>
+{% endblock %}
+{% block title %}<title id="songTitle2">{{ album_song_list.0.title }} by {{ album_detail.group }}</title>{% endblock %}
+
+{% block content %}
+<div class="container-music">
+  <div class="business-card-music">
+    <div class="controls">  
+        <button style="width: 100%; margin: -4px auto;" id="songTitle">{{ album_song_list.0.title}}</button>
+    </div>
+    <div class="controls">
+        {{ album_song_list.0.group_album }} - {{ album_song_list.0.group_album.group }}
+    </div>
+    <div class="custom-audio-player">
+        <span id="currentTime">0:00</span> <input type="range"  class="custom-range" id="seekBar" value="0" max="100"> <span id="duration">0:00</span>
+    </div>
+    <div class="music-player">
+        <audio id="audioPlayer" controls hidden>
+            <source id="audioSource" src="{{ album_song_list.0.audio_file.url}}" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <div class="controls" style="width:54%; margin: 0 auto;">  
+            <button id="prevBtn"><i class="fas fa-backward"></i></button>
+            <button id="playPauseBtn"><i class="fas fa-play"></i></button>
+            <button id="nextBtn"><i class="fas fa-forward"></i></button>
+        </div>
+        <div class="custom-audio-player">
+            Volume <input type="range"  class="custom-range" id="volumeBar" min="0" max="1" step="0.1" value="1">
+        </div>
+        <div class="playlist">    
+            {% if album_song_list %}
+                <ul id="playlist">
+                    {% for song in album_song_list %}
+                    <div class="song-list">
+                        <div class="song-list-left">{{ song.track_number }}</div>
+                        <div class="song-list-center">
+                            <li data-src="{{ song.audio_file.url }}" 
+                                songTitle="{{ song.title }}" 
+                                songAlbum="{{ song.group_album }}" 
+                                songArtist="{{ song.group_album.group }}" 
+                                songArt="{{ song.group_album.cover_art.url }}">
+                            {{ song.title }}
+                            <a style="color:brown" href="{% url 'music:music-detail' song.pk %}">Song Details</a>
+                            </li>
+                        </div>
+                            
+                    </div>
+                    {% endfor %}
+                </ul>
+            {% else %}
+            There are no SONGS to list sorry!
+            {% endif %} 
+            </div>  
+        <div class="music-player-bott">
+            {{ album_song_list.0.group_album.release_date }} <br> {{ album_song_list.0.group_album.duration }}
+        </div>
+    </div>
+  </div>
+  <div class="business-card-music">
+    <section id="video-presentation">
+      <div class="song-details">
+        <div class="card-header">
+          <h6>{{ album_detail.album_url|urlize }}</h6>
+          <table>
+            <tr><strong>{{ album_detail.title }} </strong> : <a href="{% url 'group:group-detail' album_detail.group.id %}">{{ album_detail.group }} </a>
+            </tr>
+            <tr>
+              {% if album_detail.cover_art %}
+                  <a class="album-art" style="color:black;font-weight:bold;" href="{% url 'group:album-detail' album_detail.id %}">
+                      <img style="width: 150px;" src="{{ album_detail.cover_art.url }}" alt="Album Art">
+                  </a> 
+              {% else %}
+                  <a class="album-art" style="color:black;font-weight:bold;" href="{% url 'group:album-detail' album_detail.group.id %}">
+                      <img style="width: 150px;" src="{% static '/home/images/LMNlogo.jpg' %}" alt="Album Art">
+                  </a> 
+              {% endif %}
+            </tr>
+            <tr>
+              <td><a href="https://labmunkzink.com/shop/product/ravens-nest/"><button class="add-to-cart-btn">Buy Now:</button></a></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>Description:</strong></td>
+              <td>{{ album_detail.description }}</td>
+            </tr>
+            <tr>
+              <td><strong>Release Date:</strong></td>
+              <td>{{ album_detail.release_date }}</td>
+            </tr>
+            <tr>
+              <td><strong>Record Label:</strong></td>
+              <td>{{ album_detail.record_label }}</td>
+            </tr>
+            <tr>
+              <td><strong>Total Tracks:</strong></td>
+              <td>{{ album_detail.total_tracks }}</td>
+            </tr>
+            <tr>
+              <td><strong>Duration:</strong></td>
+              <td>{{ album_detail.duration }}</td>
+            </tr>
+            <tr>
+              <td><strong>Spotify Link:</strong></td>
+              <td>
+                  {% if album_detail.spotify_link %}
+                      <a class="album-art" style="color:black;font-weight:bold;" href="{{ album_detail.spotify_link }}">
+                          Click Here
+                      </a> 
+                  {% else %}
+                      No link
+                  {% endif %}
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Apple Music Link:</strong></td>
+              <td>
+                  {% if album_detail.apple_music_link %}
+                      <a class="album-art" style="color:black;font-weight:bold;" href="{{ album_detail.apple_music_link }}">
+                          Click Here
+                      </a> 
+                  {% else %}
+                      No link
+                  {% endif %}
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+{% endblock %}    

@@ -1,0 +1,82 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block extrahead %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>{% endblock extrahead %}
+{% block title %}<title>Home of da Lab Munkz Music</title>{% endblock %}
+{% block content %} 
+<div class="business-card">
+<section class="product-detail">
+    <div class="cart-container">
+        <h3>Key: {{ key }}</h3>
+        <h3>BPM: {{ bpm }}</h3>
+        <div id="interactive-plot" style="width: 600px;">
+            {{ interactive_plot|safe }}
+        </div>
+    </div>
+</section>
+<section id="music-player">
+    <img src="{% static '' %}" id="background" />
+    <audio src="/media/{{ file_path }}" id="song"></audio>
+
+    <div class="container">  
+        <div class="box"></div>      
+        <img src="{% static '' %}" id="thumbnail" />
+        
+        <img src="{% static 'music/assets/icons/play.png' %}" width="40px" onclick="playPause()" id="play-pause" />
+        <img src="{% static 'music/assets/icons/forward.png' %}" width="40px" onclick="nextSong()" id="next-song" />
+        <img src="{% static 'music/assets/icons/backward.png' %}" width="40px" onclick="previousSong()" id="previous-song" />
+        
+        <!-- Input element for progress bar - min=0 starting value of every song - max length will change per song so leave empty -->
+        
+        <input 
+            type="range" 
+            id="progress-bar" 
+            min="0" 
+            max="" 
+            value="0" 
+            onchange="changeProgressBar()"
+        />
+
+        <div class="currentTime"></div>
+        <div class="durationTime"></div>
+
+    </div>
+
+    <script src=" {% static 'music/player.js' %}"></script>
+
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const rmsList = {{ rms_list|safe }};
+
+        const labels = rmsList.map((_, index) => index + 1);
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'RMS Value',
+                data: rmsList,
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        };
+
+        const config = {
+            type: 'line',
+            data: data,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        };
+
+        const ctx = document.getElementById('waveformChart').getContext('2d');
+        new Chart(ctx, config);
+    });
+</script>
+</div>
+{% endblock %}

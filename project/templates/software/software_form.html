@@ -1,0 +1,82 @@
+{% extends "home/base.html" %}
+
+{% block title %}<title>Software creation</title> {% endblock %}
+{% block breadcrumb %} / Software / add a Software{% endblock %}
+
+{% block content %}
+
+{% if request.user.staff %}
+<div class="row">
+  <div class="col-lg-6">
+    <div class="card mb-3">
+      <div class="card-header" style="background-color:rgb(10, 212, 26);">
+        <h3>add a Software to the Project:</h3> 
+      </div>
+      <form class="form-control" method="post">{% csrf_token %}
+        <div class="form-group">
+          <div class="form-row" style="margin-top: 10px;"><label for="id_software">&nbsp; <b>Project:</b></label> {{ form.project.errors }}
+            <select class="form-control" name="project" required="" id="id_project">
+                {% for project in form.project   %}
+                  {{ project }}
+                {% endfor %}
+            </select>
+          </div>
+          <div class="form-row" style="margin-top: 10px;"><label for="id_software">&nbsp; <b>software:</b></label> {{ form.software.errors }}
+            <select class="form-control" name="software" required="" id="id_software">
+                {% for software in form.software   %}
+                  {{ software }}
+                {% endfor %}
+            </select>
+          </div>
+          <div class="form-row" style="margin-top: 10px;"><label for="id_task">&nbsp; <b>Task:</b></label> {{ form.task.errors }}
+              {% if request.user.staff %}<div style="float:right;">&nbsp; <a href="{% url 'todo:add_list' proj=psite.job_num scop=0 %}"> <i class="fa fa-plus-square"></i> create</a></div>{% endif %}
+            <select class="form-control" name="task" required="" id="id_task">
+                {% for task in form.task %}
+                  {{ task }}
+                {% endfor %}
+            </select>
+          </div>
+          <hr>
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+              <label for="id_purchased_date">&nbsp;Purchase date:</label> {{ form.purchased_date.errors }}
+              <input class="form-control" type="date" name="purchased_date" id="id_purchased_date" value="{{ software.purchased_date|date:"Y-m-d" }}" aria-describedby="nameHelp">
+            </div>
+            <div class="col" style="margin-top: 10px;">
+              <label for="id_onsite_date">&nbsp; Onsite date:</label> {{ form.onsite_date.errors }}
+              <input class="form-control" type="date" name="onsite_date" id="id_onsite_date" value="{{ software.onsite_date|date:"Y-m-d" }}" aria-describedby="nameHelp">
+            </div>
+            <div class="col" style="margin-top: 10px;">
+              <label for="id_installed_date">&nbsp; Installed date:</label> {{ form.installed_date.errors }}
+              <input class="form-control" type="date" name="installed_date" id="id_installed_date" value="{{ software.installed_date|date:"Y-m-d" }}" aria-describedby="nameHelp">
+            </div>
+            </div>
+            <div class="form-row" style="margin-top: 10px;">
+              <label for="id_qty">&nbsp; Quantity:</label> 
+              <input class="form-control" type="number" name="qty" id="id_qty" value="{{ software.qty }}" aria-describedby="nameHelp">
+            </div>
+            <div class="form-row" style="margin-top: 10px;">
+              <label for="id_cost">&nbsp; Cost:</label>
+              <input class="form-control" type="number" name="cost" id="id_cost" step="0.01" value="{{ software.cost }}" aria-describedby="nameHelp">
+            </div>
+            <div class="form-row" style="margin-top: 10px;">
+              <label for="id_software_status">&nbsp; software Status:</label> 
+              {{ form.software_status }}
+            </div>
+          </div>
+        <input style="margin-bottom: 10px;" class="btn btn-primary btn-block" type="submit" value="Save" />
+      </form>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card mb-3">
+      <div class="card-header" style="background-color:rgb(0, 119, 255);">
+        <h3>Whats the Next step?<br>?</h3> 
+      </div> 
+    </div>
+  </div>
+</div>
+{% else %}
+Your not allowed to view this page..
+{% endif %} 
+{% endblock %} 

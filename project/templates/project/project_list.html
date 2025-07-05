@@ -1,0 +1,65 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% block title %}<title>wBee Project List</title>{% endblock %}
+
+{% block styler %}<link href="{% static 'home/vendor/datatables/dataTables.bootstrap4.css' %}" rel="stylesheet" type="text/css"> {% endblock %}
+
+{% block breadcrumb %} / <a href="{% url 'jobsite-list' %}">Job Site</a> / <a href="{% url 'project-list' %}">Project</a> / list
+{% endblock %}
+
+{% block content %}    
+<div class="table-responsive">
+  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+    <thead>
+      <tr>
+        <th style="font-weight: inherit;">Job </th>
+        <th style="font-weight: inherit;">Project <i class="fa fa-fw fa-wrench"></i> </th>
+        <th style="font-weight: inherit;">Job Sites <i class="fa fa-fw fa-building"></i> </th>
+        <th style="font-weight: inherit;">Client <i class="fa fa-id-card-o"></i> </th>
+        <th style="font-weight: inherit;">Status </th>
+        <th style="font-weight: inherit;">City </th>
+        <th style="font-weight: inherit;">State </th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th style="font-weight: inherit;">Job </th>
+        <th style="font-weight: inherit;">Project <i class="fa fa-fw fa-wrench"></i> </th>
+        <th style="font-weight: inherit;">Job Sites <i class="fa fa-fw fa-building"></i> </th>
+        <th style="font-weight: inherit;">Client <i class="fa fa-id-card-o"></i> </th>
+        <th style="font-weight: inherit;">Status </th>
+        <th style="font-weight: inherit;">City </th>
+        <th style="font-weight: inherit;">State </th>
+      </tr>
+    </tfoot>
+    <tbody>
+    {% if project_list %}
+      {% for project in project_list %}
+      <tr>
+        <td><a style="color:black;font-weight:bold;" href="{{ project.get_absolute_url }}">{{ project.job_num }}</a> </td>
+        <td><a style="color:black;font-weight:bold;" href="{{ project.get_absolute_url }}">{{ project.job_name }}</a> </td>
+        <td><a style="color:black;font-weight:bold;" href="{{ project.jobsite.get_absolute_url }}">{{ project.jobsite }}</a> </td>
+        <td><a style="color:black;font-weight:bold;" href="{{ project.jobsite.job_client.get_absolute_url }}">{{ project.jobsite.job_client }}</a> </td>
+        <td><a style="color:black;font-weight:bold;" href="{{ project.get_absolute_url }}">{{ project.get_job_status_display }}</a> </td>
+        <td style="font-weight:bold;">{{ project.jobsite.city }} </td>
+        <td style="font-weight:bold;">{{ project.jobsite.state }} </td>
+      </tr>
+    {% endfor %}
+    {% else %}
+    <tr>
+        <td>There are no  </td>
+        <td>clients </td>
+        <td>to list sorry!  </td>
+    </tr>
+    <p>There are no nopes in this planet, nope.</p>
+    {% endif %} 
+    </tbody>
+  </table>
+</div> 
+{% endblock %}
+
+{% block scripter %} 
+<script src="{% static 'home/js/sb-admin-datatables.min.js' %}"></script>
+<script src="{% static 'home/vendor/datatables/jquery.dataTables.js' %}"></script>
+<script src="{% static 'home/vendor/datatables/dataTables.bootstrap4.js' %}"></script> 
+{% endblock %}

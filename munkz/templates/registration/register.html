@@ -1,0 +1,36 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% block title %}<title>Artist Registration</title>{% endblock %}
+
+{% block content %}
+<div class="container2">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+  <a class="navbar-brand" href="">LM Network Registration</a></nav>
+  <div class="card-login">
+        <p>Join the community to like, comment, and share content!</p>
+        {% if messages %}
+        <div class="alert alert-danger">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if form.errors %}
+        <div class="alert alert-danger">
+            <ul>
+                {% for field, errors in form.errors.items %}
+                    <li><strong>{{ field }}:</strong> {{ errors|striptags }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        <!--<form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="hidden" name="is_superuser" value="false">   ✅ Hidden field in HTML 
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+        </form>-->
+</div>
+</div>
+{% endblock %}

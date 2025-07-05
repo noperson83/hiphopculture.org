@@ -1,0 +1,235 @@
+{% extends "home/base.html" %}
+
+{% load static %}
+{% block title %}<title>Scope of work</title>{% endblock %}
+{% block breadcrumb %} / <a href="{% url 'scope-of-work' %}">Scope of work</a>
+  {% if request.user.staff %} /<a href="{% url 'create-scope-of-work' proj=scope_detail.project.job_num %}"> add a new scope area</a>{% else %}{% endif %} {% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-8">  
+    <div class="card mb-3">
+      <div class="card-header" style="background-color:rgb(10, 212, 26);">
+        <h4>Scope of work - {{ scope_detail.area }}
+          {% if request.user.staff %}
+            <div class="add_jobsite"><a href="{% url 'update-scope-of-work' scope_detail.id %}"> edit </a></div>
+          {% else %}{% endif %}</h4>
+          <b><a href="{% url 'project-detail' scope_detail.project.job_num %}">{{ scope_detail.project.job_num }} - {{scope_detail.project.job_name}} </a></b>
+          {% if request.user.staff %}&nbsp; <a href="{% url 'todo:add_list' proj=scope_detail.project.job_num scop=scope_detail.pk %}"> <i class="fa fa-plus-square"></i> add a task list.</a>
+          {% else %} There are no task lists in this area, <a href="{% url 'create-scope-of-work' proj=scope_detail.project.job_num %}">please add one.</a>
+          {% endif %}
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0"> 
+          <thead>
+            <tr>
+              <th style="font-weight: inherit;">Task List </th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th style="font-weight: inherit;">Task List </th>
+            </tr>
+          </tfoot>
+          <tbody>
+          {% if task_list %}
+            {% for task in task_list %}
+              <tr>
+                <td>
+                  <h5><a href="{% url 'todo:list_detail' task.id task.slug %}"> {{ task.name }}</a></h5>
+                </td>
+              </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+              <td>
+            <p>There are no task lists in this area, <a href="{% url 'todo:add_list' proj=scope_detail.project.job_num scop=scope_detail.pk %}"> <i class="fa fa-plus-square"></i> add a task list.</a></p>
+              </td>
+            </tr>{% endif %}
+          </tbody>
+        </table>
+      </div> 
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card mb-3">
+      <div class="card-header" style="background-color:rgb(0, 119, 255);">
+        <h3>Area of work
+          {% if request.user.staff %}
+            <div class="add_jobsite"><a href="{% url 'create-scope-of-work' proj=scope_detail.project.job_num %}">add</a></div>
+          {% else %}
+          {% endif %}
+        </h3>
+      </div>
+      <div class="card-body bg-faded">
+        {% if other_scopes %}
+        <ul>
+          {% for others in other_scopes %}
+            <li><a href="{% url 'scope-detail' others.id %}"> {{ others.area }} </a></li>
+          {% endfor %}
+        {% else %}
+          <p>There are no areas for this project, please add one.</p>
+        {% endif %}
+        </ul>
+      </div>
+    </div>
+    <div class="card mb-3">
+      <div class="card-header"><b>Devices</b>
+        {% if request.user.staff %}
+          <a href="{% url 'create-project-device' proj=scope_detail.project.job_num tas=0  %}"><div class="add_jobsite"> + add</div></a>
+        {% else %}
+        {% endif %}
+      </div>
+      {% if device_mate_list %}
+      <div class="card-body">
+        <table>
+          {% for device in device_mate_list %}
+          <tr width="100%">
+            <td width="60%"><a href="{% url 'project-device-detail' device.pk %}"> {{ device.device.general_disc }}</a></td>
+            <td>
+              {{ device.qty }}
+              {% if request.user.staff and request.user.admin %}
+              - <a href="{% url 'update-project-device' device.pk %}">edit</a> - ${{ device.total }} 
+              {% else %}
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </table><table>
+          {% for device in devicelist %}
+          <tr width="100%">
+            <td width="60%"><a href="{% url 'project-device-detail' device.pk %}"> {{ device.device.general_disc }}</a></td>
+            <td>
+              {{ device.qty }}
+              {% if request.user.staff and request.user.admin %}
+              - <a href="{% url 'update-project-device' device.pk %}">edit</a> - ${{ device.total }} 
+              {% else %}
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+      {% else %}
+      {% endif %}
+    </div>
+    <div class="card mb-3">
+      <div class="card-header"><b>Wire</b>
+        {% if request.user.staff %}
+          <a href="{% url 'create-project-wire' proj=scope_detail.project.job_num tas=0  %}"><div class="add_jobsite"> + add</div></a>
+        {% else %}
+        {% endif %}
+      </div>
+      {% if wire_mate_list %}
+      <div class="card-body">
+        <table>
+          {% for wire in wire_mate_list %}
+          <tr width="100%">
+            <td width="60%"><a href="{% url 'project-wire-detail' wire.pk %}"> {{ wire.wire.general_disc }}</a></td>
+            <td>
+              {{ wire.length }}
+              {% if request.user.staff and request.user.admin %}
+                - <a href="{% url 'update-project-wire' wire.pk %}">edit</a> - ${{ wire.total }} 
+              {% else %}
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+      {% else %}
+      {% endif %}
+    </div>
+    <div class="card mb-3">
+      <div class="card-header"><b>Hardware</b>
+        {% if request.user.staff %}
+          <a href="{% url 'create-project-hardware' proj=scope_detail.project.job_num tas=0  %}"><div class="add_jobsite"> + add</div></a>
+        {% else %}
+        {% endif %}
+      </div>
+      {% if hardware_mate_list %}
+      <div class="card-body">
+        <table>
+          {% for hardware in hardware_mate_list %}
+          <tr width="100%">
+            <td width="70%"><a href="{% url 'project-hardware-detail' hardware.pk %}"> {{ hardware.hardware.general_disc }}</a></td>
+            <td>
+              {{ hardware.qty }}
+              {% if request.user.staff and request.user.admin %}
+                - <a href="{% url 'update-project-hardware' hardware.pk %}">edit</a> - ${{ hardware.total }} 
+              {% else %}
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+      {% else %}
+      {% endif %}
+    </div>
+    <div class="card mb-3">
+      <div class="card-header"><b>Software</b>
+        {% if request.user.staff %}
+          <a href="{% url 'create-project-software' proj=scope_detail.project.job_num tas=0  %}"><div class="add_jobsite"> + add</div></a>
+        {% else %}
+        {% endif %}
+      </div>
+      {% if software_mate_list %}
+      <div class="card-body">
+        <table>
+          {% for software in software_mate_list %}
+          <tr width="100%">
+            <td width="70%"><a href="{% url 'project-software-detail' software.pk %}"> {{ software.software.general_disc }}</a></td>
+            <td>
+              {{ software.qty }}
+              {% if request.user.staff and request.user.admin %}
+                - <a href="{% url 'update-project-software' software.pk %}">edit</a> - ${{ software.total }} 
+              {% else %}
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+      {% else %}
+      {% endif %}
+    </div>
+    <div class="card mb-3">
+      <div class="card-header"><b>License</b>
+        {% if request.user.staff %}
+          <a href="{% url 'create-project-license' proj=scope_detail.project.job_num tas=0  %}"><div class="add_jobsite"> + add</div></a>
+        {% else %}
+        {% endif %}
+      </div>
+      {% if license_mate_list %}
+      <div class="card-body">
+        <table>
+          {% for license in license_mate_list %}
+          <tr width="100%">
+            <td width="70%"><a href="{% url 'project-license-detail' license.pk %}"> {{ license.license.general_disc }}</a></td>
+            <td>
+              {{ license.qty }}
+              {% if request.user.staff and request.user.admin %}
+                - <a href="{% url 'update-project-license' license.pk %}">edit</a> - ${{ license.total }} 
+              {% else %}
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+      {% else %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+</div>
+
+
+{% endblock %}
+
+{% block scripter %} 
+<script src="{% static 'home/js/sb-admin-datatables.min.js' %}"></script>
+<script src="{% static 'home/vendor/datatables/jquery.dataTables.js' %}"></script>
+<script src="{% static 'home/vendor/datatables/dataTables.bootstrap4.js' %}"></script> 
+{% endblock %}

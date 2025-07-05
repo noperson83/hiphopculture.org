@@ -1,0 +1,47 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% block title %}<title>Videos</title>{% endblock %}
+{% block scripter %}
+    <script src="{% static 'home/js/albumplayer.js' %}"></script>
+{% endblock %}
+{% block content %}
+<div class="business-card">
+    <div class="song-details">
+      <div class="card-header">
+        <h1>Videos</h1>
+        <div class="video-list">
+            {% for video in videos %}
+            <div class="video-title" style="margin-top: 8px; font-weight: bold;">{{ video|slice:"7:" }}</div>
+            <video controls width="560" height="315" style="border-radius: 6px;">
+                <source src="/media/{{ MEDIA_URL }}{{ video }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            {% endfor %}
+        </div>
+      </div>
+    </div>
+</div>
+<div class="business-card">
+    <div class="song-details">
+      <div class="card-header">
+        <h1>YouTube Videos</h1>
+        <div class="video-list">
+            {% for video in ytvideos %}
+            <div class="video-item">
+                <h2>{{ video.title }}</h2>
+                <p>{{ video.description }}</p>
+                {% if video.video_type == "youtube" %}
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ video.youtube_url|cut:'https://www.youtube.com/watch?v=' }}" frameborder="0" allowfullscreen></iframe>
+                {% elif video.video_type == "uploaded" %}
+                    <video width="560" height="315" controls>
+                        <source src="{{ ytvideo.video_file.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}   

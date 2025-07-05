@@ -1,0 +1,19 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block title %}<title>Home of da Lab Munkz Music - Donations</title>{% endblock %}
+{% block styler %} <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}"> {% endblock %}
+{% block content %}  
+<main>
+<h1>{{ question.question_text }}</h1>
+
+<ul>
+{% for choice in question.choice_set.all %}
+    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+{% endfor %}
+</ul>
+
+<a href="{% url 'polls:detail' question.id %}">Vote again?</a>
+<br><br><br><br><br><br><br><br><br><br>
+</section>
+</main>
+{% endblock %}

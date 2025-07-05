@@ -1,0 +1,54 @@
+{% extends 'home/base.html' %}
+
+{% block title %}<title>{{ product.name }} - Product Details</title>{% endblock %}
+
+{% block content %}
+<div class="product-detail">
+  <div class="product-images">
+    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="primary-image">
+  </div>
+  <h2>{{ product.name }}</h2>
+  <p class="price">
+    {% if product.price %}
+      ${{ product.price }}
+    {% else %}
+      Free
+    {% endif %}
+  </p>
+  <p>{{ product.description }}</p>
+  <form method="post" action="{% url 'shop:add_to_cart' product.id %}">
+    {% csrf_token %}
+    <label for="option">
+      {% if product.is_donation %}
+        Donation for Download:
+      {% else %}
+        Select:
+      {% endif %}
+    </label>
+    {% if product.is_donation %}
+      <p>Your donation will support our work. Any amount is appreciated!</p>
+      <input type="number" name="price" id="price" min="0" value="{{ price }}" required> 
+    {% else %}
+      <select name="size" id="size" required>
+        {% for product_size in product.product_sizes.all %}
+          <option value="{{ product_size.size.id }}">
+            {{ product_size.size.name }} ({{ product_size.stock }} in stock)
+          </option>
+        {% endfor %}
+      </select>
+    {% endif %}
+    <button type="submit" class="add-to-cart-btn">
+      {% if product.is_donation %}
+        Donate Now
+      {% else %}
+        Add to Cart
+      {% endif %}
+    </button>
+  </form> 
+  <div class="additional-images">
+    {% for image in product.images.all %}
+        <img src="{{ image.image.url }}" alt="{{ product.name }} additional image">
+    {% endfor %}
+</div>
+</div>
+{% endblock %}

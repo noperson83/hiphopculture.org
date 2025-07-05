@@ -1,0 +1,47 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% block title %}<title>Group List</title>{% endblock %}
+
+{% block content %}
+  <div class="business-card">
+  <table width="100%" cellspacing="0" style="border-radius: 8%;">
+    <tbody>
+    {% if group_list %}
+      {% for group in group_list %}
+          <tr>
+            {% if group.button %}
+              <td style="width: 150px;">
+                <a class="music-art" href="{% url 'group:group-detail' group.id %}">
+                    <img src="{{ group.button.url }}" alt="Button Art">
+                </a> 
+              </td>
+            {% else %}
+              <td style="width: 150px;">
+                <a class="music-art" href="{% url 'group:group-detail' group.id %}">
+                    <img src="{% static '/home/images/LMNlogo.jpg' %}" alt="Album Art">
+                </a> 
+              </td>
+            {% endif %}
+            <td>
+              <div class="album-card">
+                <a class="music-art" href="{% url 'group:group-detail' group.id %}">
+                  <h2>{{ group.group_name }}</h2>
+                </a> 
+              </div>
+            </td>
+          </tr>
+      {% endfor %}
+      {% else %}
+      <tr>
+          <td>There are no  </td>
+          <td>clients </td>
+          <td>to list sorry!  </td>
+      </tr>
+    {% endif %} 
+    </tbody>
+  </table>
+</div>
+{% endblock %}
+
+{% block scripter %} 
+{% endblock %}

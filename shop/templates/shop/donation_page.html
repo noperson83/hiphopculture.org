@@ -1,0 +1,13 @@
+{% extends 'home/base.html' %}
+
+{% block title %}Donate{% endblock %}
+
+{% block content %}
+<h2>Support {{ product.name }}</h2>
+<p>{{ product.description }}</p>
+<form method="post">
+    {% csrf_token %}
+    <input type="number" name="amount" placeholder="Enter donation amount" required>
+    <button type="submit">Donate</button>
+</form>
+{% endblock %}

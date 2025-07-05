@@ -1,0 +1,49 @@
+{% extends "home/base.html" %}
+
+{% block title %}<title>Client</title>{% endblock %}
+{% block breadcrumb %} / <a href="{% url 'client' %}">Client Section</a> / Choose by first letter. ({{ num_clients }}) clients {% endblock %}
+
+{% block content %}
+<div style="display: flow-root;">
+  <a href="{% url 'client-results' client_list_a %}"><div class="alphabuttons">A </div></a> 
+  <a href="{% url 'client-results' client_list_b %}"><div class="alphabuttons">B </div></a> 
+  <a href="{% url 'client-results' client_list_c %}"><div class="alphabuttons">C </div></a>
+  <a href="{% url 'client-results' client_list_d %}"><div class="alphabuttons">D </div></a> 
+  <a href="{% url 'client-results' client_list_e %}"><div class="alphabuttons">E </div></a></div> 
+<div style="display: flow-root;"> 
+  <a href="{% url 'client-results' client_list_f %}"><div class="alphabuttons">F </div></a> 
+  <a href="{% url 'client-results' client_list_g %}"><div class="alphabuttons">G </div></a>
+  <a href="{% url 'client-results' client_list_h %}"><div class="alphabuttons">H </div></a> 
+  <a href="{% url 'client-results' client_list_i %}"><div class="alphabuttons">I </div></a> 
+  <a href="{% url 'client-results' client_list_j %}"><div class="alphabuttons">J </div></a></div> 
+<div style="display: flow-root;"> 
+  <a href="{% url 'client-results' client_list_k %}"><div class="alphabuttons">K </div></a> 
+  <a href="{% url 'client-results' client_list_l %}"><div class="alphabuttons">L </div></a>
+  <a href="{% url 'client-results' client_list_m %}"><div class="alphabuttons">M </div></a> 
+  <a href="{% url 'client-results' client_list_n %}"><div class="alphabuttons">N </div></a> 
+  <a href="{% url 'client-results' client_list_o %}"><div class="alphabuttons">O </div></a> </div> 
+<div style="display: flow-root;"> 
+  <a href="{% url 'client-results' client_list_p %}"><div class="alphabuttons">P </div></a>
+  <a href="{% url 'client-results' client_list_q %}"><div class="alphabuttons">Q </div></a> 
+  <a href="{% url 'client-results' client_list_r %}"><div class="alphabuttons">R </div></a> 
+  <a href="{% url 'client-results' client_list_s %}"><div class="alphabuttons">S </div></a> 
+  <a href="{% url 'client-results' client_list_t %}"><div class="alphabuttons">T </div></a> </div> 
+<div style="display: flow-root;">
+  <a href="{% url 'client-results' client_list_u %}"><div class="alphabuttons">U </div></a> 
+  <a href="{% url 'client-results' client_list_v %}"><div class="alphabuttons">V </div></a> 
+  <a href="{% url 'client-results' client_list_w %}"><div class="alphabuttons">W </div></a> 
+  <a href="{% url 'client-results' client_list_x %}"><div class="alphabuttons">X </div></a>
+  <a href="{% url 'client-results' client_list_y %}"><div class="alphabuttons">Y </div></a> </div> 
+<div style="display: flow-root;">
+  <a href="{% url 'client-results' client_list_z %}"><div class="alphabuttons">Z </div></a> 
+  <a href="list/#"><div class="alphabuttons">#/all</div></a>   
+  <div style="float: left; width: 64px; padding: 12px; margin: 6px;"></div>   
+  <div style="float: left; width: 64px; padding: 12px; margin: 6px;"></div> 
+    {% if request.user.staff %}
+      <a href="{% url 'create-client' %}"><div class="alphabuttons">new</div></a>
+    {% else %}
+      <div style="float: left; width: 64px; padding: 12px; margin: 6px;"></div>
+    {% endif %} 
+</div>
+{% endblock %}
+

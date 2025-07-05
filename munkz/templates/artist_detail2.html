@@ -1,0 +1,249 @@
+{% extends "home/base.html" %}
+
+{% block title %}<title>Staff Details</title>    <style>
+  .profile-container {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      padding: 20px;
+      text-align: center;
+  }
+  .profile-img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 20px;
+  }
+  .profile-info h2 {
+      margin: 10px 0;
+      font-size: 24px;
+  }
+  .profile-info p {
+      color: #666;
+      font-size: 14px;
+      margin: 5px 0;
+  }
+  .profile-links a {
+      text-decoration: none;
+      color: #007bff;
+      font-size: 14px;
+      margin: 10px;
+  }
+</style>{% endblock %}
+
+{% block content %}
+<main> 
+  <div class="container">
+      <div class="card">
+        <section id="profile">
+          <div class="profile-container">
+            {% if worker_detail.profile_pic %}<img class="profile-img" src="{{ worker_detail.profile_pic.url|default_if_none:'#' }}" class="profile-img">{% endif %}
+            <div class="profile-info">
+                <h2>{{ worker_detail.get_full_name }}</h2>
+                <p>{{ worker_detail.jobtitle }}</p>
+                <p>{{ worker_detail.address_city }}, {{ worker_detail.address_state }}</p>
+            </div>
+            <div class="profile-links">
+                <a href="{{ worker_detail.facebook_url|default_if_none:'none' }}">Facebook</a> |
+                <a href="{{ worker_detail.instagram_url|default_if_none:'none' }}">Twitter</a> |
+                <a href="{{ worker_detail.twitter_url|default_if_none:'none' }}">Instagram</a>
+            </div>
+          </div>
+        </section>
+        </div>
+        <div class="card">
+        <section id="group">
+          <div class="profile-container">
+            {% if worker_detail.group.logo %}<img class="profile-img" src="{{ worker_detail.group.logo.url|default_if_none:'#' }}" class="profile-img">{% endif %}
+            <div class="profile-info">
+                <h2>{{ worker_detail.group.group_name }}</h2>
+                <p>{{ worker_detail.group.group_url|urlize }}</p>
+                <p>{{ worker_detail.group.billing_address_city }}, {{ worker_detail.group.billing_address_state }}</p>
+            </div>
+            <div class="profile-links">
+              <a href="{{ worker_detail.group.facebook_url|default_if_none:'none' }}">Facebook</a> |
+              <a href="{{ worker_detail.group.instagram_url|default_if_none:'none' }}">Twitter</a> |
+              <a href="{{ worker_detail.group.twitter_url|default_if_none:'none' }}">Instagram</a>
+            </div>
+          </div>
+        </section>
+      </div>
+  </div>
+  {% if request.user.is_authenticated %}  
+  <a href="{% url 'munkz:artist-dashboard'%}">Dashboard</a>
+  {% else %}
+  <a href="{% url 'login' %}">Login</a>
+  {% endif %}
+
+<div class="row">
+  <div class="col-lg-4">
+    <div class="card-header" style="background-color:rgb(233, 236, 239);">
+      {% if request.user.active and request.user.staff and request.user.admin  %}
+        ({{ worker_detail.salary }}) ({{ worker_detail.hourly }}) | Date of hire: {{ worker_detail.date_of_hire }}
+      {% else %}{% endif %}
+      <h3>{{ worker_detail.get_full_name }}
+      {% if request.user.admin %}
+        <div class="add_jobsite"><a href="{% url 'munkz:update-worker' worker_detail.id %}"> edit </a></div>
+      {% else %}
+      {% endif %}</h3></div>
+    <div class="card mb-3 card-body">
+      <h4>{{ worker_detail.jobtitle }}</h4>
+      <br>{% if worker_detail.profile_pic %}<img style="max-width:200px;" src="{{ worker_detail.profile_pic.url|default_if_none:'#' }}" class="">{% endif %}
+      {% if worker_detail.resume %}<br><a href="{{ worker_detail.resume.url|default_if_none:'#' }}">Resume link</a>{% endif %}
+      <h6>
+        <a style="color:black;font-weight:bold;" href="tel:{{ worker_detail.phone_number }}">{{ worker_detail.phone_number }}</a><br>
+        <a style="color:black;font-weight:bold;" href="mailto:{{ worker_detail.email }}">{{ worker_detail.email }}</a><br>
+        {{ worker_detail.address_street }}<br>
+        {{ worker_detail.address_city }}, 
+        {{ worker_detail.address_state }}  
+        {{ worker_detail.address_zipcode }}</h6>
+      <p>{{ worker_detail.bio }}</p>
+    </div>
+    <div class="card-body py-2 small">
+      <p class="text-muted"><strong>Genre:</strong> 
+        {% for genre in worker_detail.genre.all %}
+          <button class="listButton">{{ genre }}</button>
+          {% if not forloop.last %} {% endif %}{% endfor %}
+      </p>
+      <p class="text-muted"><strong>Clearance:</strong> 
+        {% for clearance in worker_detail.clearance.all %}
+          <button class="listButton">{{ clearance }}</button>
+          {% if not forloop.last %} {% endif %}{% endfor %}
+      </p>
+      <p class="text-muted"><strong>Certificates:</strong> 
+        {% for certs in worker_detail.certs.all %}
+          <button class="listButton">{{ certs }}</button>
+          {% if not forloop.last %} {% endif %}{% endfor %}
+      </p>
+    </div>
+  </div>
+<div class="col-lg-4">
+  <div class="card mb-2">
+    <div class="card-header" style="background-color:rgb(0, 119, 255);"><b>Scheduled days</b>
+    </div>
+    <div class="card-body">
+      {% if project_event_list %}
+        <div>
+          {% for event in project_event_list %}
+          <a style="color:black;" href="{{ event.get_absolute_url }}">
+          <div class="statusLost">
+            <table>
+              <tr>
+                <td>{{ event.start|date:"M d" }}, </td><td> {{ event.title|truncatechars:28 }} </td><td>( {{ event.lead }} )</td>
+              </tr>
+            </table>
+          </div> </a>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p>There are no events scheduled.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+<div class="col-lg-4">
+  <div class="card mb-2">
+    <div class="card-header" style="background-color:rgb(0, 119, 255);">
+        <b>Tools</b>
+    </div> 
+    {% if ladder_list %}
+    <div class="list-group list-group-flush small">
+    {% for ladder in ladder_list %}
+    <a class="list-group-item list-group-item-action" href="{{ ladder.get_absolute_url }}">
+      <div class="media">
+        <div class="statusLost">Ladder</div>
+        <div class="media-body">
+          <strong>{{ ladder.label }}</strong>  Location: {{ ladder.get_location_display }}
+          <div class="text-muted smaller">{{ ladder.get_size_display }} - {{ ladder.get_color_display }}</div>
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+    </div>
+    {% else %}
+    {% endif %}
+    {% if vehicle_list %}
+    <div class="list-group list-group-flush small"> 
+    {% for vehicle in vehicle_list %}
+    <a class="list-group-item list-group-item-action" href="{{ vehicle.get_absolute_url }}">
+      <div class="media">
+        <div class="statusLost">Vehicle</div>
+        <div class="media-body">
+          <strong>{{ vehicle.label }}</strong>  Location: {{ vehicle.make }}
+          <div class="text-muted smaller">{{ vehicle.model }} - {{ vehicle.year }}</div>
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+    </div>
+    {% else %}
+    {% endif %}
+    {% if fiber_list %}
+    <div class="list-group list-group-flush small"> 
+    {% for fiber in fiber_list %}
+    <a class="list-group-item list-group-item-action" href="{{ fiber.get_absolute_url }}">
+      <div class="media">
+        <div class="statusLost">Fiber</div>
+        <div class="media-body">
+          <strong>{{ fiber.label }}</strong>  Location: {{ fiber.make }}
+          <div class="text-muted smaller">{{ fiber.model }} - {{ fiber.year }}</div>
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+    </div>
+    {% else %}
+    {% endif %}
+    {% if power_tool_list %}
+    <div class="list-group list-group-flush small"> 
+    {% for power_tool in power_tool_list %}
+    <a class="list-group-item list-group-item-action" href="{{ power_tool.get_absolute_url }}">
+      <div class="media">
+        <div class="statusLost">Power Tool</div>
+        <div class="media-body">
+          <strong>{{ power_tool.label }}</strong>  Location: {{ power_tool.make }}
+          <div class="text-muted smaller">{{ power_tool.model }} - {{ power_tool.year }}</div>
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+    </div>
+    {% else %}
+    {% endif %}
+    {% if tool_list %}
+    <div class="list-group list-group-flush small"> 
+    {% for tool in tool_list %}
+    <a class="list-group-item list-group-item-action" href="{{ tool.get_absolute_url }}">
+      <div class="media">
+        <div class="statusLost">tool</div>
+        <div class="media-body">
+          <strong>{{ tool.label }}</strong>  Location: {{ tool.make }}
+          <div class="text-muted smaller">{{ tool.model }} - {{ tool.year }}</div>
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+    </div>
+    {% else %}
+    {% endif %}
+    {% if tester_list %}
+    <div class="list-group list-group-flush small"> 
+    {% for tester in tester_list %}
+    <a class="list-group-item list-group-item-action" href="{{ tester.get_absolute_url }}">
+      <div class="media">
+        <div class="statusLost">tester</div>
+        <div class="media-body">
+          <strong>{{ tester.label }}</strong>  Location: {{ tester.make }}
+          <div class="text-muted smaller">{{ tester.model }} - {{ tester.year }}</div>
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+    </div>
+    {% else %}
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

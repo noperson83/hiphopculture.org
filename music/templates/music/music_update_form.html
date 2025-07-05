@@ -1,0 +1,73 @@
+{% extends "home/base.html" %}
+
+{% block title %}<title>Client Update</title> {% endblock %}
+{% block breadcrumb %} / <a href="{% url 'client' %}">Client</a> / Update client info{% endblock %}
+
+{% block content %}
+
+{% if request.user.staff %}
+<div class="col-lg-6">
+  <div class="card mb-3">
+    <div class="card-header" style="background-color:rgb(0, 119, 255);">
+      <h3>Update client info{% if request.user.admin %}<div class="add_jobsite"><a href="{% url 'delete-client' client.id %}"> delete </a></div>{% else %}{% endif %}</h3>
+    </div>
+    <form class="form-control" method="post">{% csrf_token %}
+      <div class="form-group">
+        <div class="form-row">
+          <label for="id_company_name">&nbsp; Company name:</label>
+          <input class="form-control" type="text" name="company_name" required="" id="id_company_name" maxlength="100" placeholder="Company name" value="{{ client.company_name }}"></div>
+        <div class="form-row" style="margin-top: 10px;">
+          <label for="id_company_url">&nbsp; Company url:</label> 
+          <input class="form-control" type="text" name="company_url" id="id_company_url" maxlength="100" placeholder="web page http://" value="{{ client.company_url }}"></div>
+        {% if client.logo %}
+        <div class="form-row" style="margin-top: 10px;">
+          <label for="id_logo">&nbsp; Logo:</label>  {{ form.logo.errors }}</div>
+        <div class="form-row" style="margin-top: 10px;">
+          Currently: <a href="{{ client.get_absolute_url }}">{{ client.logo.url }}</a>
+          <input type="checkbox" name="logo-clear" id="logo-clear_id"> <label for="logo-clear_id">Clear</label></div>
+        <div class="form-row" style="margin-top: 10px;">
+          Change: <input type="file" name="logo" id="id_logo" accept="image/*">
+        </div>
+        {% else %}
+        <div class="form-row" style="margin-top: 10px;"><label for="id_logo">&nbsp; <b>Profile pic:</b></label>  {{ form.logo.errors }}
+          <input class="form-control" type="file" name="logo" id="id_logo" accept="image/*">
+        </div>
+        {% endif %}
+        <div class="form-row" style="margin-top: 10px;">
+          <label for="id_first_name">&nbsp; <b>Billing Contact Name:</b></label></div>
+        <div class="form-row" style="margin-top: 10px;">
+          <input class="form-control" style="width:50%;" type="text" name="first_name" required="" id="id_first_name" maxlength="100" placeholder="First name" value="{{ client.first_name }}">
+          <input class="form-control" style="width:50%;" type="text" name="last_name" id="id_last_name" maxlength="100" placeholder="Last name" value="{{ client.last_name }}"></div>
+        <div class="form-row" style="margin-top: 10px;">
+          <label for="id_contact_email">&nbsp; Contact email:</label> 
+          <input class="form-control" type="email" name="contact_email" id="id_contact_email" maxlength="254" placeholder="them@email.net" value="{{ client.contact_email }}"></div>
+        <div class="form-row" style="margin-top: 10px;">
+          <label for="id_contact_phone">&nbsp; Contact phone:</label> 
+          <input class="form-control" type="text" name="contact_phone" required="" id="id_contact_phone" maxlength="17" placeholder="(###) ###-####" value="{{ client.contact_phone }}"></div>
+        <div class="form-row" style="margin-top: 10px;">
+          <label for="id_billing_top_address">&nbsp; Billing address:</label> 
+          <input class="form-control" type="text" name="billing_top_address" id="id_billing_top_address" maxlength="100" placeholder="Attn: John Doe" value="{{ client.billing_top_address }}"></div>
+        <div class="form-row" style="margin-top: 10px;">
+          <input class="form-control" style="width:50%;" type="text" name="billing_address" id="id_billing_address" maxlength="100" placeholder="Street address" value="{{ client.billing_address }}">
+          <input class="form-control" style="width:50%;" type="text" name="billing_address_city" id="id_billing_address_city" maxlength="100" placeholder="City" value="{{ client.billing_address_city }}"></div>
+        <div class="form-row" style="margin-top: 10px;">
+          <input class="form-control" style="width:50%;" type="text" name="billing_address_state" id="id_billing_address_state" maxlength="100" placeholder="State" value="{{ client.billing_address_state }}">
+          <input class="form-control" style="width:50%;" type="text" name="billing_address_zipcode" id="id_billing_address_zipcode" maxlength="100" placeholder="Postal/ Zip code" value="{{ client.billing_address_zipcode }}"></div>
+        <div class="form-row" style="margin-top: 10px;">
+          <label for="id_summary">&nbsp; Summary:</label> 
+          <textarea class="form-control" name="summary" cols="90%" required="" id="id_summary" rows="10" maxlength="1000" placeholder="Enter a brief description of the Building or Orginization">{{client.summary}}</textarea></div>
+        <div class="form-row" style="margin-top: 10px;">
+          <label for="id_date_of_contact">&nbsp; Date of contact:</label> 
+          <input class="form-control" type="date" name="date_of_contact" required="" id="id_date_of_contact" placeholder="Date of Contact" value="{{ client.date_of_contact|date:'Y-m-d' }}"></div>
+        <div class="form-row" style="margin-top: 10px;">
+          <label for="id_date_of_contract">&nbsp; Date of contract:</label> 
+          <input class="form-control" type="date" name="date_of_contract" id="id_date_of_contract" placeholder="Date of Contract" value="{{ client.date_of_contract|date:'Y-m-d' }}"></div>
+      </div>
+      <input style="margin-bottom: 10px;" class="btn btn-primary btn-block" type="submit" value="Update" />
+    </form>
+  </div>
+</div>
+{% else %}
+Your not allowed to view this page..
+{% endif %} 
+{% endblock %} 

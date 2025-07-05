@@ -1,0 +1,50 @@
+{% extends "home/base.html" %}
+
+{% block title %}<title>Scope of work creation</title> {% endblock %}
+{% block breadcrumb %} / <a href="{% url 'scope-of-work' %}">Scope of work</a> / Create a new scope of work{% endblock %}
+
+{% block content %}
+
+{% if request.user.staff %}
+<div class="row">
+  <div class="col-lg-6">
+    <div class="card mb-3">
+      <div class="card-header" style="background-color:rgb(10, 212, 26);">
+        <h3>Create a new scope of work</h3> 
+      </div>
+      <form class="form-control" method="post">{% csrf_token %}
+        <div class="form-group">
+          <div class="form-row" style="margin-top: 10px;"><label for="id_project">&nbsp; <b>Project:</b></label> {{ form.project.errors }}
+              {% if request.user.staff %}<div style="float:right;">&nbsp; <a href="{% url 'create-project-from' jobsi=jobsite %}"> <i class="fa fa-plus-square"></i> create</a></div>{% endif %}
+            <select class="form-control" name="project" required="" id="id_project">
+                {% for project in form.project %}
+                  {{ project }}
+                {% endfor %}
+            </select>
+          </div>
+          <div class="form-row" style="margin-top: 10px;">
+            <label for="id_area">&nbsp; Area:</label> 
+            <input class="form-control" type="text" name="area" id="id_area" maxlength="100" placeholder="area" value="{{ scopeofwork.area }}"></div>
+          <div class="form-row" style="margin-top: 10px;">
+            <label for="id_system_type">&nbsp; System Type:</label> 
+            {{ form.system_type }}</div>
+          <div class="form-row" style="margin-top: 10px;">
+            <label for="id_system_type">&nbsp; Priority:</label> 
+            {{ form.priority }}</div>
+        </div>
+        <input style="margin-bottom: 10px;" class="btn btn-primary btn-block" type="submit" value="Save" />
+      </form>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card mb-3">
+      <div class="card-header" style="background-color:rgb(0, 119, 255);">
+        <h3>Whats the Next step?<br>Add devices!</h3> 
+      </div> 
+    </div>
+  </div>
+</div>
+{% else %}
+Your not allowed to view this page..
+{% endif %} 
+{% endblock %} 

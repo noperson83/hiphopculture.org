@@ -1,0 +1,259 @@
+Dear {{ project_detail.jobsite.job_client.first_name }},<br>&nbsp;&nbsp;&nbsp;&nbsp; Thank you for allowing J2 Technology Solutions, LLC to assist you with this project. J2 has created a proposal
+                    based off the project’s statement of work and design sheets.
+                <br><br>&nbsp;&nbsp;&nbsp;&nbsp;J2 has a reputation of being a professional organization that has the capacity to deliver superior quality andunmatched service within the network infrastructure arena. You will experience the “personal” commitmentour team takes in ensuring that you excel in your endeavors.
+                <br><br>&nbsp;&nbsp;&nbsp;&nbsp;We regard this as an opportunity to extend our relationship with {{ project_detail.jobsite.job_client.company_name }}. We see that the ability to service your organization in many disciplines and geographies will help to expand and maintain the relationship with your organization that we so greatly appreciate.
+                <br><br>&nbsp;&nbsp;&nbsp;&nbsp;While we have tried to provide a clear, concise and complete response, we do anticipate that you will have questions. We are excited for the opportunity to discuss our response and delivery plan, in detail. Thank you again for this opportunity, and we look forward to further discussions.
+                <br><br><br><br><br><br>Sincerely,<br><br>{{ project_detail.estimator }}<br>{{ project_detail.estimator.jobtitle }}<br>J2 Technology Solutions, LLC.<br>(520) 585-5959
+
+
+                <div class="page">
+                    <strong>Install overview:</strong><br>
+                        {{ project_detail.install_overview }}<br>
+                    <strong>Price Policy:</strong> <br>
+                    {{ project_detail.pricing_disclaim }}
+                  </div>
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Sales Report</title>
+    <style type="text/css">
+        @page {
+            size: A4;
+            margin: 1cm;
+        }
+        .table {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 5px;
+            background-color: #fff;
+        }
+        .table th,
+        .table td {
+            padding: 5px;
+            vertical-align: top;
+            border-top: 1px solid #000;
+            text-align: center;
+        }
+        .table thead th {
+            vertical-align: bottom;
+            border-bottom: 2px solid #000;
+        }
+        .table tbody + tbody {
+            border-top: 2px solid #000;
+        }
+        .table .table {
+            background-color: #fff;
+        }
+        .list-group {
+            display: block;
+            width: 100%;
+            list-style: none;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+        .list-group p {
+            width: 100%;
+            height: 20px;
+            line-height: 20px;
+            list-style: none;
+            font-size: 1.1em;
+        }
+        @import url("https://fonts.googleapis.com/css?family=Pacifico|Source+Sans+Pro:400,700");
+        @page {
+        margin: 3cm;
+        @bottom-left {
+            color: #1ee494;
+            font-family: Pacifico;
+            content: '♥ Thank you!'; }
+        @bottom-right {
+            color: 000;
+            content: 'community@kozea.fr | +33 4 78 84 19 28 | community.kozea.fr';
+            font-family: Pacifico;
+            font-size: 9pt; } }
+
+        html {
+        color: #14213d;
+        font-family: Source Sans Pro;
+        font-size: 11pt;
+        line-height: 1.6; }
+        html body {
+            margin: 0; }
+        html h1 {
+            color: #1ee494;
+            font-family: Pacifico;
+            font-size: 40pt;
+            margin: 0; }
+        html aside {
+            display: flex;
+            margin: 2em 0 4em; }
+            html aside address {
+            font-style: normal;
+            white-space: pre-line; }
+            html aside address#from {
+                color: #a9a;
+                flex: 1; }
+            html aside address#to {
+                text-align: right; }
+        html dl {
+            text-align: right;
+            position: absolute;
+            right: 0;
+            top: 0; }
+            html dl dt, html dl dd {
+            display: inline;
+            margin: 0; }
+            html dl dt {
+            color: #a9a; }
+            html dl dt::before {
+                content: '';
+                display: block; }
+            html dl dt::after {
+                content: ':'; }
+        html table {
+            border-collapse: collapse;
+            width: 100%; }
+            html table th {
+            border-bottom: .2mm solid #a9a;
+            color: #a9a;
+            font-size: 10pt;
+            font-weight: 400;
+            padding-bottom: .25cm;
+            text-transform: uppercase; }
+            html table td {
+            padding-top: 7mm; }
+            html table td:last-of-type {
+                color: #1ee494;
+                font-weight: bold;
+                text-align: right; }
+            html table th, html table td {
+            text-align: center; }
+            html table th:first-of-type, html table td:first-of-type {
+                text-align: left; }
+            html table th:last-of-type, html table td:last-of-type {
+                text-align: right; }
+            html table#total {
+            background: #f6f6f6;
+            border-color: #f6f6f6;
+            border-style: solid;
+            border-width: 2cm 3cm;
+            bottom: 0;
+            font-size: 20pt;
+            margin: 0 -3cm;
+            position: absolute;
+            width: 18cm; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h3>Structured Cabling    |    Network Solutions    |    A/V Solutions    |    Physical Layers</h3>
+        </div>
+
+        <div class="list-group">
+
+    <h1>Invoice</h1>
+
+    <aside>
+      <address id="from">
+        {{ project_detail.job_name }}
+        Weasyprint [ by Kozea ]
+        107 boulevard de Stalingrad
+        69100 Villeurbanne City
+        France
+      </address>
+
+      <address id="to">
+        Our awesome developers
+        From all around the world
+        Earth
+      </address>
+    </aside>
+
+    <dl id="informations">
+      <dt>Invoice number</dt>
+      <dd>12345</dd>
+      <dt>Date</dt>
+      <dd>March 31, 2018</dd>
+    </dl>
+
+    <table>
+      <thead>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Subtotal</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Website design</td>
+          <td>€34.20</td>
+          <td>100</td>
+          <td>€3,420.00</td>
+        </tr>
+        <tr>
+          <td>Website development</td>
+          <td>€45.50</td>
+          <td>100</td>
+          <td>€4,550.00</td>
+        </tr>
+        <tr>
+          <td>Website integration</td>
+          <td>€25.75</td>
+          <td>100</td>
+          <td>€2,575.00</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table id="total">
+      <thead>
+        <th>Due by</th>
+        <th>Account number</th>
+        <th>Total due</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>May 10, 2018</td>
+          <td>132 456 789 012</td>
+          <td>€10,545.00</td>
+        </tr>
+      </tbody>
+    </table>
+
+
+        </div>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Raised</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Customer</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for sale in sales %}
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>&pound;</td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="card-header">
+                <h3>4500 E. Speedway, Suite 50     |     Tucson, AZ 85712     |     Phone(520) 585-5959     |     ROC 311659</h3>
+            </div>
+    </div>
+</div>
+
+</body>
+</html>
+

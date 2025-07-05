@@ -1,0 +1,158 @@
+{% extends "home/base.html" %}
+{% load static %}
+
+{% block title %}<title>{{ group_detail.group_name }} - Profile</title>{% endblock %}
+
+{% block breadcrumb %} / <a href="{% url 'group:group' %}">Groups</a> / {{ group_detail.group_name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card">
+        <!-- Group Banner -->
+        <div class="profile-banner" style="background-image: url('{{ group_detail.logo.url }}');">
+            <div class="profile-pic-container">
+                <img src="{{ group_detail.button.url }}" alt="{{ group_detail.group_name }} Logo">
+            </div>
+        </div>
+
+        <!-- Group Info -->
+        <div class="group-info">
+            <h1 class="group-name">{{ group_detail.group_name }}</h1>
+
+            <!-- Social & Contact Links -->
+            <div class="group-links">
+                {% if group_detail.group_url %} <a href="{{ group_detail.group_url }}" target="_blank">🌐 Website</a> {% endif %}
+                {% if group_detail.facebook_url %} <a href="{{ group_detail.facebook_url }}" target="_blank">📘 Facebook</a> {% endif %}
+                {% if group_detail.instagram_url %} <a href="{{ group_detail.instagram_url }}" target="_blank">📸 Instagram</a> {% endif %}
+                {% if group_detail.twitter_url %} <a href="{{ group_detail.twitter_url }}" target="_blank">🐦 Twitter</a> {% endif %}
+            </div>
+            <p class="group-summary">{{ group_detail.summary }}</p>
+        </div>
+
+        <!-- Tabs for Sections -->
+        <div class="group-tabs">
+            <button class="tab-link active" onclick="openTab(event, 'albums')">🎵 Albums</button>
+            <button class="tab-link" onclick="openTab(event, 'members')">👥 Members</button>
+            <button class="tab-link" onclick="openTab(event, 'events')">🎤 Events</button>
+        </div>
+
+        <!-- Albums Section -->
+        <div id="albums" class="tab-content active">
+            <div class="business-card">
+                <h2>Albums</h2>
+                <table width="100%" cellspacing="0" style="border-radius: 8%;">
+                <tbody>
+                {% if group_album_list %}
+                    {% for album in group_album_list %}
+                        <tr>
+                        {% if album.cover_art %}
+                            <td style="width: 150px;">
+                            <a class="album-art" style="color:black;font-weight:bold;" href="{% url 'group:album-detail' album.id %}">
+                                <img src="{{ album.cover_art.url }}" alt="Album Art">
+                            </a> 
+                            </td>
+                        {% else %}
+                            <td style="width: 150px;">
+                            <a class="album-art" style="color:black;font-weight:bold;" href="{% url 'group:album-detail' album.id %}">
+                                <img src="{% static '/home/images/LMNlogo.jpg' %}" alt="Album Art">
+                            </a> 
+                            </td>
+                        {% endif %}
+                        <td>
+                            <div class="album-card">
+                            <a style="color:black;font-weight:bold;" href="{% url 'group:album-detail' album.id %}">
+                                <h2>{{ album.title }}</h2>{{ album.group.group_name }}
+                            </a> 
+                            </div>
+                        </td>
+                        </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td>There are no  </td>
+                        <td>album </td>
+                        <td>to list sorry!  </td>
+                    </tr>
+                {% endif %} 
+                </tbody>
+                </table>
+            </div>
+
+        <!-- Members Section -->
+        <div id="members" class="tab-content">
+            <div class="business-card">
+                <h2>Members</h2>
+                <table width="100%" cellspacing="0" style="border-radius: 8%;">
+                    <tbody>
+                        {% if group_member_list %}
+                            {% for member in group_member_list %}
+                            <tr>
+                                {% if member.profile_pic %}
+                                <td style="width: 150px;">
+                                    <a class="album-art" style="color:black;font-weight:bold;" href="{% url 'munkz:artist-detail' member.pk %}">
+                                    <img src="{{ member.profile_pic.url }}" alt="{{ member.display_name }}">
+                                    </a> 
+                                </td>
+                                {% else %}
+                                <td style="width: 150px;">
+                                    <a class="album-art" style="color:black;font-weight:bold;" href="{% url 'munkz:artist-detail' member.pk %}">
+                                        <img src="{% static '/home/images/LMNlogo.jpg' %}" alt="Album Art">
+                                    </a> 
+                                </td>
+                                {% endif %}
+                                <td>
+                                <div class="album-card">
+                                    <a style="color:black;font-weight:bold;" href="{% url 'munkz:artist-detail' member.pk %}">
+                                    <a href="{% url 'munkz:artist-detail' member.pk %}">{{ member.get_full_name }}</a>
+                                    </a> 
+                                </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td><p>No members </p>  </td>
+                                <td>in this </td>
+                                <td>group sorry!  </td>
+                            </tr>
+                        {% endif %} 
+                    </tbody>
+                </table>                        
+            </div>
+        </div>
+
+        <!-- Events Section -->
+        <div id="events" class="tab-content">
+            <h2>Upcoming Events</h2>
+            <iframe src="/schedule/calendar/compact_month/{{ group_detail.group_name|lower }}" class="mini-calendar"></iframe>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="group-contact">
+            <h3>Contact</h3>
+            <p><strong>Manager:</strong> {{ group_detail.first_name }} {{ group_detail.last_name }}</p>
+            <p><strong>Email:</strong> {{ group_detail.contact_email }}</p>
+            <p><strong>Phone:</strong> {{ group_detail.contact_phone }}</p>
+            <p><strong>Address:</strong><br>
+                {{ group_detail.billing_address }}<br>
+                {{ group_detail.billing_address_city }}, {{ group_detail.state }} {{ group_detail.billing_address_zipcode }}</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tab-link");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("active");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.classList.add("active");
+    }
+</script>
+{% endblock %}

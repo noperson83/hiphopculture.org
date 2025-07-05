@@ -1,0 +1,107 @@
+{% extends "home/base.html" %}
+
+{% load static %}
+{% block title %}<title>Project Travel</title>{% endblock %}
+{% block breadcrumb %} / Travel Info{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-8">  
+    <div class="card mb-3">
+      <div class="card-header" style="background-color:rgb(10, 212, 26);">
+        <h4>Travel - {{ travel_detail.travel_name }}
+          {% if request.user.staff %}
+            <div class="add_jobsite"><a href="{% url 'update-project-travel' pk=travel_detail.id %}"> edit </a></div>
+          {% else %}
+          {% endif %}</h4><b>Project:</b>&nbsp; <a href="{% url 'project-detail' travel_detail.project.job_num %}">{{ travel_detail.project.job_num }} - {{travel_detail.project.job_name}} </a>
+      </div>
+      <div class="form-group">
+        <div class="form-row">
+          <div class="col" style="margin-top: 10px;">
+            <div class="form-row">
+              <div class="col" style="margin-top: 10px;">
+                &nbsp;<b>Task:</b>&nbsp;{{ travel_detail.task }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="form-row">
+          <div class="col" style="margin-top: 10px;">
+            &nbsp;<b>Purchase date:</b>&nbsp;
+              {{ travel_detail.purchased_date|date:"Y-m-d" }}
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+            &nbsp;<b>Hotel Name:</b>&nbsp;
+              {{ travel_detail.hotel_name }}</div>
+          </div>
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+            &nbsp;<b>Cost:</b>&nbsp;
+              {{ travel_detail.cost }}</div>
+          </div>
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+            &nbsp;<b>Gas Estimate:</b>&nbsp;
+              {{ travel_detail.gas_estimate }}</div>
+          </div>
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+            &nbsp;<b>Total:</b>&nbsp;
+              {{ travel_detail.total }}</div>
+          </div>
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+            &nbsp;<b>Travel Status:</b>&nbsp;
+            {{ travel_detail.get_travel_status_display }}</div>
+          </div>
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+            &nbsp;<b>Last modified:</b>&nbsp;
+            {{ travel_detail.lastmodification }}</div>
+          </div>
+          <div class="form-row">
+            <div class="col" style="margin-top: 10px;">
+            &nbsp;<b>Date of creation:</b>&nbsp;
+            {{ travel_detail.dateofcreation }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card mb-3">
+      <div class="card-header" style="background-color:rgb(0, 119, 255);">
+        <h3>Project travels
+          {% if request.user.staff %}
+            <div class="add_jobsite"><a href="{% url 'create-project-travel' proj=travel_detail.project.job_num tas=0 %}">add</a></div>
+          {% else %}
+          {% endif %}
+        </h3>
+      </div>
+      <div class="card-body bg-faded">
+        {% if other_travels %}
+        <ul>
+          {% for others in other_travels %}
+            <li><a href="{% url 'project-travel-detail' id=others.pk %}"> {{ others.total }} </a></li>
+          {% endfor %}
+        {% else %}
+          <p>There are no travels for this project, please add one.</p>
+        {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+{% block scripter %} 
+<script src="{% static 'home/js/sb-admin-datatables.min.js' %}"></script>
+<script src="{% static 'home/vendor/datatables/jquery.dataTables.js' %}"></script>
+<script src="{% static 'home/vendor/datatables/dataTables.bootstrap4.js' %}"></script> 
+{% endblock %}

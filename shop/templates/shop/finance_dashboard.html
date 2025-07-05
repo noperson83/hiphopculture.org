@@ -1,0 +1,97 @@
+{% extends 'home/base.html' %}
+
+{% block title %}<title>{{ product.name }} - Product Details</title>{% endblock %}
+
+{% block content %}
+<div class="product-detail"><h1>Finance Dashboard</h1>
+    
+<h2>Purchases</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Invoice number</th>
+            <th>Purchased from</th>
+            <th>Product sizes</th>
+            <th>Tax</th>
+            <th>Shipping</th>
+            <th>Purchase Total</th>
+            <th>Purchase Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for purchase in purchases %}
+        <tr>
+            <td>{{ purchase.invoice_number }}</td>
+            <td>{{ purchase.purchased_from }}</td>
+            <td>{{ purchase.product_sizes }}</td>
+            <td>{{ purchase.tax }}</td>
+            <td>${{ purchase.shipping }}</td>
+            <td>${{ purchase.purchase_total }}</td>
+            <td>{{ purchase.purchase_date }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Total paid: ${{ total_p }}</h3>
+
+<h2>Inventory</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Size</th>
+            <th>Purchased Quantity</th>
+            <th>Remaining Quantity</th>
+            <th>Total Cost</th>
+            <th>Cost Per Item</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for inventory in inventories %}
+        <tr>
+            <td>{{ inventory.product_size.product.name }}</td>
+            <td>{{ inventory.product_size.size.name }}</td>
+            <td>{{ inventory.quantity }}</td>
+            <td>{{ inventory.product_size.stock }}</td>
+            <td>${{ inventory.total_cost }}</td>
+            <td>${{ inventory.cost }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Total Cost: ${{ total_c }}</h3>
+<h3>Total Possable make: ${{ total_m }}</h3>
+
+<h2>Sales</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Size</th>
+            <th>Quantity Sold</th>
+            <th>Sale Price</th>
+            <th>Profit</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for sale in sales %}
+        <tr>
+            <td>{{ sale.product.name }}</td>
+            <td>{{ sale.size.name }}</td>
+            <td>{{ sale.quantity }}</td>
+            <td>${{ sale.total_price }}</td>
+            <td>${{ sale.profit }}</td>
+            <td>{{ sale.sale_date }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Total Income: ${{ total_revenue }}</h3>
+<h3>Total Profit: ${{ total_profit }}</h3>
+
+</div>
+{% endblock %}

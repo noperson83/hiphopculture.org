@@ -1,0 +1,200 @@
+{% extends "home/base.html" %}
+
+{% block title %}<title>Project Update</title> {% endblock %}
+{% block breadcrumb %} / <a href="{% url 'jobsite-list' %}">Job Site</a> / <a href="{% url 'project-list' %}">Project</a> / Update project info{% endblock %}
+
+{% block content %}{% if request.user.staff %}
+<div class="row">
+  <div class="col-lg-6">
+    <div class="card mb-3">
+      <div class="card-header" style="background-color:rgb(255, 219, 57);">
+        <h3>Update Project info
+          <div class="add_jobsite"><a href="{% url 'delete-project' project.job_num %}"> delete </a></div>
+        </h3> 
+      </div>
+      
+    {{ form.non_field_errors }}
+    <form class="form-control" method="post" >{% csrf_token %}
+      <div class="form-group">
+        <div class="form-row">
+         <div class="col-3">
+          <label for="id_job_num">&nbsp; <b>Job num:</b></label> {{ form.job_num.errors }}
+            <input class="form-control" type="number" name="job_num" id="id_job_num" required="" value="{{ project.job_num }}" placeholder="####">
+         </div>
+         <div class="col">
+          <label for="id_job_name">&nbsp; <b>Job name:</b></label> {{ form.job_name.errors }}
+            <input class="form-control" type="text" name="job_name" id="id_job_name" maxlength="200" required="" value="{{ project.job_name }}" placeholder="Job Name">
+         </div>
+         <div class="col">
+          <label for="id_job_name">&nbsp; Revision:</label> {{ form.revision.errors }}
+            <input class="form-control" type="text" name="revision" id="id_revision" maxlength="200" value="{% if project.revision %}{{ project.revision }}{% endif %}" placeholder="Number or Name">
+         </div>
+        </div>
+        <div class="form-row" style="margin-top: 10px;">
+         <div class="col">
+          <label for="id_jobsite">&nbsp; <b>Jobsite:</b></label> {{ form.jobsite.errors }}
+          <select class="form-control" name="jobsite" id="id_jobsite" required="">
+            {% for jobsite in form.jobsite %}
+              {{ jobsite }}
+            {% endfor %}
+          </select>
+         </div>
+         <div class="col">
+          <label for="id_job_status">&nbsp; Job status:</label> {{ form.job_status.errors }}
+          <select class="form-control" name="job_status" id="id_job_status">
+            {% for job_status in form.job_status %}
+            {{ job_status }}
+            {% endfor %} 
+          </select>
+         </div> 
+        </div>
+        <div class="form-row" style="margin-top: 10px;">
+          <label for="id_install_overview">&nbsp; Install overview:</label> {{ form.install_overview.errors }}
+          <textarea class="form-control" name="install_overview" cols="40" maxlength="8000" id="id_install_overview" rows="10" placeholder="Enter the overview of the install">{{ project.install_overview }}</textarea>
+        </div>
+        <div class="form-row" style="margin-top: 10px;">
+          <label for="id_pricing_disclaim">&nbsp; Price Policy:</label> {{ form.pricing_disclaim.errors }}
+          <textarea class="form-control" name="pricing_disclaim" cols="40" maxlength="8000" id="id_pricing_disclaim" rows="10" placeholder="Enter the price disclaimer of the install">{{ project.pricing_disclaim }}</textarea>
+        </div>
+        <div class="form-row" style="margin-top: 10px;">
+          <label for="id_site_contact">&nbsp; Site Contact:</label> {{ form.site_contact.errors }}
+          <input class="form-control" name="site_contact" type="text" id="id_site_contact" value="{{ project.site_contact }}" placeholder="Joe Shmoe">
+        </div>
+        <div class="form-row" style="margin-top: 10px;">
+          <label for="id_date_requested">&nbsp; <b>Start date requested:</b></label> {{ form.date_requested.errors }}
+          <input class="form-control" type="date" name="date_requested" id="id_date_requested" required="" value="{{ project.date_requested|date:'Y-m-d' }}">
+        </div>
+        <hr>
+        <div class="form-row">
+          <div class="col" style="margin-top: 10px;">
+            <label for="id_due_date">&nbsp; Due date:</label> {{ form.due_date.errors }}
+            <input class="form-control" type="date" name="due_date" id="id_due_date" value="{{ project.due_date|date:'Y-m-d' }}">
+          </div>
+          <div class="col" style="margin-top: 10px;">
+            <label for="id_finished_date">&nbsp; Finished date:</label> {{ form.finished_date.errors }}
+            <input class="form-control" type="date" name="finished_date" id="id_finished_date" value="{{ project.finished_date|date:'Y-m-d' }}">
+          </div>
+          <div class="col" style="margin-top: 10px;">
+            <label for="id_paid_date">&nbsp; Paid date:</label> {{ form.paid_date.errors }}
+            <input class="form-control" type="date" name="paid_date" id="id_paid_date" value="{{ project.paid_date|date:'Y-m-d' }}">
+          </div>
+        </div>
+        <div class="form-row" style="margin-top: 10px;">
+          <div class="col"> 
+            <label for="id_tax_status">&nbsp; Tax status:</label> {{ form.tax_status.errors }}
+            <select class="form-control" name="tax_status" id="id_tax_status">
+              {% for tax_status in form.tax_status %}
+              {{ tax_status }}
+              {% endfor %} 
+            </select>
+          </div>
+          <div class="col"> 
+            <label for="id_type_status">&nbsp; Type status:</label> {{ form.type_status.errors }}
+            <select class="form-control" name="type_status" id="id_type_status">
+              {% for type_status in form.type_status %}
+              {{ type_status }}
+              {% endfor %} 
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>  
+  </div>
+  <div class="col-lg-6">
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="form-group">
+          <div class="form-row" style="margin-top: 10px;">
+            <div class="col">
+              <label for="id_division_status">&nbsp; Division status:</label> {{ form.division_status.errors }}
+              <select class="form-control" name="division_status" id="id_division_status">
+                {% for division_status in form.division_status %}
+                {{ division_status }}
+                {% endfor %} 
+              </select>
+            </div>
+            <div class="col">
+              <label for="id_foremen">&nbsp; Foremen:</label> {{ form.foremen.errors }}
+              <select class="form-control" name="foremen" id="id_foremen">
+                {% for foremen in form.foremen %}
+                {{ foremen }}
+                {% endfor %} 
+              </select>
+            </div>
+          </div>
+          <div class="form-row" style="margin-top: 10px;"> 
+            <div class="col">
+              <label for="id_estimator">&nbsp; Estimator:</label> {{ form.estimator.errors }}
+              <select class="form-control" name="estimator" id="id_estimator">
+                {% for estimator in form.estimator %}
+                {{ estimator }}
+                {% endfor %} 
+              </select>
+            </div>
+            <div class="col">
+              <label for="id_projectmanager">&nbsp; Project manager:</label> {{ form.projectmanager.errors }}
+              <select class="form-control" name="projectmanager" id="id_projectmanager">
+                {% for projectmanager in form.projectmanager %}
+                {{ projectmanager }}
+                {% endfor %} 
+              </select>
+            </div>
+          </div>
+          <div class="form-row" style="margin-top: 10px;">
+            <label for="id_lead">&nbsp; Lead:</label> {{ form.lead.errors }}
+            <select class="form-control" name="lead" id="id_lead" multiple="">
+              {% for lead in form.lead %}
+              {{ lead }}
+              {% endfor %} 
+            </select>
+          </div>
+          <div class="form-row" style="margin-top: 10px;">
+            <label for="id_workers">&nbsp; Workers:</label> {{ form.workers.errors }}
+            <select class="form-control" name="workers" id="id_workers" multiple="">
+              {% for workers in form.workers %}
+                {{ workers }}
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-row" style="margin-top: 10px;">
+            <div class="col">
+              <label for="id_burden">&nbsp; <b>Burden Percentage:</b></label> {{ form.burden.errors }}
+              <input class="form-control" type="number" name="burden" required="" step="0.01" id="id_burden" value="{{ project.burden }}">
+            </div>
+            <div class="col">
+              <label for="id_markup">&nbsp; <b>Material Markup:</b></label> {{ form.markup.errors }}
+              <input class="form-control" type="number" name="markup" required="" step="0.01" id="id_markup" value="{{ project.markup }}">
+            </div>  
+            <div class="col">
+              <label for="id_licmarkup">&nbsp; <b>License Markup:</b></label> {{ form.licmarkup.errors }}
+              <input class="form-control" type="number" name="licmarkup" required="" placeholder="1.15" step="0.01" id="id_licmarkup" value="{{ project.licmarkup }}">
+            </div>
+          </div> 
+          <div class="form-row" style="margin-top: 10px;">
+            <div class="col">
+              <label for="id_estimated_cost">&nbsp; <b>Estimated cost:</b></label> {{ form.estimated_cost.errors }}
+              <input class="form-control" type="number" name="estimated_cost" required="" step="0.01" id="id_estimated_cost" value="{{ project.estimated_cost }}">
+            </div>
+            <div class="col">
+              <label for="id_contract_value">&nbsp; <b>Contract value:</b></label> {{ form.contract_value.errors }}
+              <input class="form-control" type="number" name="contract_value" required="" step="0.01" id="id_contract_value" value="{{ project.contract_value }}">
+            </div>
+          </div>                  
+        </div>
+        <input style="margin-bottom: 10px;" class="btn btn-primary btn-block" type="submit" value="Save" />
+        </div>
+      </div>
+    </form> 
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card mb-3">
+      Whats the Next step?<br>
+      Create a Task mate! 
+    </div>
+  </div>
+</div>
+{% else %}
+Your not allowed to view this page..
+{% endif %} 
+{% endblock %} 

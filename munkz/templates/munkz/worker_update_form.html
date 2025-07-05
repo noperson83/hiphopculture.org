@@ -1,0 +1,29 @@
+{% extends "home/base.html" %}
+
+{% block title %}<title>Staff Profile Update</title> {% endblock %}
+
+{% block breadcrumb %} / <a href="{% url 'hr' %}">Staff</a>
+{% if request.user.admin %} / Update worker profile{% else %}
+Your not allowed to view this page..
+{% endif %} 
+{% endblock %} 
+
+{% block content %}
+{% if request.user.admin %}
+<div class="col-lg-6">
+  <div class="card mb-3">
+    <div class="card-header" style="background-color:rgb(0, 119, 255);">
+      <h3>Update worker info
+        <div class="add_jobsite"></div>
+      </h3>      
+    </div>
+    <form class="form-control" method="post">{% csrf_token %}
+      <div class="form-group">
+        {{form.as_p}} 
+        <input style="margin-bottom: 10px;" class="btn btn-primary btn-block" type="submit" value="Update" />
+    </form>
+  </div>
+</div>
+{% else %}
+{% endif %} 
+{% endblock %} 

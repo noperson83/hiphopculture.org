@@ -1,0 +1,25 @@
+{% extends "home/base.html" %}
+
+{% block content %}
+<div class="profile-container">
+    <h2>{{ artist.first_name }} {{ artist.last_name }}</h2>
+    
+    {% if artist.profile_pic %}
+        <img src="{{ artist.profile_pic.url }}" alt="{{ artist.first_name }}'s profile picture">
+    {% endif %}
+
+    <p><strong>Bio:</strong> {{ artist.bio }}</p>
+    <p><strong>Website:</strong> <a href="{{ artist.website }}" target="_blank">{{ artist.website }}</a></p>
+
+    <p><strong>Social Links:</strong></p>
+    <ul>
+        {% if artist.facebook_url %} <li><a href="{{ artist.facebook_url }}">Facebook</a></li> {% endif %}
+        {% if artist.instagram_url %} <li><a href="{{ artist.instagram_url }}">Instagram</a></li> {% endif %}
+        {% if artist.twitter_url %} <li><a href="{{ artist.twitter_url }}">Twitter</a></li> {% endif %}
+        {% if artist.youtube_url %} <li><a href="{{ artist.youtube_url }}">YouTube</a></li> {% endif %}
+        {% if artist.spotify_url %} <li><a href="{{ artist.spotify_url }}">Spotify</a></li> {% endif %}
+    </ul>
+
+    <a href="{% url 'munkz:artist-edit' artist.id %}" class="btn btn-primary">Edit Profile</a>
+</div>
+{% endblock %}

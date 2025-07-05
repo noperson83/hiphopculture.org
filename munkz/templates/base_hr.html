@@ -1,0 +1,11 @@
+{% extends "home/base.html" %}
+
+{% block title %}<title>Client App</title>{% endblock %}
+{% block breadcrumb %} / <a href="{% url 'worker-list' %}">Staff</a> / {% endblock %}
+
+{% block content %}
+
+<p>We have ({{ num_workers }}) on Staff</p>
+
+{% endblock %}
+

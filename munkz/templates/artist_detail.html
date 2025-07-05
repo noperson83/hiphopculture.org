@@ -1,0 +1,283 @@
+{% extends "home/base.html" %}
+
+{% block title %}<title>Artist Profile</title>{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="card">
+        <!-- Profile Banner -->
+        <div class="profile-banner" style="background-image: url('{{ artist.cover_photo.url }}');">
+            <div class="profile-pic-container">
+                <img src="{{ artist.profile_pic.url }}" alt="{{ artist.display_name }}">
+            </div>
+        </div>
+
+        <!-- Profile Info -->
+        <div class="profile-info">
+            <h1 class="artist-name">{{ artist.stage_name|default:artist.first_name }}</h1>
+            <p class="bio">{{ artist.bio }}Thank you for taking the time to consider LabMunkzInk for these opportunities. We are excited about the possibility of working together and bringing our music to new listeners.</p>
+
+            <!-- Social & Contact Links -->
+            <div class="social-links">
+                {% if artist.website %} <a href="{{ artist.website }}" target="_blank">🌐 Website</a> {% endif %}
+                {% if artist.instagram_url %} <a href="{{ artist.instagram_url }}" target="_blank">📸 Instagram</a> {% endif %}
+                {% if artist.twitter_url %} <a href="{{ artist.twitter_url }}" target="_blank">🐦 Twitter</a> {% endif %}
+                {% if artist.spotify_url %} <a href="{{ artist.spotify_url }}" target="_blank">🎵 Spotify</a> {% endif %}
+                {% if artist.youtube_url %} <a href="{{ artist.youtube_url }}" target="_blank">▶️ YouTube</a> {% endif %}
+            </div>
+        </div>
+
+        <!-- Tabs for Sections -->
+        <div class="profile-tabs">
+            <button class="tab-link active" onclick="openTab(event, 'music')">🎵 Music</button>
+            <button class="tab-link" onclick="openTab(event, 'gallery')">📸 Gallery</button>
+            <button class="tab-link" onclick="openTab(event, 'shows')">🎤 Shows</button>
+            <button class="tab-link" onclick="openTab(event, 'posts')">📝 Posts</button>
+        </div>
+
+        <!-- Music Section -->
+        <div id="music" class="tab-content active">
+            <h2>Latest Tracks</h2>
+            <audio controls>
+                <source src="{{ latest_track.url }}" type="audio/mpeg">
+                Your browser does not support the audio tag.
+            </audio>
+        </div>
+
+        <!-- Gallery Section -->
+        <div id="gallery" class="tab-content">
+            <h2>Photo Gallery</h2>
+            <div class="photo-grid">
+                {% for photo in artist.photos.all %}
+                <img src="{{ photo.url }}" alt="Gallery Image">
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Shows Section -->
+        <div id="shows" class="tab-content">
+            <h2>Upcoming Shows</h2>
+            <iframe src="/schedule/calendar/compact_month/{{ artist.display_name|lower }}" class="mini-calendar"></iframe>
+        </div>
+
+        <!-- Posts Section -->
+        <div id="posts" class="tab-content">
+            <h2>Recent Activity</h2>
+            <div class="main-content">
+                {% for post in posts %}
+                <div class="post">
+                    <div class="post-header">
+                        <a href="{% url 'munkz:artist-detail' post.author.id %}"><img src="{{ post.author.profile_pic.url }}" alt="{{ post.author.display_name }}" class="profile-pic"></a>
+                        <div class="post-info">
+                            <a href="{% url 'munkz:artist-detail' post.author.id %}"><div class="post-author">{{ post.author.display_name }}</div></a>
+                            <span class="post-date">{{ post.created_at|date:"M d, Y H:i" }}</span>
+                        </div>
+                        {% if post.text %}
+                            {% with words=post.text.split %}
+                                {% if words|length > 10 %}
+                                    <p class="post-text">
+                                        {{ post.text|truncatewords:10 }} 
+                                    </p></div>
+                                    <div class="expandable" id="expandSection">   
+                                        <p class="post-text">{{ words|slice:"10:"|join:" " }}</p>
+                                    </div>
+                                    <span class="see-more" onclick="toggleExpand()">See More...</span>
+                                {% else %}
+                                    <p class="post-text">{{ post.text }}</p></div>
+                                {% endif %}
+                            {% endwith %}
+                        {% endif %}
+                    
+    
+                    {% if post.youtube_url %}
+                    <div class="post-media">
+                        <iframe width="100%" height="315" src="https://www.youtube.com/embed/{{ post.youtube_url|slice:'-11:' }}" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    {% endif %}
+            
+                    {% if post.images.all %}
+                    <div class="post-gallery">
+                        {% for image in post.images.all %}
+                        <img src="{{ image.image.url }}" alt="Post Image">
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+            
+                    {% if post.video %}
+                    <video controls>
+                        <source src="{{ post.video.video.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    {% endif %}
+            
+                    {% if post.audio %}
+                    <audio controls>
+                        <source src="{{ post.audio.audio.url }}" type="audio/mpeg">
+                        Your browser does not support the audio tag.
+                    </audio>
+                    {% endif %}
+            
+                    <div class="post-actions">
+                        <a href="{% url 'posts:post_like' post.id %}" class="like-btn">❤️ {{ post.likes.count }}</a>
+                        <a href="" class="comment-btn">💬 {{ post.comments.count }}</a>
+                        <a href="{% url 'posts:post_share' post.id %}" class="share-btn">🔄 Share</a>
+                    </div>
+                </div>
+                {% empty %}
+                <p>No posts yet. Be the first to post!</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tab-link");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("active");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.classList.add("active");
+    }
+</script>
+
+
+
+
+{% endblock %}
+
+{% block extra_css %}
+<style>/* Profile Container */
+.profile-container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Profile Banner */
+.profile-banner {
+    width: 100%;
+    height: 250px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+/* Profile Picture */
+.profile-pic-container {
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 5px solid white;
+}
+.profile-pic-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Artist Info */
+.artist-name {
+    margin-top: 60px;
+    font-size: 28px;
+}
+.bio {
+    font-size: 16px;
+    color: #666;
+    margin-top: 5px;
+}
+
+/* Social Links */
+.social-links {
+    margin-top: 10px;
+}
+.social-links a {
+    text-decoration: none;
+    margin: 5px;
+    padding: 8px 12px;
+    background: #222;
+    color: white;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+/* Tabs */
+.profile-tabs {
+    margin-top: 20px;
+}
+.tab-link {
+    background: #eee;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin: 5px;
+}
+.tab-link.active {
+    background: #333;
+    color: white;
+}
+
+/* Tab Content */
+.tab-content {
+    display: none;
+    padding: 20px;
+    background: #f8f8f8;
+    border-radius: 5px;
+}
+.tab-content.active {
+    display: block;
+}
+
+/* Photo Grid */
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+}
+.photo-grid img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+/* Mini Calendar */
+.mini-calendar {
+    width: 100%;
+    height: 250px;
+    border: none;
+}
+
+/* Responsive */
+@media screen and (max-width: 600px) {
+    .profile-banner {
+        height: 180px;
+    }
+    .profile-pic-container {
+        width: 90px;
+        height: 90px;
+        bottom: -40px;
+    }
+    .artist-name {
+        font-size: 22px;
+    }
+    .tab-link {
+        padding: 8px;
+        font-size: 14px;
+    }
+}
+
+</style>
+{% endblock %}

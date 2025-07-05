@@ -1,0 +1,76 @@
+{% extends "home/base.html" %}
+
+{% block title %}<title>Jobsite details</title>{% endblock %}
+{% block breadcrumb %} / <a href="{% url 'jobsite-list' %}">Job Site</a> / detail view{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-8">
+    <div class="card mb-3">
+      <div class="card-header" style="background-color:rgb(255, 219, 57);">
+        <h4>Projects
+        {% if request.user.staff %}
+          <div class="add_jobsite"><a href="{% url 'create-project-from' jobsi=jobsite.id %}">add</a></div>
+          {% else %}<br>
+          {% endif %}</h4></div>
+        <div class="list-group list-group-flush small">
+          {% for copy in jobsite.project_set.all %}
+            <div style="margin-left:20px;margin-top:20px;margin-right:20px;">
+              <a style="color:#000;" href="{{ copy.get_absolute_url }}"><strong>{{copy.job_num}}{% if copy.revision %}-{{copy.revision}}{% else %}{% endif %}</strong> {{copy.job_name}}
+              <div class="{% if copy.job_status == 'p' %}statusProspect
+                        {% elif copy.job_status == 'q' %}statusQuoted
+                        {% elif copy.job_status == 'o' %}statusInstalling
+                        {% elif copy.job_status == 'c' %}statusComplete
+                        {% elif copy.job_status == 's' %}statusService
+                        {% elif copy.job_status == 't' %}statusTm
+                        {% elif copy.job_status == 'm' %}statusPaid
+                        {% elif copy.job_status == 'i' %}statusInvoiced
+                        {% else %}statusLost
+                        {% endif %} ">
+                Status: <strong>{{ copy.get_job_status_display }}</strong>
+              <div style="float:right;">{% if copy.job_status != 'c' %}Due to be finished: <strong>{{copy.finished_date}}</strong>{% endif %}</div>
+              </div></a>
+            </div>
+          {% endfor %}
+          <br>
+        </div>
+    </div>  
+  </div>
+  <div class="col-lg-4">
+    <div class="card mb-3">
+      <div class="card-header" style="background-color:rgb(0, 119, 255);">
+        <h4>{{ jobsite.job_title }}
+            {% if request.user.staff %}
+              <div class="add_jobsite"><a href="{% url 'update-jobsite' jobsite.id %}"> edit </a></div>
+            {% else %}
+            {% endif %}</h4></div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-8 my-auto" style="background-color:rgb(196, 196, 196);">
+            <p><strong><a href="{{ jobsite.job_client.get_absolute_url }}">{{ jobsite.job_client }}</a> 
+              <br> <a href="{{ jobsite.google_maps_link }}">
+                <h6>{{ jobsite.top_address }}<br>{{ jobsite.street_address }}<br>
+                {{ jobsite.city }}, {{ jobsite.state }}  {{ jobsite.zipcode }}</h6></a>
+                </strong>
+              </p>
+              {{ jobsite.job_summary }}
+          </div>
+          {% if request.user.staff and request.user.admin %}
+          <div class="col-sm-4 text-center my-auto">
+            <div class="h4 mb-0 text-primary">$34,693</div>
+            <div class="small text-muted">YTD Revenue</div>
+            <hr>
+            <div class="h4 mb-0 text-warning">$18,474</div>
+            <div class="small text-muted">YTD Expenses</div>
+            <hr>
+            <div class="h4 mb-0 text-success">$16,219</div>
+            <div class="small text-muted">YTD Margin</div>
+          </div>
+          {% else %}{% endif %}
+        </div>
+      </div>
+      <div class="card-footer small text-muted">Signed Contract: <strong>{{ jobsite.signed_contract }}</strong> - <strong>Date of completion:</strong> {{ jobsite.due_finished }}</div>
+    </div>
+  </div>
+</div>  
+{% endblock %}

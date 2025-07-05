@@ -1,0 +1,46 @@
+{% extends 'home/base.html' %}
+
+{% block title %}<title>Thank You!!</title>{% endblock %}
+
+{% block content %}
+<div class="product-detail">
+    <h1>Thank You for Your Purchase!</h1>
+    <p>Your transaction was successful. Below is your receipt:</p>
+    
+    <div class="product-detail">
+        <h2>Receipt #{{ receipt.receipt_number }}</h2>
+        <p>Date: {{ receipt.issued_date }}</p>
+        <div class="cart-container">
+            <table class="cart-table">
+            <thead>
+                <tr>
+                    <th>By</th>
+                    <th>Product</th>
+                    <th>Size</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                    <th>Download</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sale in receipt.sales.all %}
+                <tr>
+                    <td>{{ sale.user|default:"LabMunk" }}</td>
+                    <td>{{ sale.product.name }}</td>
+                    <td>{{ sale.size.name }}</td>
+                    <td>{{ sale.quantity }}</td>
+                    <td>${{ sale.total_price }}</td>
+                    <td>{% if sale.product.digital_content %}<a href="{% url 'shop:download_digital_content' sale.product.id %}">
+                        Download Digital Content</a>{% endif %}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+           </table>
+        </div>
+        <p><strong>Shipping Cost:</strong> ${{ shipping_cost|floatformat:2 }}</p>
+        <p><strong>Grand Total:</strong> ${{ receipt.total_amount|floatformat:2 }}</p>
+    </div>
+    
+    <a href="{% url 'shop:shop' %}">Continue Shopping</a>
+</div>
+{% endblock %}

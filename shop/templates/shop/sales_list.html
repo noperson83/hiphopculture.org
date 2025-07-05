@@ -1,0 +1,30 @@
+{% extends 'home/base.html' %}
+{% load cart_filters %}
+{% block title %}<title>Shop</title>{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card">
+    <h2 class="shop-header">All Sales</h2>
+
+    <ul class="product-list">
+        {% for sale in sales %}
+            <li>
+                <a href="{% url 'shop:product_detail' sale.product.slug %}">
+                    <img src="{{ sale.product.image.url }}" alt="{{ sale.product.name }}">
+                    <h3>{{ sale.product.name }}</h3>
+                    {% if sale.total_price %}
+                        <p>${{ sale.total_price }}</p>
+                    {% else %}
+                        <p>Free</p>
+                    {% endif %}
+                </a>
+            </li>
+        {% empty %}
+            <p>No products available in this category.</p>
+        {% endfor %}
+    </ul>
+        <p><strong>Total:</strong> ${{ total }}</p>
+    </div>
+</div>
+{% endblock %}

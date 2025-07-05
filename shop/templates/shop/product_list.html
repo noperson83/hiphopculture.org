@@ -1,0 +1,28 @@
+{% extends 'home/base.html' %}
+
+{% block title %}<title>Shop</title>{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card">
+<h2 class="shop-header">{% if category %}{{ category.name }}{% else %}All Products{% endif %}</h2>
+
+<ul class="product-list">
+    {% for product in products %}
+        <li>
+            <a href="{% url 'shop:product_detail' product.slug %}">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                <h3>{{ product.name }}</h3>
+                {% if product.price %}
+                    <p>${{ product.price }}</p>
+                {% else %}
+                    <p>Free</p>
+                {% endif %}
+            </a>
+        </li>
+    {% empty %}
+        <p>No products available in this category.</p>
+    {% endfor %}
+</ul>
+{% endblock %}
+</div></div>

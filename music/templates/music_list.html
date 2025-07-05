@@ -1,0 +1,49 @@
+{% extends "home/base.html" %}
+{% load static %}
+{% block title %}<title>Music List</title>{% endblock %}
+{% block breadcrumb %} / <a href="{% url 'music:music' %}">Music</a> / List
+  {% if request.user.staff %} /<a href="{% url 'create-music' %}"> add a new music</a>{% else %}{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="table-responsive">
+  <table class="table table-bordered" id="dataTable" width="90%" cellspacing="0">
+    <thead>
+      <tr>
+        <th style="font-weight: inherit;">Music <i class="fa fa-id-card-o"></i> </th>
+        <th style="font-weight: inherit;">Artist<i class="fa fa-fw fa-user"></i> </th>
+        <th style="font-weight: inherit;">Album<i class="fa fa-phone"></i> </th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th style="min-width:64px; font-weight: inherit;">music <i class="fa fa-id-card-o"></i> </th>
+        <th style="font-weight: inherit;"><i class="fa fa-fw fa-user"></i> </th>
+        <th style="min-width:120px; font-weight: inherit;"><i class="fa fa-phone"></i> </th>
+      </tr>
+    </tfoot>
+    <tbody>
+          {% if music_list %}
+          {% for music in music_list %}
+              <tr>
+                <td><a style="color:black;font-weight:bold;" href="{% url 'music:music-detail' music.id %}">{{ music.title }}</a> </td>
+                <td><a style="color:black;font-weight:bold;" href="{% url 'group:group-detail' music.group_album.group.id %}">{{ music.group_album.group }}</a> </td>
+                <td><a style="color:black;font-weight:bold;" href="{% url 'group:album-detail' music.group_album.id %}">{{ music.group_album }}</a> </td>
+              </tr>
+          {% endfor %}
+          {% else %}
+          <tr>
+              <td>There are no  </td>
+              <td>musics </td>
+              <td>to list sorry!</td>
+          </tr>
+    <p>There are no nopes in this planet.</p>
+  {% endif %} 
+    </tbody>
+  </table>
+</div>
+{% endblock %} 
+
+{% block scripter %} 
+{% endblock %}
+   
