@@ -79,3 +79,7 @@ def unsubscribe(request, email):
     except Subscriber.DoesNotExist:
         messages.error(request, "Email not found.")
     return redirect('home:home')
+
+def easter_egg(request):
+    """Render the playful easter egg page."""
+    return render(request, "home/easter_egg.html")
