@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Munkzink Secret</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .secret-header {
+            color: #00ff00;
+            font-size: 2.5em;
+            text-shadow: 0 0 10px #00ff00;
+            margin-bottom: 30px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #00ff00; }
+            to { text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00; }
+        }
+
+        .konami-hint {
+            color: #fff;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .flask {
+            font-size: 4em;
+            margin: 20px;
+            display: inline-block;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            filter: hue-rotate(0deg);
+        }
+
+        .flask:hover {
+            transform: scale(1.2) rotate(10deg);
+            filter: hue-rotate(90deg);
+        }
+
+        .flask.bubbling {
+            animation: bubble 0.5s ease-in-out infinite;
+        }
+
+        @keyframes bubble {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .secret-message {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            color: #00ff00;
+            font-size: 1.1em;
+            line-height: 1.6;
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .matrix-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.1;
+        }
+
+        .matrix-char {
+            position: absolute;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            font-size: 20px;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100vh); opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+
+        .easter-egg-triggered {
+            display: block !important;
+        }
+
+        .pun-counter {
+            color: #fff;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .achievement {
+            background: linear-gradient(45deg, #ffd700, #ffed4a);
+            color: #333;
+            padding: 15px;
+            border-radius: 25px;
+            margin: 10px 0;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+            display: none;
+            animation: bounce 0.6s ease-out;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-bg" id="matrixBg"></div>
+    
+    <div class="container">
+        <h1 class="secret-header">🧪 LAB MUNKZINK SECRET LAB 🧪</h1>
+        
+        <div class="konami-hint">
+            Try the Konami Code: ↑ ↑ ↓ ↓ ← → ← → B A
+        </div>
+
+        <div class="flask-container">
+            <span class="flask" onclick="bubbleFlask(this)">🧪</span>
+            <span class="flask" onclick="bubbleFlask(this)">⚗️</span>
+            <span class="flask" onclick="bubbleFlask(this)">🧪</span>
+        </div>
+
+        <div class="pun-counter">
+            Flask clicks: <span id="flaskCount">0</span> | 
+            Puns discovered: <span id="punCount">0</span>
+        </div>
+
+        <div class="secret-message" id="secretMessage">
+            <h2>🎉 CONGRATULATIONS! 🎉</h2>
+            <p>You've discovered the <strong>Lab Munkzink</strong> secret Easter egg!</p>
+            <p>🧬 <em>"We're not just any lab... we're a <strong>flask-ion</strong> forward team!"</em></p>
+            <p>🔬 <em>"Our experiments are always <strong>element-ary</strong>, my dear Watson!"</em></p>
+            <p>⚛️ <em>"We've got <strong>chemistry</strong> - and not just the periodic kind!"</em></p>
+            <p>🧪 <em>"Warning: This team may cause <strong>spontaneous reactions</strong> of awesomeness!"</em></p>
+            <p><strong>Achievement Unlocked:</strong> Secret Lab Infiltrator! 🏆</p>
+        </div>
+
+        <div class="achievement" id="achievement">
+            🏆 ACHIEVEMENT UNLOCKED: Master of Flask-ionable Science! 🏆
+        </div>
+    </div>
+
+    <script>
+        // Konami Code Easter Egg
+        let konamiCode = [
+            'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
+            'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight',
+            'KeyB', 'KeyA'
+        ];
+        let konamiIndex = 0;
+        let flaskClickCount = 0;
+        let punCount = 0;
+
+        // Matrix-style background
+        function createMatrixRain() {
+            const chars = '01ATCG🧬🔬⚛️🧪⚗️LABMUNKZINK';
+            const matrixBg = document.getElementById('matrixBg');
+            
+            for (let i = 0; i < 30; i++) {
+                const char = document.createElement('div');
+                char.className = 'matrix-char';
+                char.textContent = chars[Math.floor(Math.random() * chars.length)];
+                char.style.left = Math.random() * 100 + '%';
+                char.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                char.style.animationDelay = Math.random() * 2 + 's';
+                matrixBg.appendChild(char);
+            }
+        }
+
+        // Konami code listener
+        document.addEventListener('keydown', function(e) {
+            if (e.code === konamiCode[konamiIndex]) {
+                konamiIndex++;
+                if (konamiIndex === konamiCode.length) {
+                    triggerEasterEgg();
+                    konamiIndex = 0;
+                }
+            } else {
+                konamiIndex = 0;
+            }
+        });
+
+        function triggerEasterEgg() {
+            const secretMessage = document.getElementById('secretMessage');
+            const achievement = document.getElementById('achievement');
+            
+            secretMessage.classList.add('easter-egg-triggered');
+            achievement.style.display = 'block';
+            
+            // Add some fun sounds (visual feedback)
+            document.body.style.animation = 'none';
+            setTimeout(() => {
+                document.body.style.animation = 'glow 0.5s ease-in-out 3';
+            }, 10);
+            
+            punCount = 4; // All puns revealed
+            document.getElementById('punCount').textContent = punCount;
+        }
+
+        function bubbleFlask(flask) {
+            flaskClickCount++;
+            document.getElementById('flaskCount').textContent = flaskClickCount;
+            
+            flask.classList.add('bubbling');
+            setTimeout(() => {
+                flask.classList.remove('bubbling');
+            }, 500);
+
+            // Secret flask combination
+            if (flaskClickCount === 7) {
+                const secretMessage = document.getElementById('secretMessage');
+                secretMessage.innerHTML += '<p><em>🎈 "Seven flasks clicked! You must be <strong>beaker-ing</strong> the rules!"</em></p>';
+                punCount++;
+                document.getElementById('punCount').textContent = punCount;
+            }
+
+            if (flaskClickCount === 13) {
+                const secretMessage = document.getElementById('secretMessage');
+                secretMessage.innerHTML += '<p><em>🎪 "Thirteen clicks! That\'s <strong>test-tube-licious</strong>!"</em></p>';
+                punCount++;
+                document.getElementById('punCount').textContent = punCount;
+            }
+        }
+
+        // Initialize matrix background
+        createMatrixRain();
+
+        // Fun console message for developers
+        console.log(`
+        🧪 LAB MUNKZINK SECRET CONSOLE 🧪
+        ================================
+        Hey there, fellow developer! 
+        You found the console Easter egg too!
+        
+        Fun fact: This lab has ${Math.floor(Math.random() * 1000)} virtual experiments running!
+        
+        Try typing: labMunkzink.superSecret()
+        `);
+
+        // Secret console function
+        window.labMunkzink = {
+            superSecret: function() {
+                console.log("🎉 SUPER SECRET ACTIVATED! 🎉");
+                console.log("You've unlocked the developer achievement!");
+                console.log("🧬 DNA sequence: AWESOME-TEAM-ROCKS-HARD 🧬");
+                alert("🏆 Developer Achievement Unlocked! Check the console for your secret DNA sequence!");
+            }
+        };
+    </script>
+</body>
+</html>
