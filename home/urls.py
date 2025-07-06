@@ -11,7 +11,8 @@ urlpatterns = [
     path('contact/', contactView, name='contact'),
     path('success/', successView, name='success'),
     path('send-newsletter/', views.send_newsletter, name='send_newsletter'),
-    path('unsubscribe/<str:email>/', views.unsubscribe, name='unsubscribe')
+    path('unsubscribe/<str:email>/', views.unsubscribe, name='unsubscribe'),
+    path('secret-lab/', views.easter_egg, name='easter_egg'),
 
 ]
 if settings.DEBUG:
