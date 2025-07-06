@@ -1,7 +1,10 @@
 {% extends "home/base.html" %}
 {% load static %}
 
-{% block title %}<title>{{ group_detail.group_name }} - Profile</title>{% endblock %}
+{% block title %}
+<title>{{ group_detail.group_name }} - Profile</title>
+<meta name="description" content="{{ group_detail.summary|default:'Group information' }}">
+{% endblock %}
 
 {% block breadcrumb %} / <a href="{% url 'group:group' %}">Groups</a> / {{ group_detail.group_name }}{% endblock %}
 
@@ -11,7 +14,7 @@
         <!-- Group Banner -->
         <div class="profile-banner" style="background-image: url('{{ group_detail.logo.url }}');">
             <div class="profile-pic-container">
-                <img src="{{ group_detail.button.url }}" alt="{{ group_detail.group_name }} Logo">
+                <img src="{{ group_detail.button.url }}" alt="{{ group_detail.group_name }} Logo" loading="lazy">
             </div>
         </div>
 
@@ -48,21 +51,26 @@
                         {% if album.cover_art %}
                             <td style="width: 150px;">
                             <a class="album-art" style="color:black;font-weight:bold;" href="{% url 'group:album-detail' album.id %}">
-                                <img src="{{ album.cover_art.url }}" alt="Album Art">
+                                <img src="{{ album.cover_art.url }}" alt="Album Art" loading="lazy">
                             </a> 
                             </td>
                         {% else %}
                             <td style="width: 150px;">
                             <a class="album-art" style="color:black;font-weight:bold;" href="{% url 'group:album-detail' album.id %}">
-                                <img src="{% static '/home/images/LMNlogo.jpg' %}" alt="Album Art">
+                                <img src="{% static '/home/images/LMNlogo.jpg' %}" alt="Album Art" loading="lazy">
                             </a> 
                             </td>
                         {% endif %}
                         <td>
                             <div class="album-card">
-                            <a style="color:black;font-weight:bold;" href="{% url 'group:album-detail' album.id %}">
-                                <h2>{{ album.title }}</h2>{{ album.group.group_name }}
-                            </a> 
+                                <a style="color:black;font-weight:bold;" href="{% url 'group:album-detail' album.id %}">
+                                    <h2>{{ album.title }}</h2>
+                                </a>
+                                <p>Released: {{ album.release_date }}</p>
+                                <div class="stream-links">
+                                    {% if album.spotify_link %}<a href="{{ album.spotify_link }}" target="_blank">Spotify</a>{% endif %}
+                                    {% if album.apple_music_link %} | <a href="{{ album.apple_music_link }}" target="_blank">Apple Music</a>{% endif %}
+                                </div>
                             </div>
                         </td>
                         </tr>
@@ -125,17 +133,22 @@
         <div id="events" class="tab-content">
             <h2>Upcoming Events</h2>
             <iframe src="/schedule/calendar/compact_month/{{ group_detail.group_name|lower }}" class="mini-calendar"></iframe>
+            <p class="event-note">If no events appear, please check back soon!</p>
         </div>
 
         <!-- Contact Info -->
         <div class="group-contact">
             <h3>Contact</h3>
             <p><strong>Manager:</strong> {{ group_detail.first_name }} {{ group_detail.last_name }}</p>
-            <p><strong>Email:</strong> {{ group_detail.contact_email }}</p>
-            <p><strong>Phone:</strong> {{ group_detail.contact_phone }}</p>
+            <p><strong>Email:</strong>
+                {% if group_detail.contact_email %}
+                    <a href="mailto:{{ group_detail.contact_email }}">{{ group_detail.contact_email }}</a>
+                {% else %}Not provided{% endif %}
+            </p>
+            <p><strong>Phone:</strong> {{ group_detail.contact_phone|default:'Not provided' }}</p>
             <p><strong>Address:</strong><br>
-                {{ group_detail.billing_address }}<br>
-                {{ group_detail.billing_address_city }}, {{ group_detail.state }} {{ group_detail.billing_address_zipcode }}</p>
+                {{ group_detail.billing_address|default:'' }}<br>
+                {{ group_detail.billing_address_city|default:'' }}{% if group_detail.billing_address_state %}, {{ group_detail.billing_address_state }}{% endif %} {{ group_detail.billing_address_zipcode|default:'' }}</p>
         </div>
     </div>
 </div>
