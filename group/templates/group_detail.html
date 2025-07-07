@@ -113,9 +113,9 @@
                                 {% endif %}
                                 <td>
                                 <div class="album-card">
-                                    <a style="color:black;font-weight:bold;" href="{% url 'munkz:artist-detail' member.pk %}">
-                                    <a href="{% url 'munkz:artist-detail' member.pk %}">{{ member.get_full_name }}</a>
-                                    </a> 
+                                    <a href="{% url 'munkz:artist-detail' member.pk %}" style="color:black;font-weight:bold;">
+                                        {{ member.get_full_name }}
+                                    </a>
                                 </div>
                                 </td>
                             </tr>
