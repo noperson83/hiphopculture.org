@@ -132,7 +132,7 @@
         <!-- Events Section -->
         <div id="events" class="tab-content">
             <h2>Upcoming Events</h2>
-            <iframe src="/schedule/calendar/compact_month/{{ group_detail.group_name|lower }}" class="mini-calendar"></iframe>
+            <iframe src="/schedule/calendar/compact_month/{{ group_detail.group_name|slugify }}" class="mini-calendar"></iframe>
             <p class="event-note">If no events appear, please check back soon!</p>
         </div>
 
