@@ -12,6 +12,11 @@
 {% block breadcrumb %} / <a href="{% url 'group:group' %}">Groups</a> / {{ group_detail.group_name }}{% endblock %}
 
 {% block content %}
+<header class="header"
+    {% if group_detail.logo %}
+        style="background: url('{{ group_detail.logo.url }}') no-repeat center center; background-size: cover;"
+    {% endif %}>
+</header>
 <div class="container">
     <div class="card">
         <!-- Group Banner -->
