@@ -124,7 +124,7 @@ class Event(models.Model):
         return float(self.seconds) / 3600
 
     def get_absolute_url(self):
-        return reverse('event', args=[self.id])
+        return reverse('schedule:event', args=[self.id])
 
     def get_occurrences(self, start, end, clear_prefetch=True):
         """
