@@ -29,6 +29,7 @@ def GroupDeView(request, id):
         group_detail, name=f"{group_detail.group_name} Calendar"
     )
     upcoming_events = calendar.events.filter(start__gte=timezone.now()).order_by('start')
+    old_events = calendar.events.filter(start__lt=timezone.now()).order_by('-start')
 
     return render(
         request,
@@ -39,6 +40,7 @@ def GroupDeView(request, id):
             'group_member_list':group_member_list,
             'calendar': calendar,
             'upcoming_events': upcoming_events,
+            'old_events': old_events,
              },
     )
 
