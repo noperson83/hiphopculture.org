@@ -39,15 +39,8 @@
             <p class="group-summary">{{ group_detail.summary }}</p>
         </div>
 
-        <!-- Tabs for Sections -->
-        <div class="group-tabs">
-            <button class="tab-link active" onclick="openTab(event, 'albums')">🎵 Albums</button>
-            <button class="tab-link" onclick="openTab(event, 'members')">👥 Members</button>
-            <button class="tab-link" onclick="openTab(event, 'events')">🎤 Events</button>
-        </div>
-
-        <!-- Albums Section -->
-        <div id="albums" class="tab-content active">
+        <!-- Albums -->
+        <div id="albums" class="tab-content">
             <div class="business-card">
                 <h2>Albums</h2>
                 <table width="100%" cellspacing="0" style="border-radius: 8%;">
@@ -136,11 +129,23 @@
             </div>
         </div>
 
-        <!-- Events Section -->
+        <!-- Events -->
         <div id="events" class="tab-content">
             <h2>Upcoming Events</h2>
-            <iframe src="{% url 'schedule:compact_calendar' calendar.slug %}" class="mini-calendar"></iframe>
-            <p class="event-note">If no events appear, please check back soon!</p>
+            <table width="100%" cellspacing="0" style="border-radius: 8%;">
+                <tbody>
+                    {% for event in upcoming_events %}
+                    <tr>
+                        <td style="width: 150px;">{{ event.start|date:"M d, Y" }}</td>
+                        <td>{{ event.title }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="2" class="event-note">No upcoming events.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
 
         <!-- Contact Info -->
@@ -160,19 +165,4 @@
     </div>
 </div>
 
-<script>
-    function openTab(evt, tabName) {
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tab-content");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-        }
-        tablinks = document.getElementsByClassName("tab-link");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].classList.remove("active");
-        }
-        document.getElementById(tabName).style.display = "block";
-        evt.currentTarget.classList.add("active");
-    }
-</script>
 {% endblock %}

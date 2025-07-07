@@ -5,6 +5,8 @@ from django.urls import reverse_lazy
 from .models import Group, Album
 from munkz.models import ArtistProfile
 from music.models import AudioFile
+# from django.utils import timezone for filtering events
+from django.utils import timezone
 from schedule.models import Calendar
 #from client.models import Client
 
@@ -26,6 +28,7 @@ def GroupDeView(request, id):
     calendar = Calendar.objects.get_or_create_calendar_for_object(
         group_detail, name=f"{group_detail.group_name} Calendar"
     )
+    upcoming_events = calendar.events.filter(start__gte=timezone.now()).order_by('start')
 
     return render(
         request,
@@ -35,6 +38,7 @@ def GroupDeView(request, id):
             'group_album_list':group_album_list,
             'group_member_list':group_member_list,
             'calendar': calendar,
+            'upcoming_events': upcoming_events,
              },
     )
 
