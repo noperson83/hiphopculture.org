@@ -8,19 +8,13 @@ from music.models import AudioFile
 #from client.models import Client
 
 def group(request):
-    """
-    View function for home page of site.
-    """
-    template = 'base_group.html'
-    group = Group.objects.all()
+    """Display a list of all groups."""
+    groups = Group.objects.all()
 
-    # Render the HTML template index.html with the data in the context variable
     return render(
         request,
-        template,
-        context={
-            'group':group,
-             },
+        'group_list.html',
+        context={'group_list': groups},
     )
     
 def GroupDeView(request, id):
