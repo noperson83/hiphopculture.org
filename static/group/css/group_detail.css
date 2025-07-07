@@ -93,8 +93,29 @@
     .group-name {
         font-size: 22px;
     }
-    .tab-link {
-        padding: 8px;
-        font-size: 14px;
-    }
+.tab-link {
+    padding: 8px;
+    font-size: 14px;
+}
+}
+
+/* Tour Table */
+.tour-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.tour-table th,
+.tour-table td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+.tour-table th {
+    text-align: left;
+}
+
+.tour-table tr:nth-child(even) {
+    background-color: #f2f2f2;
 }
