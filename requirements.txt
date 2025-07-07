@@ -5,3 +5,5 @@ Pillow
 Faker
 titlecase
 factory-boy
+wheel
+python-dateutil
