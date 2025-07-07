@@ -20,7 +20,7 @@ $(document).ready(function() {
     function getEventViewURL(event){
         if (event.existed){
             if("{{ request.get_full_path }}".indexOf("/admin") != 0){
-                var view_url = "{% url 'occurrence' 12345 6789 %}".replace(/12345/, event.event_id).replace(/6789/, event.id);
+                var view_url = "{% url 'schedule:occurrence' 12345 6789 %}".replace(/12345/, event.event_id).replace(/6789/, event.id);
             }
             else{
                 var view_url = "{% url 'admin:schedule_occurrence_change' 12345 %}".replace(/12345/, event.id)
@@ -28,7 +28,7 @@ $(document).ready(function() {
         }
         else {
             if("{{ request.get_full_path }}".indexOf("/admin") != 0){
-                var view_url = "{% url 'event' 12345 %}".replace(/12345/, event.event_id);
+                var view_url = "{% url 'schedule:event' 12345 %}".replace(/12345/, event.event_id);
             }
             else{
                 var view_url = "{% url 'admin:schedule_event_change' 12345 %}".replace(/12345/, event.event_id)
@@ -40,12 +40,12 @@ $(document).ready(function() {
     function setModalProperties(type, event){
         if(type == 'edit'){
             var tYPE = '{% trans "Edit" %}';
-            var all_url = "{% url 'edit_event' calendar_slug 12345 %}".replace(/12345/, event.event_id);
+            var all_url = "{% url 'schedule:edit_event' calendar_slug 12345 %}".replace(/12345/, event.event_id);
             if (event.existed){
-                var this_url = "{% url 'edit_occurrence' 12345 6789 %}".replace(/12345/, event.event_id).replace(/6789/, event.id);
+                var this_url = "{% url 'schedule:edit_occurrence' 12345 6789 %}".replace(/12345/, event.event_id).replace(/6789/, event.id);
             }
             else{
-                var this_url = "{% url 'edit_occurrence_by_date' 123 234 345 456 567 678 789 %}".replace(
+                var this_url = "{% url 'schedule:edit_occurrence_by_date' 123 234 345 456 567 678 789 %}".replace(
                         /123/, event.event_id).replace(
                         /234/, event.year).replace(
                         /345/, event.month).replace(
@@ -57,12 +57,12 @@ $(document).ready(function() {
         }
         else if(type == 'delete'){
             var tYPE = '{% trans "Delete" %}';
-            var all_url = "{% url 'delete_event' 12345 %}".replace(/12345/, event.event_id);
+            var all_url = "{% url 'schedule:delete_event' 12345 %}".replace(/12345/, event.event_id);
             if (event.existed){
-                var this_url = "{% url 'cancel_occurrence' 12345 6789 %}".replace(/12345/, event.event_id).replace(/6789/, event.id);
+                var this_url = "{% url 'schedule:cancel_occurrence' 12345 6789 %}".replace(/12345/, event.event_id).replace(/6789/, event.id);
             }
             else{
-                var this_url = "{% url 'cancel_occurrence_by_date' 123 234 345 456 567 678 789 %}".replace(
+                var this_url = "{% url 'schedule:cancel_occurrence_by_date' 123 234 345 456 567 678 789 %}".replace(
                         /123/, event.event_id).replace(
                         /234/, event.year).replace(
                         /345/, event.month).replace(
@@ -123,7 +123,7 @@ $(document).ready(function() {
         eventLimit: true, // allow 'more' link when too many events
         selectable: {% if request.user.staff %}true{% else %}false{% endif %}, //Allows a user to highlight multiple days or timeslots by clicking and dragging.
         selectHelper: {% if request.user.staff %}true{% else %}false{% endif %},
-        events: "{% url 'api_occurrences' %}?calendar_slug={{calendar_slug}}",
+        events: "{% url 'schedule:api_occurrences' %}?calendar_slug={{calendar_slug}}",
         loading: function(bool) {
             if (bool) {
                 $('#loading').show();
@@ -178,7 +178,7 @@ $(document).ready(function() {
         eventDrop: function(event,delta,revertFunc) {
             $.ajax({
                     type: 'POST',
-                    url: "{% url 'api_move_or_resize' %}",
+                    url: "{% url 'schedule:api_move_or_resize' %}",
                     dataType: 'json',
                     data : {
                         'id': event.id,
@@ -199,7 +199,7 @@ $(document).ready(function() {
         eventResize: function(event,delta,revertFunc) {
             $.ajax({
                     type: 'POST',
-                    url: "{% url 'api_move_or_resize' %}",
+                    url: "{% url 'schedule:api_move_or_resize' %}",
                     dataType: 'json',
                     data : {
                         'id': event.id,
@@ -223,7 +223,7 @@ $(document).ready(function() {
                 console.log('{{calendar_slug}}');
                 $.ajax({
                         type: 'POST',
-                        url: "{% url 'api_select_create' %}",
+                        url: "{% url 'schedule:api_select_create' %}",
                         dataType: 'json',
                         data : {
                             'start': start.toISOString(),
