@@ -139,7 +139,7 @@
         <!-- Events Section -->
         <div id="events" class="tab-content">
             <h2>Upcoming Events</h2>
-            <iframe src="{% url 'schedule:compact_calendar' group_detail.group_name|slugify %}" class="mini-calendar"></iframe>
+            <iframe src="{% url 'schedule:compact_calendar' calendar.slug %}" class="mini-calendar"></iframe>
             <p class="event-note">If no events appear, please check back soon!</p>
         </div>
 
