@@ -57,6 +57,14 @@ class Group(models.Model):
     facebook_url            = models.URLField(max_length=200, blank=True, help_text='Facebook page URL')
     instagram_url           = models.URLField(max_length=200, blank=True, help_text='Instagram page URL')
     twitter_url             = models.URLField(max_length=200, blank=True, help_text='Twitter handle URL')
+    youtube_url             = models.URLField(max_length=200, blank=True, help_text='YouTube channel URL')
+    spotify_url             = models.URLField(max_length=200, blank=True, help_text='Spotify profile URL')
+    apple_music_url         = models.URLField(max_length=200, blank=True, help_text='Apple Music profile URL')
+    soundcloud_url          = models.URLField(max_length=200, blank=True, help_text='SoundCloud profile URL')
+    bandcamp_url            = models.URLField(max_length=200, blank=True, help_text='Bandcamp profile URL')
+    tidal_url               = models.URLField(max_length=200, blank=True, help_text='Tidal profile URL')
+    shazam_url              = models.URLField(max_length=200, blank=True, help_text='Shazam profile URL')
+    tiktok_url              = models.URLField(max_length=200, blank=True, help_text='TikTok profile URL')
 
     class Meta:
         ordering = ["group_name"]
