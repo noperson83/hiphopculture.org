@@ -88,6 +88,21 @@
                         {% endif %}
                     </tbody>
                 </table>
+                
+                <!-- Contact Info -->
+                <div class="group-contact">
+                    <h3>Contact</h3>
+                    <p><strong>Manager:</strong> {{ group_detail.first_name }} {{ group_detail.last_name }}</p>
+                    <p><strong>Email:</strong>
+                        {% if group_detail.contact_email %}
+                            <a href="mailto:{{ group_detail.contact_email }}">{{ group_detail.contact_email }}</a>
+                        {% else %}Not provided{% endif %}
+                    </p>
+                    <p><strong>Phone:</strong> {{ group_detail.contact_phone|default:'Not provided' }}</p>
+                    <p><strong>Address:</strong><br>
+                        {{ group_detail.billing_address|default:'' }}<br>
+                        {{ group_detail.billing_address_city|default:'' }}{% if group_detail.billing_address_state %}, {{ group_detail.billing_address_state }}{% endif %} {{ group_detail.billing_address_zipcode|default:'' }}</p>
+                </div>
             </div>
         </div>
 
@@ -137,8 +152,8 @@
                 </tbody>
                 </table>
             </div>
-
-        <!-- Events -->
+        </div><!-- end details-grid -->
+         <!-- Events -->
         <div id="events" class="tab-content">
             <h2>Upcoming Events</h2>
             <table class="tour-table" width="100%" cellspacing="0" style="border-radius: 8%;">
@@ -191,22 +206,6 @@
                     {% endfor %}
                 </tbody>
             </table>
-        </div>
-        </div><!-- end details-grid -->
-
-        <!-- Contact Info -->
-        <div class="group-contact">
-            <h3>Contact</h3>
-            <p><strong>Manager:</strong> {{ group_detail.first_name }} {{ group_detail.last_name }}</p>
-            <p><strong>Email:</strong>
-                {% if group_detail.contact_email %}
-                    <a href="mailto:{{ group_detail.contact_email }}">{{ group_detail.contact_email }}</a>
-                {% else %}Not provided{% endif %}
-            </p>
-            <p><strong>Phone:</strong> {{ group_detail.contact_phone|default:'Not provided' }}</p>
-            <p><strong>Address:</strong><br>
-                {{ group_detail.billing_address|default:'' }}<br>
-                {{ group_detail.billing_address_city|default:'' }}{% if group_detail.billing_address_state %}, {{ group_detail.billing_address_state }}{% endif %} {{ group_detail.billing_address_zipcode|default:'' }}</p>
         </div>
     </div>
 </div>
