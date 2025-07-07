@@ -85,8 +85,9 @@ def ProjectDeView(request, job_num):
     allocated_time_total = 0
     for ttime in tasks_for_time:
         allocated_time_total += ttime.total_hours
-        if ttime.position:
-            pay = Decimal(ttime.position.hourly) * Decimal(project_detail.burden)
+        if getattr(ttime, "position", None):
+            hourly_rate = getattr(ttime.position, "hourly", 0)
+            pay = Decimal(hourly_rate) * Decimal(project_detail.burden)
             event_pay = pay * Decimal(ttime.total_hours)
             time_cost += event_pay
         else:
@@ -99,7 +100,8 @@ def ProjectDeView(request, job_num):
         workers = eventer.artist.count()
         event_time += workers * eventer.hours
         for worker in eventer.artist.all():
-            pay = Decimal(worker.hourly) * Decimal(project_detail.burden)
+            hourly_rate = getattr(worker, "hourly", 0)
+            pay = Decimal(hourly_rate) * Decimal(project_detail.burden)
             event_pay = pay * Decimal(eventer.hours)
             scheduled_cost += event_pay
     
@@ -111,7 +113,8 @@ def ProjectDeView(request, job_num):
         days_to_hours = card.day_total.days * 24
         sec_to_hours = (card.day_total.seconds) / 3600
         overall_hours = days_to_hours + sec_to_hours
-        payed = Decimal(card.worker.hourly) * Decimal(project_detail.burden)
+        hourly_rate = getattr(getattr(card, "artist", None), "hourly", 0)
+        payed = Decimal(hourly_rate) * Decimal(project_detail.burden)
         event_payed = payed * Decimal(overall_hours)
         used_cost += event_payed
 
@@ -219,7 +222,10 @@ def project_detail_pdf(request, job_num):
     allocated_time_total = 0
     for ttime in tasks_for_time:
         allocated_time_total += ttime.total_hours
-        pay = Decimal(ttime.position.hourly) * Decimal(project_detail.burden)
+        hourly_rate = 0
+        if getattr(ttime, "position", None):
+            hourly_rate = getattr(ttime.position, "hourly", 0)
+        pay = Decimal(hourly_rate) * Decimal(project_detail.burden)
         event_pay = pay * Decimal(ttime.total_hours)
         time_cost += event_pay
 
