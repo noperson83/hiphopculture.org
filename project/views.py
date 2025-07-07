@@ -96,9 +96,9 @@ def ProjectDeView(request, job_num):
     event_time = 0
     scheduled_cost = 0
     for eventer in scheduling_event_list:
-        workers = eventer.workers.count()
+        workers = eventer.artist.count()
         event_time += workers * eventer.hours
-        for worker in eventer.workers.all():
+        for worker in eventer.artist.all():
             pay = Decimal(worker.hourly) * Decimal(project_detail.burden)
             event_pay = pay * Decimal(eventer.hours)
             scheduled_cost += event_pay
@@ -181,7 +181,7 @@ class ProjectUpdate(UpdateView):
               'projectmanager',
               'foremen',
               'lead',
-              'workers',
+              'artist',
               'burden',
               'markup',
               'estimated_cost',

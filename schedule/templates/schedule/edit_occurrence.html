@@ -36,10 +36,10 @@
       <div class="card mb-3">
         <div class="card-body">
           <div class="form-group">
-            <div class="form-row"><label for="id_workers">Workers:</label>{{ form.workers.errors }}
-            <select class="form-control" name="workers" multiple="" id="id_workers">
-              {% for workers in form.workers %}
-                {{ workers }}
+            <div class="form-row"><label for="id_artist">Artists:</label>{{ form.artist.errors }}
+            <select class="form-control" name="artist" multiple="" id="id_artist">
+              {% for artist in form.artist %}
+                {{ artist }}
               {% endfor %}</select></div>
           <div class="form-row"><label for="id_project">Project:</label>{{ form.project.errors }}
             <select class="form-control" name="project" required="" id="id_project">

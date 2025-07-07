@@ -111,12 +111,12 @@
       <div class="card-header"><b>Scheduled onsite</b></div>
         <div class="card-body">
           <ul>
-            {% for workers in event.workers.all %}
+            {% for artist in event.artist.all %}
               <li>
-                <a style="color:black;font-weight:bold;" href="{{ workers.get_absolute_url }}">
-                {{ workers.first_name }} {{ workers.last_name }} :</a> 
-                <a style="color:black;font-weight:bold;" href="tel:{{ workers.phone_number }}">
-                  {{ workers.phone_number }}</a></li>
+                <a style="color:black;font-weight:bold;" href="{{ artist.get_absolute_url }}">
+                {{ artist.first_name }} {{ artist.last_name }} :</a>
+                <a style="color:black;font-weight:bold;" href="tel:{{ artist.phone_number }}">
+                  {{ artist.phone_number }}</a></li>
             {% if not forloop.last %} {% endif %}
             {% endfor %}
           </ul>
