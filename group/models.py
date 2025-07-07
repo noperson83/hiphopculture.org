@@ -3,11 +3,18 @@ from django.urls import reverse #for the get_absolute_url return
 import os
 
 def upload_to_group_folder(instance, filename):
-    # Normalize the group name to be used as a folder name
-    group_name = instance.group.group_name.replace(' ', '_').lower()
-    # Generate the folder path
-    folder_name = f'{group_name}/'
-    # Return the full path to the file
+    """Return file path for uploads scoped to a group's folder.
+
+    When called from the :class:`Group` model itself ``instance`` will be a
+    ``Group`` object. In that case the group name is stored directly on the
+    instance. For related models (e.g. ``Album``) ``instance`` will have a
+    ``group`` attribute pointing to the ``Group`` object.  Support both
+    scenarios so the same function can be reused across models.
+    """
+
+    group_obj = getattr(instance, "group", None) or instance
+    group_name = group_obj.group_name.replace(" ", "_").lower()
+    folder_name = f"{group_name}/"
     return os.path.join(folder_name, filename)
 
 def upload_to_group_folder_ac(instance, filename):
