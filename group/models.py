@@ -40,6 +40,14 @@ class Group(models.Model):
     group_url               = models.CharField(max_length=100, blank=True, help_text='Web page')
     logo                    = models.ImageField(upload_to=upload_to_group_folder, null=True, blank=True, max_length=60, help_text='Logopic.jpg', default="home/images/LMNlogo.jpg")
     button                  = models.FileField(upload_to=upload_to_group_folder, null=True, blank=True, max_length=60, help_text='button.png', default="home/images/LMNlogo.jpg")
+    background_image        = models.ImageField(
+        upload_to=upload_to_group_folder,
+        null=True,
+        blank=True,
+        max_length=60,
+        help_text='Background image',
+        default="home/images/LMNlogo.jpg",
+    )
     first_name              = models.CharField(max_length=100, help_text='Payment contact first name')
     last_name               = models.CharField(max_length=100, blank=True, help_text='Payment contact last name')
     contact_email           = models.EmailField(max_length=254, blank=True, help_text='Contact@email.com')

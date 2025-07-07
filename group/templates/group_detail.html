@@ -15,7 +15,12 @@
 <div class="container">
     <div class="card">
         <!-- Group Banner -->
-        <div class="profile-banner" {% if group_detail.logo %}style="background-image: url('{{ group_detail.logo.url }}');"{% endif %}>
+        <div class="profile-banner" 
+            {% if group_detail.background_image %}
+                style="background-image: url('{{ group_detail.background_image.url }}');"
+            {% elif group_detail.logo %}
+                style="background-image: url('{{ group_detail.logo.url }}');"
+            {% endif %}>
             <div class="profile-pic-container">
                 {% if group_detail.button %}
                     <img src="{{ group_detail.button.url }}" alt="{{ group_detail.group_name }} Logo" loading="lazy">
