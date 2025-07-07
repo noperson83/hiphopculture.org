@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from .models import Group, Album
 from munkz.models import ArtistProfile
 from music.models import AudioFile
+from schedule.models import Calendar
 #from client.models import Client
 
 def group(request):
@@ -19,18 +20,22 @@ def group(request):
     
 def GroupDeView(request, id):
     template_name = 'group_detail.html'
-    group_detail = Group.objects.get(id=id) 
+    group_detail = Group.objects.get(id=id)
     group_album_list = Album.objects.all().filter(group__id=group_detail.pk)
     group_member_list = ArtistProfile.objects.all().filter(group__id=group_detail.pk)
-    
+    calendar = Calendar.objects.get_or_create_calendar_for_object(
+        group_detail, name=f"{group_detail.group_name} Calendar"
+    )
+
     return render(
         request,
         template_name,
         context={
             'group_detail':group_detail,
             'group_album_list':group_album_list,
-            'group_member_list':group_member_list
-             }, 
+            'group_member_list':group_member_list,
+            'calendar': calendar,
+             },
     )
 
 class GroupListView(generic.ListView):
