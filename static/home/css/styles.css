@@ -347,7 +347,12 @@ main {
     .container-home {
         display: inline-block;
     }
-}    
+
+    /* Stack music cards vertically on small screens */
+    .container-music {
+        grid-template-columns: 1fr;
+    }
+}
 
 .card {
     flex: 1;
