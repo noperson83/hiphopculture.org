@@ -89,8 +89,8 @@ def options(context, occurrence):
     if CHECK_EVENT_PERM_FUNC(occurrence.event, user) and CHECK_CALENDAR_PERM_FUNC(occurrence.event.calendar, user):
         context['edit_occurrence'] = occurrence.get_edit_url()
         context['cancel_occurrence'] = occurrence.get_cancel_url()
-        context['delete_event'] = reverse('delete_event', args=(occurrence.event.id,))
-        context['edit_event'] = reverse('edit_event', args=(occurrence.event.calendar.slug, occurrence.event.id,))
+        context['delete_event'] = reverse('schedule:delete_event', args=(occurrence.event.id,))
+        context['edit_event'] = reverse('schedule:edit_event', args=(occurrence.event.calendar.slug, occurrence.event.id,))
     else:
         context['edit_event'] = context['delete_event'] = ''
     return context
@@ -106,7 +106,7 @@ def create_event_url(context, calendar, slot):
         'calendar_slug': calendar.slug,
     }
     context['create_event_url'] = '%s%s' % (
-        reverse('calendar_create_event', kwargs=lookup_context),
+        reverse('schedule:calendar_create_event', kwargs=lookup_context),
         querystring_for_date(slot))
     return context
 

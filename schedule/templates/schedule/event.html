@@ -3,15 +3,15 @@
 
 {% block title %}<title>Day event details</title>{% endblock %}
 
-{% block breadcrumb %} / <a href="{% url 'schedule' %}">Schedule</a> / Day event detail{% endblock %}
+{% block breadcrumb %} / <a href="{% url 'schedule:schedule' %}">Schedule</a> / Day event detail{% endblock %}
 
 {% block content %}
 
     {% if request.user.staff %}
 <div class="row">
   <div class="col-lg-2">
-      <a href="{% url 'delete_event' event.id %}"> <i class="fa fa-trash"></i> delete </a> -
-      <a href="{% url 'edit_event' event.calendar.slug event.id  %}"><i class="fa fa-pencil"></i> edit</a>
+      <a href="{% url 'schedule:delete_event' event.id %}"> <i class="fa fa-trash"></i> delete </a> -
+      <a href="{% url 'schedule:edit_event' event.calendar.slug event.id  %}"><i class="fa fa-pencil"></i> edit</a>
   </div>
 </div>
     {% endif %}

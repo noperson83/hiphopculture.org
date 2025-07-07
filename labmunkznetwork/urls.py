@@ -26,7 +26,7 @@ urlpatterns = [
     path('project/', include('project.urls')),
     path('material/', include('material.urls')),
     path('posts/', include('posts.urls')),
-    path('schedule/', include('schedule.urls')),
+    path('schedule/', include('schedule.urls', namespace='schedule')),
     path('timecard/', include('timecard.urls')),
     path('todo/', include('todo.urls', namespace="todo")),
    # path('wip/', include('wip.urls')),

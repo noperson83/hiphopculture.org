@@ -3,7 +3,7 @@
 
 
 {% block title %}<title>Event Update</title> {% endblock %}
-{% block breadcrumb %} / <a href="{% url 'schedule' %}">Schedule</a> / Update Event info{% endblock %}
+{% block breadcrumb %} / <a href="{% url 'schedule:schedule' %}">Schedule</a> / Update Event info{% endblock %}
 
 {% block content %}
 {% if request.user.staff %}
