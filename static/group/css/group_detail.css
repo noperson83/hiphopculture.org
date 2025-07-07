@@ -119,3 +119,18 @@
 .tour-table tr:nth-child(even) {
     background-color: #f2f2f2;
 }
+
+/* Layout for large screens */
+.details-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+@media screen and (min-width: 992px) {
+    .details-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+}
