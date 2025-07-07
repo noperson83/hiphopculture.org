@@ -175,8 +175,8 @@ class Calendar(models.Model):
 
     def get_absolute_url(self):
         if USE_FULLCALENDAR:
-            return reverse('fullcalendar', kwargs={'calendar_slug': self.slug})
-        return reverse('calendar_home', kwargs={'calendar_slug': self.slug})
+            return reverse('schedule:fullcalendar', kwargs={'calendar_slug': self.slug})
+        return reverse('schedule:calendar_home', kwargs={'calendar_slug': self.slug})
 
 
 class CalendarRelationManager(models.Manager):

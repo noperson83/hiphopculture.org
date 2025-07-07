@@ -10,7 +10,7 @@
 {% include "schedule/_dialogs.html" %}
 <div class="row row-centered">
  <div class="col">
-    <a class="btn btn-primary gradient" href="{% url "day_calendar" calendar.slug %}">
+    <a class="btn btn-primary gradient" href="{% url "schedule:day_calendar" calendar.slug %}">
       {% trans "Today" %}
     </a>
   <a class="btn btn-primary gradient" href="{% url "week_calendar" calendar.slug %}{% querystring_for_date period.start 3 %}">
@@ -18,7 +18,7 @@
   </a>
  </div>
  <div class="col">
-  {% prevnext "day_calendar" calendar period "l, F d, Y" %}
+  {% prevnext "schedule:day_calendar" calendar period "l, F d, Y" %}
  </div>
  <div class="col">
   <div style="float: right;">

@@ -31,7 +31,7 @@
   {% for day in period.get_days %}
     <div class="col-md-3">
       <div class="row row-centered">
-        <a class="btn btn-primary gradient" href="{% url "day_calendar" calendar.slug %}{% querystring_for_date day.start 3 %}">
+        <a class="btn btn-primary gradient" href="{% url "schedule:day_calendar" calendar.slug %}{% querystring_for_date day.start 3 %}">
           {{day.start|date:"l, d"}}
         </a>
       </div>
