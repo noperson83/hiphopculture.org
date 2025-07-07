@@ -4,6 +4,10 @@
     font-weight: normal;
     font-style: normal;
 }
+/* Ensure padding doesn't cause horizontal overflow */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
 .icon-bar {
     position: fixed;
     bottom: 0%;
@@ -431,7 +435,7 @@ main {
     justify-content: space-between;
     padding-left: 0px;
     padding-right: 0px;
-    width: 111%;
+    width: 100%;
 }
 
 .song-list-left {
