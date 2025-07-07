@@ -72,7 +72,7 @@ body {
 /* Tab Content */
 .tab-content {
     display: block;
-    padding: 20px;
+    padding: 0px;
     background: #f8f8f8;
     border-radius: 5px;
 }
