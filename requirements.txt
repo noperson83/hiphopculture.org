@@ -1,0 +1,7 @@
+Django==3.2.25
+django-environ
+psycopg2-binary
+Pillow
+Faker
+titlecase
+factory-boy
