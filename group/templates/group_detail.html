@@ -48,6 +48,53 @@
         </div>
 
         <div class="details-grid">
+        <!-- Albums -->
+        <div id="albums" class="tab-content">
+            <div class="business-card">
+                <h2>Albums</h2>
+                <table width="100%" cellspacing="0" style="border-radius: 8%;">
+                <tbody>
+                {% if group_album_list %}
+                    {% for album in group_album_list %}
+                        <tr>
+                        {% if album.cover_art %}
+                            <td style="width: 150px;">
+                            <a class="album-art" style="color:black;font-weight:bold;" href="{% url 'group:album-detail' album.id %}">
+                                <img src="{{ album.cover_art.url }}" alt="Album Art" loading="lazy">
+                            </a> 
+                            </td>
+                        {% else %}
+                            <td style="width: 150px;">
+                            <a class="album-art" style="color:black;font-weight:bold;" href="{% url 'group:album-detail' album.id %}">
+                                <img src="{% static '/home/images/LMNlogo.jpg' %}" alt="Album Art" loading="lazy">
+                            </a> 
+                            </td>
+                        {% endif %}
+                        <td>
+                            <div class="album-card">
+                                <a style="color:black;font-weight:bold;" href="{% url 'group:album-detail' album.id %}">
+                                    <h2>{{ album.title }}</h2>
+                                </a>
+                                <p>Released: {{ album.release_date }}</p>
+                                <div class="stream-links">
+                                    {% if album.spotify_link %}<a href="{{ album.spotify_link }}" target="_blank">Spotify</a>{% endif %}
+                                    {% if album.apple_music_link %} | <a href="{{ album.apple_music_link }}" target="_blank">Apple Music</a>{% endif %}
+                                </div>
+                            </div>
+                        </td>
+                        </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td>There are no  </td>
+                        <td>album </td>
+                        <td>to list sorry!  </td>
+                    </tr>
+                {% endif %} 
+                </tbody>
+                </table>
+            </div>
+
         <!-- Members Section -->
         <div id="members" class="tab-content">
             <div class="business-card">
@@ -85,58 +132,11 @@
                                 <td>in this </td>
                                 <td>group sorry!  </td>
                             </tr>
-                        {% endif %}
+                        {% endif %} 
                     </tbody>
-                </table>
+                </table>                        
             </div>
         </div>
-
-        <!-- Albums -->
-        <div id="albums" class="tab-content">
-            <div class="business-card">
-                <h2>Albums</h2>
-                <table width="100%" cellspacing="0" style="border-radius: 8%;">
-                <tbody>
-                {% if group_album_list %}
-                    {% for album in group_album_list %}
-                        <tr>
-                        {% if album.cover_art %}
-                            <td style="width: 150px;">
-                            <a class="album-art" style="color:black;font-weight:bold;" href="{% url 'group:album-detail' album.id %}">
-                                <img src="{{ album.cover_art.url }}" alt="Album Art" loading="lazy">
-                            </a>
-                            </td>
-                        {% else %}
-                            <td style="width: 150px;">
-                            <a class="album-art" style="color:black;font-weight:bold;" href="{% url 'group:album-detail' album.id %}">
-                                <img src="{% static '/home/images/LMNlogo.jpg' %}" alt="Album Art" loading="lazy">
-                            </a>
-                            </td>
-                        {% endif %}
-                        <td>
-                            <div class="album-card">
-                                <a style="color:black;font-weight:bold;" href="{% url 'group:album-detail' album.id %}">
-                                    <h2>{{ album.title }}</h2>
-                                </a>
-                                <p>Released: {{ album.release_date }}</p>
-                                <div class="stream-links">
-                                    {% if album.spotify_link %}<a href="{{ album.spotify_link }}" target="_blank">Spotify</a>{% endif %}
-                                    {% if album.apple_music_link %} | <a href="{{ album.apple_music_link }}" target="_blank">Apple Music</a>{% endif %}
-                                </div>
-                            </div>
-                        </td>
-                        </tr>
-                    {% endfor %}
-                    {% else %}
-                    <tr>
-                        <td>There are no  </td>
-                        <td>album </td>
-                        <td>to list sorry!  </td>
-                    </tr>
-                {% endif %}
-                </tbody>
-                </table>
-            </div>
 
         <!-- Events -->
         <div id="events" class="tab-content">
