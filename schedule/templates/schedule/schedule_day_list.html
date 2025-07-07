@@ -46,10 +46,10 @@
     <tbody>
     {% if schedule_day_list %}
       {% for dayevent in schedule_day_list %}
-        {% for workers in dayevent.workers.all %}
+        {% for artist in dayevent.artist.all %}
           <tr style="background-color:{{dayevent.color_event}};">
             <td style="min-width:68px;font-weight:bold;"><a style="color:black;font-weight:bold;" href="{{ dayevent.get_absolute_url }}">{{dayevent.start|date:"m/d"}}</a> </td>
-            <td style="min-width:80px;font-weight:bold;"><a style="color:black;font-weight:bold;" href="{{ workers.get_absolute_url }}">{{ workers.first_name }} {{ workers.last_name }}</a><br> </td>
+            <td style="min-width:80px;font-weight:bold;"><a style="color:black;font-weight:bold;" href="{{ artist.get_absolute_url }}">{{ artist.first_name }} {{ artist.last_name }}</a><br> </td>
             <td style="min-width:92px;font-weight:bold;"><a style="color:black;font-weight:bold;" href="{{ dayevent.get_absolute_url }}">{{ dayevent.start_time|date:"f A" }}</a> </td>
             <td style="min-width:92px;font-weight:bold;"><a style="color:black;font-weight:bold;" href="{{ dayevent.get_absolute_url }}">{{ dayevent.start|date:"f A" }}</a> </td>
             <td style="min-width:220px;font-weight:bold;"><a style="color:black;" href="{{ dayevent.project.get_absolute_url }}">{{ dayevent.project.job_name|truncatechars:48 }}</a> </td>
@@ -63,10 +63,10 @@
     {% endif %} 
     {% if querysettomorrow %}
       {% for dayevent in querysettomorrow %}
-        {% for workers in dayevent.workers.all %}
+        {% for artist in dayevent.artist.all %}
           <tr style="background-color:{{dayevent.color_event}};">
           <td style="min-width:68px;font-weight:bold;"><a style="color:black;font-weight:bold;" href="{{ dayevent.get_absolute_url }}">{{dayevent.start|date:"m/d"}}</a> </td>
-          <td style="min-width:80px;font-weight:bold;"><a style="color:black;font-weight:bold;" href="{{ workers.get_absolute_url }}">{{ workers.first_name }} {{ workers.last_name }}</a><br> </td>
+          <td style="min-width:80px;font-weight:bold;"><a style="color:black;font-weight:bold;" href="{{ artist.get_absolute_url }}">{{ artist.first_name }} {{ artist.last_name }}</a><br> </td>
           <td style="min-width:92px;font-weight:bold;"><a style="color:black;font-weight:bold;" href="{{ dayevent.get_absolute_url }}">{{ dayevent.start_time|date:"f A" }}</a> </td>
           <td style="min-width:92px;font-weight:bold;"><a style="color:black;font-weight:bold;" href="{{ dayevent.get_absolute_url }}">{{ dayevent.start|date:"f A" }}</a> </td>
           <td style="min-width:220px;font-weight:bold;"><a style="color:black;" href="{{ dayevent.project.get_absolute_url }}">{{ dayevent.project.job_name|truncatechars:48 }}</a> </td>

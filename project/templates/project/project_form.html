@@ -144,10 +144,10 @@
             </select>
           </div>
           <div class="form-row" style="margin-top: 10px;">
-            <label for="id_workers">&nbsp; Workers:</label> {{ form.workers.errors }}
-            <select class="form-control" name="workers" id="id_workers" multiple="">
-              {% for workers in form.workers %}
-                {{ workers }}
+            <label for="id_artist">&nbsp; Artists:</label> {{ form.artist.errors }}
+            <select class="form-control" name="artist" id="id_artist" multiple="">
+              {% for artist in form.artist %}
+                {{ artist }}
               {% endfor %}
             </select>
           </div>

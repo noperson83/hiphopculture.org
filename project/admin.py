@@ -40,8 +40,8 @@ def copy_project(modeladmin, request, queryset):
         for lead in sd.lead.all():
             sd_copy.lead.add(lead)
 
-        for workers in sd.workers.all():
-            sd_copy.workers.add(workers)
+        for artist in sd.artist.all():
+            sd_copy.artist.add(artist)
  
     sd_copy.save()  # (7) save the copy to the database for M2M relations
 
