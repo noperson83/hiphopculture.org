@@ -9,22 +9,28 @@
 <meta name="description" content="{{ group_detail.summary|default:'Group information' }}">
 {% endblock %}
 
+{% block body_attrs %}
+    {% if group_detail.background_image %}
+        style="background: url('{{ group_detail.background_image.url }}')"
+    {% endif %}
+{% endblock %}
+
 {% block breadcrumb %} / <a href="{% url 'group:group' %}">Groups</a> / {{ group_detail.group_name }}{% endblock %}
 
 {% block content %}
 <header class="header"
-    {% if group_detail.logo %}
-        style="background: url('{{ group_detail.logo.url }}') no-repeat center center; background-size: cover;"
+    {% if group_detail.background_image %}
+        style="background: url('{{ group_detail.background_image.url }}') no-repeat center center; background-size: cover;"
     {% endif %}>
 </header>
 <div class="container">
     <div class="card">
         <!-- Group Banner -->
-        <div class="profile-banner" 
-            {% if group_detail.background_image %}
-                style="background-image: url('{{ group_detail.background_image.url }}');"
-            {% elif group_detail.logo %}
+        <div class="profile-banner"
+            {% if group_detail.logo %}
                 style="background-image: url('{{ group_detail.logo.url }}');"
+            {% elif group_detail.background_image %}
+                style="background-image: url('{{ group_detail.background_image.url }}');"
             {% endif %}>
             <div class="profile-pic-container">
                 {% if group_detail.button %}
