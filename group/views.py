@@ -59,7 +59,7 @@ class GroupListView(generic.ListView):
 
 class GroupCreate(CreateView):
     model = Group
-    fields = ['group_name', 
+    fields = ['group_name',
               'group_url',
               'logo',
               'button',
@@ -67,6 +67,14 @@ class GroupCreate(CreateView):
               'last_name',
               'contact_email',
               'contact_phone',
+              'youtube_url',
+              'spotify_url',
+              'apple_music_url',
+              'soundcloud_url',
+              'bandcamp_url',
+              'tidal_url',
+              'shazam_url',
+              'tiktok_url',
               'billing_top_address',
               'billing_address',
               'billing_address_city',
@@ -80,7 +88,7 @@ class GroupCreate(CreateView):
 
 class GroupUpdate(UpdateView):
     model = Group
-    fields = ['group_name', 
+    fields = ['group_name',
               'group_url',
               'logo',
               'button',
@@ -91,6 +99,14 @@ class GroupUpdate(UpdateView):
               'facebook_url',
               'instagram_url',
               'twitter_url',
+              'youtube_url',
+              'spotify_url',
+              'apple_music_url',
+              'soundcloud_url',
+              'bandcamp_url',
+              'tidal_url',
+              'shazam_url',
+              'tiktok_url',
               'billing_top_address',
               'billing_address',
               'billing_address_city',
