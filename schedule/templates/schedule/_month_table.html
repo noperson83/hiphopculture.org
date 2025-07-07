@@ -12,7 +12,7 @@
   {% for week in month.get_weeks %}
       <tr>
       <td style="width:4%;" class="calendr-day">
-          <a href="{% url "week_calendar" calendar.slug %}{% querystring_for_date week.start 3 %}">
+          <a href="{% url "schedule:week_calendar" calendar.slug %}{% querystring_for_date week.start 3 %}">
               <i class="fa fa-calendar-plus-o" aria-hidden="true"></i>
           </a>
       </td>
