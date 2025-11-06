@@ -1,326 +1,273 @@
 {% extends 'home/base.html' %}
 {% load static %}
+{% block body_attrs %} class="home-body"{% endblock %}
 {% block scripter %}
     <script src="{% static 'home/js/albumplayer.js' %}"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 {% block title %}<title id="songTitle2">Home of da Lab Munkz Music</title>{% endblock %}
 {% block content %}
-<header class="header">
-    <!-- The social media icon bar -->
-    <div class="icon-bar">
-        <a href="https://www.facebook.com/LABMUNKZink" target="_blank" class="facebook"><i class="fa fa-facebook"></i></a>
-        <a href="https://twitter.com/HHCultureOrg" target="_blank" class="twitter"><i class="fa fa-twitter"></i></a>
-        <a href="https://www.tiktok.com/@hiphopculturedotorg" target="_blank" class="tiktok"><i class="fa fa-tiktok"></i></a>
-        <a href="https://www.instagram.com/wwwlabmunkzartcom/" target="_blank" class="instagram"><i class="fa fa-linkedin"></i></a>    
-        <a href="https://www.youtube.com/channel/UCZp7m-ZslYaYGN4zbYW9qcA" target="_blank" class="youtube"><i class="fa fa-youtube"></i></a>
-        <a href="https://itunes.apple.com/us/artist/labmunkzink/id1086239160" target="_blank" class="twitter"><i class="fab fa-itunes"></i></a></li>
-        <a href="https://open.spotify.com/artist/7INHTJTpRjrNg6RpCFvSRW" target="_blank" class="spotify"><i class="fab fa-spotify"></i></a></li>
-        <a href="https://www.roblox.com/catalog/120626848945926/Robo-Magic-Longsleeve" target="_blank" class="roblox"><i class="fab fa-roblox"></i>DrRoblox</a></li>
-    </div>
-    <div class="logo">
-        <a href="https://labmunkzink.com/admin/"><img src="{% static '/home/images/LMNlogo.jpg' %}" alt="Logo Lab Munkz Header"></a>
-    </div>
-    <!-- Promotion Bar -->
-    <div class="promotion-bar">
-        <p><a style="text-decoration: underline; color:white;" href="{% url 'home:subscribe' %}">Subscribe to our newsletter!</a> - {{ site_promotion }}</p>
-    </div>
-</header>
-<main> 
-    <div class="container-home">
-        <div class="left-sidebar">
-            <div class="card">
-                <div style="text-align: center;">
-                    <h2>Performance and Interview Opportunities</h2>
-                </div>
-                <!-- Group info, album info, and album song list content here -->
-                <section id="seeking opportunities">
-                    <p>
-                    Dear All,</p>
-                    <p>
-                    I hope this message finds you well.</p>
-                    <p>
-                    My name is Marcus, and I am reaching out on behalf of LabMunkzInk, an underground hip-hop music group known for their unique sound and dynamic performances. We are currently seeking opportunities to expand our reach and connect with a broader audience through interviews, airplay, and live performances.</p>
-                    <p>
-                    LabMunkzInk has been making waves in the underground scene with their innovative use of loopers, guitars, turntables, and powerful vocal performances. Our music is a blend of old-school hip-hop with a modern twist, and we believe it would resonate well with your audience.</p>
-                    <p>
-                    We would be honored to collaborate with you for any upcoming events, interviews, or media features that you may have. Below are the links to our social media profiles and music for your consideration:</p>
-                    <p>
-                    Thank you for taking the time to consider LabMunkzInk for these opportunities. We are excited about the possibility of working together and bringing our music to new listeners.</p>
-                    <p>
-                    Please feel free to reach out if you have any questions or need further information. We look forward to hearing from you.</p>
-                    <p>
-                    Best regards,<br />
-                    St. Dominic <a href="mailto:musicsoul@live.com" style="color: rgb(101, 101, 101);">musicsoul@live.com</a><br />
-                    Dr. Nope <a href="mailto:labmunkzink@gmail.com" style="color: rgb(101, 101, 101);">labmunkzink@gmail.com</a><br />
-                    LabMunkzInk.com
-                    <br />
-                    <div id="video-presentation">
-                        <div class="youtube-video">
-                            <iframe width="560" height="315" src="https://www.youtube.com/embed/j638DFcmCI4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        </div>
-                        <!-- Expandable Section -->
-                        <div class="expandable" id="expandSection">
-                            <div style="text-align: left;">
-                                <h3 id="m_-5894546713511448945x_x_m_-4132962258120572366yui_3_17_2_1_1489273414182_1101" style="margin: 0px; padding: 0px; color: rgb(32, 32, 32); font-size: 20px; line-height: 25px;">Tucson, Arizona based artist of LabMunkzink&nbsp;releases an amazing visual.</h3>
-                            </div>
-                            <div class="youtube-video">
-                                <iframe width="560" height="315" src="https://www.youtube.com/embed/4gCKruPbB5M" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                            </div>
-                            <br />
-                            <br /> 
-                            DJ Captain Antenna featured in&nbsp;Pushing Buttons, Tucson&rsquo;s rapidly expanding hip-hop scene that has grown to include producers from all types of music.
-                            <h1 style="color: rgb(0, 0, 0); margin: 0px; padding: 0px; font-size: 26px; line-height: 32.5px;"><span style="font-size: 23px;">About LabMunkzink</span></h1>
-                        
-                            <p style="margin: 10px 0px; padding: 0px; line-height: 24px;"><strong>LabMunkzink</strong>&nbsp;is an experiment of poetry,&nbsp;rhythm, and art, they vibe off the elements of <g class="gr_ gr_63 gr-alert gr_spell gr_inline_cards gr_disable_anim_appear ContextualSpelling ins-del multiReplace" data-gr-id="63" id="63">HipHop</g>, experimental neo-soul and blues.&nbsp; Hailing from Tucson Arizona This collective of <g class="gr_ gr_76 gr-alert gr_gramm gr_inline_cards gr_disable_anim_appear Grammar only-ins doubleReplace replaceWithoutSep" data-gr-id="76" id="76">artist</g> <g class="gr_ gr_77 gr-alert gr_gramm gr_inline_cards gr_disable_anim_appear Grammar multiReplace" data-gr-id="77" id="77">are</g> skilled in DJing, beat production, songwriting and Live performances.</p>
-                        
-                            <p style="margin: 10px 0px; padding: 0px; line-height: 24px;">LabMunkzInk Original members are&nbsp; Dr. Nope /Jesus/ Marcus Lovato., St. Dominic aka (DJ) Captain. Antenna&nbsp; (Dominic Capanna), Dj Prado. Inspired by J.S. and the elements of hip-hop.</p>
-                        
-                            <p style="margin: 10px 0px; padding: 0px; line-height: 24px;">This group also has a mobile studio so wherever inspiration hits to create they are ready on spot.</p>
-                        
-                            <p style="margin: 10px 0px; padding: 0px; line-height: 24px;">Dominic &ldquo;DJ Captain Antenna&rdquo; Capanna adds his skills as a Dj who still mixes vinyl, a lost art.&nbsp; He also is able to create unique mixes that you will only hear in a DJ Captain Antenna set.&nbsp; &ldquo;I am old school no bells and whistles, I use 2 turntables and a mixer, a microphone and a looper&rdquo; &nbsp; He can use anything to create from goodwill toys to instruments.
-                            <br />
-                            <br />
-                            Press:<br />
-                            <br />
-                            <strong>Tucson Weekly Review-</strong><br />
-                            <a data-saferedirecturl="https://www.google.com/url?hl=en&amp;q=https://www.tucsonweekly.com/tucson/labmunkzink-almanac/Content?oid%3D3906756&amp;source=gmail&amp;ust=1510026147383000&amp;usg=AFQjCNElryoL_IOJCeZkJqc8rirQW0o00w" href="https://www.tucsonweekly.com/tucson/labmunkzink-almanac/Content?oid=3906756" style="color: rgb(17, 85, 204);">https://www.tucsonweekly.com/t<wbr />ucson/labmunkzink-almanac/Cont<wbr />ent?oid=3906756</a><br />
-                            <br />
-                            <strong>Subba-Culcha Review-</strong><br />
-                            <a data-saferedirecturl="https://www.google.com/url?hl=en&amp;q=https://goo.gl/mSYrph&amp;source=gmail&amp;ust=1510026147383000&amp;usg=AFQjCNGi8qcBW9pf-drdQV6UX5-5azJc6Q" href="https://goo.gl/mSYrph" style="color: rgb(17, 85, 204);">https://goo.gl/mSYrph</a>
-                            </p>
-                        </div>
-                        <!-- See More Button -->
-                        <span class="see-more" onclick="toggleExpand()">See more...</span>
-                    </div>
-                </section>
+<section class="hero">
+    <div class="hero__content">
+        <div class="hero__logo">
+            <a href="https://labmunkzink.com/admin/" aria-label="LabMunkzInk admin">
+                <img src="{% static 'home/images/LMNlogo.jpg' %}" alt="LabMunkzInk logo">
+            </a>
+        </div>
+        <div class="hero__text">
+            <span class="hero__eyebrow">The Lab Munkz Collective</span>
+            <h1 class="hero__headline">Underground hip-hop amplified.</h1>
+            <p class="hero__description">Tune into loopers, guitars, turntables, and fearless vocals streaming straight from Tucson, Arizona.</p>
+            <div class="hero__cta">
+                <a href="{% url 'home:subscribe' %}">Subscribe</a>
+                <span>{{ site_promotion }}</span>
             </div>
-            <div class="card">
-                <div style="text-align: center;">
-                <h2>3 Layers of One takes...</h2>
-                </div>
-                <!-- Song details content here -->
-                <section id="video-presentation">
-                    <div class="youtube-video">
-                        <iframe width="560" height="315" src="https://www.youtube.com/embed/rmd8-ucgHRQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
-                    <p>
-                        You are the last, forgotten broadcast.<br>
-                    stars are us.  we have fallen ..<br>
-                    eldest ancestor,  shapE shiftER  meteor.<br>
-                    laughing  impression...   <br>
-                    stereotype nonbeliever <br>
-                    fait sealer...  no ribbon ...no ink  <br>
-                    EYE never blink.</p>
-                    <!-- Expandable Section -->
-                    <div class="expandable" id="expandSection">
-                        <div style="text-align: left;">
-                            <p>
-                                all together now <br>
-                            time to rethink  <br>
-                            reanimate the animator  <br>
-                            deflower the armor. <br>
-                            jackhammer vernacular<br>
-                            massacre  out dated <br>
-                            attempted assassination.<br>
-                            ZION sun  hold a flam to the  candle.<br>
-                            IMPRESSIONABLE  powerful <br>
-                            TRANSMITTABLE  <br>
-                            for you to belive...</p>
-                            <p>
-                                Connected The universe is just a verse  <br>
-                            disguised has an ADVERSE curse <br>
-                            realm is vacant<br>
-                            persistent enlightenment  is the reassignment  <br>
-                            for you to believe <br>
-                            A star skip away from the truth being <br>
-                            ANARCHY BLOODTHIRSTY BLASPHEMY <br>
-                            COINCIDENCE in <br>
-                            consciousness <br>
-                            cosmos convey <br>
-                            common sense TO conspiracy. <br>
-                            HARMONIOUSLY<br>
-                            let light commence.</p>
-                            <p>
-                                "you are the last falling star <br>
-                            savior memoir avatar <br>
-                            you are the last  of that  dying breed "<br>
-                            (for you to believe)... </p>
-                            <p>                 
-                                you are the last falling star <br>
-                            savior memoir avatar <br>
-                            you are the last  of that  dying breed <br>
-                            (for you to believe)... </p>
-                            <p>
-                                SLEEP in a canopy forgotten sea stars fall.<br>
-                            IMPRISONMENTS OF SCIENCE <br>
-                            deface the monument<br>
-                            stone-hedge student.<br>
-                            light basic pyramid. <br>
-                            Rest  when descend</p>
-                            <p>
-                                forgiving foe and friend<br>
-                            Family everlasting .   <br>
-                            achieve sun status on <br>
-                            different types of planets.<br> 
-                            Angel  speak <br>
-                            frequent frequencies </p>
-                            <p>
-                                def to homosapiaen </p>
-                            <p>
-                                torch is now lit. <br>
-                            Set the earth a blaze   <br>
-                            born head first scorch  <br>
-                            intense biblical portions  <br>
-                            and  pardon  the pagans<br>
-                            missions in ruins    <br>
-                            HOLD  visions of weapons</p>
-                            <p> 
-                                you are the last falling star <br>
-                            savior memoir avatar <br>
-                            you are the last  of that  dying breed <br>
-                            for you to belive... </p>
-                            <p>
-                            no love no light kills the seed </p>
-                            <p>
-                            photo-copied bottle feed centipede  <br>
-                            bruised and  bleed with THE rivers of gold<br>
-                            strolled through the ice cold <br>
-                            bankrolled a thousand  hands hold. <br>
-                            The ugliest  soberest centerfold.  <br>
-                            undersold  souls with  a defused glow</p>
-                            <p>
-                            at the point of a broken thesh hold <br>
-                            pigeonholed.  ego's turn  right and white <br>
-                            doves and crows cry back in black. <br>
-                            dirty banjos sing  (sing)         <br>    
-                            rusty gob irons. ring (ring)</p>
-                            <p>
-                            Music on the mountain make any devil retire. <br>
-                            mello desperados veto  deprived bravados  <br>
-                            sopranos tempt volcanoes with  best blazzing arrows  <br>
-                            throwing  roses  at the poses <br>
-                            for the dogma and divas <br>
-                            devices and vices<br>
-                            vodka's and burben's <br>
-                            pills and ciggretts  kill the<br>
-                            kids and the vets. </p>
-                            <p>
-                            a reason to live with a reason to write.   <br>
-                            holy ghost some damn fight same night<br>
-                            good day and good night same damn fight<br>
-                            holy ghost</p>
-                            <p>LOOK AT ALL THE STARS OUT TONIGHT</p>
-                        </div>
-                    </div>
-                    <!-- See More Button -->
-                    <span class="see-more" onclick="toggleExpand()">See more...</span>
-                </section>
+            <div class="social-links">
+                <a href="https://www.facebook.com/LABMUNKZink" target="_blank" rel="noopener" aria-label="LabMunkzInk on Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://twitter.com/HHCultureOrg" target="_blank" rel="noopener" aria-label="LabMunkzInk on Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.tiktok.com/@hiphopculturedotorg" target="_blank" rel="noopener" aria-label="LabMunkzInk on TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="https://www.instagram.com/wwwlabmunkzartcom/" target="_blank" rel="noopener" aria-label="LabMunkzInk on Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.youtube.com/channel/UCZp7m-ZslYaYGN4zbYW9qcA" target="_blank" rel="noopener" aria-label="LabMunkzInk on YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="https://itunes.apple.com/us/artist/labmunkzink/id1086239160" target="_blank" rel="noopener" aria-label="LabMunkzInk on Apple Music"><i class="fab fa-itunes-note"></i></a>
+                <a href="https://open.spotify.com/artist/7INHTJTpRjrNg6RpCFvSRW" target="_blank" rel="noopener" aria-label="LabMunkzInk on Spotify"><i class="fab fa-spotify"></i></a>
+                <a href="https://www.roblox.com/catalog/120626848945926/Robo-Magic-Longsleeve" target="_blank" rel="noopener" aria-label="LabMunkzInk merch on Roblox"><i class="fas fa-robot"></i><span class="sr-only">Roblox Merch</span></a>
             </div>
         </div>
-        
-        <div class="main-content">
+    </div>
+</section>
+<div class="page-shell">
+    <div class="container-home">
+        <aside class="left-sidebar">
+            <div class="card highlight-card">
+                <h2>Performance and Interview Opportunities</h2>
+                <p class="feature-card__intro">Dear All,</p>
+                <p class="feature-card__intro">I hope this message finds you well.</p>
+                <p class="feature-card__intro">My name is Marcus, and I am reaching out on behalf of LabMunkzInk, an underground hip-hop music group known for their unique sound and dynamic performances. We are currently seeking opportunities to expand our reach and connect with a broader audience through interviews, airplay, and live performances.</p>
+                <p class="feature-card__intro">LabMunkzInk has been making waves in the underground scene with an innovative blend of loopers, guitars, turntables, and powerful vocal performances. Our music fuses old-school hip-hop with a modern twist, and we believe it will resonate with your audience.</p>
+                <p class="feature-card__intro">We would be honored to collaborate with you for upcoming events, interviews, or media features. Below are links to our social media profiles and music for your consideration.</p>
+                <p class="feature-card__intro">Thank you for taking the time to consider LabMunkzInk. We are excited about the possibility of working together and bringing our music to new listeners.</p>
+                <p class="feature-card__intro">Please feel free to reach out if you have any questions or need further information. We look forward to hearing from you.</p>
+                <p class="feature-card__signature">Best regards,<br>
+                    St. Dominic <a href="mailto:musicsoul@live.com">musicsoul@live.com</a><br>
+                    Dr. Nope <a href="mailto:labmunkzink@gmail.com">labmunkzink@gmail.com</a><br>
+                    LabMunkzInk.com
+                </p>
+                <div class="video-stack">
+                    <div class="responsive-video">
+                        <iframe src="https://www.youtube.com/embed/j638DFcmCI4" title="LabMunkzInk live" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div id="press-extra" class="expandable">
+                        <div class="responsive-video">
+                            <iframe src="https://www.youtube.com/embed/4gCKruPbB5M" title="Tucson visual" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <p class="feature-card__intro">DJ Captain Antenna is featured in Pushing Buttons, Tucson&rsquo;s rapidly expanding hip-hop scene that now includes creators from every corner of music.</p>
+                        <h3>About LabMunkzInk</h3>
+                        <p class="feature-card__intro"><strong>LabMunkzInk</strong> is an experiment in poetry, rhythm, and art. Hailing from Tucson, Arizona, this collective of artists is skilled in DJing, beat production, songwriting, and live performances.</p>
+                        <p class="feature-card__intro">Original members include Dr. Nope / Jesus / Marcus Lovato, St. Dominic (DJ Captain Antenna), and DJ Prado. Inspired by the foundational elements of hip-hop, the crew also brings a mobile studio so inspiration can become creation anywhere.</p>
+                        <p class="feature-card__intro">Dominic &ldquo;DJ Captain Antenna&rdquo; Capanna still mixes on vinyl, crafting unique sets with two turntables, a mixer, a microphone, and a looper. He can make music from thrift-store toys to traditional instruments.</p>
+                        <p class="feature-card__intro"><strong>Press</strong></p>
+                        <ul class="feature-links">
+                            <li><a href="https://www.tucsonweekly.com/tucson/labmunkzink-almanac/Content?oid=3906756" target="_blank" rel="noopener">Tucson Weekly Review</a></li>
+                            <li><a href="https://goo.gl/mSYrph" target="_blank" rel="noopener">Subba-Culcha Review</a></li>
+                        </ul>
+                    </div>
+                    <button class="see-more" type="button" data-toggle="expand" data-target="#press-extra">See more...</button>
+                </div>
+            </div>
+            <div class="card">
+                <h2>3 Layers of One takes...</h2>
+                <div class="video-stack">
+                    <div class="responsive-video">
+                        <iframe src="https://www.youtube.com/embed/rmd8-ucgHRQ" title="3 Layers of One takes" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <p class="lyric">You are the last, forgotten broadcast.
+stars are us. we have fallen.
+eldest ancestor, shape shifter meteor.
+laughing impression.
+stereotype nonbeliever.
+faith sealer... no ribbon... no ink.
+EYE never blink.</p>
+                <div id="poem-extra" class="expandable">
+                    <p class="lyric">all together now
+time to rethink
+reanimate the animator
+deflower the armor.
+jackhammer vernacular
+massacre outdated
+attempted assassination.
+ZION sun hold a flame to the candle.
+IMPRESSIONABLE powerful
+TRANSMITTABLE
+for you to believe...</p>
+                    <p class="lyric">Connected the universe is just a verse
+disguised as an adverse curse.
+realm is vacant
+persistent enlightenment is the reassignment
+for you to believe.
+A star skip away from the truth being
+ANARCHY BLOODTHIRSTY BLASPHEMY
+COINCIDENCE in
+consciousness
+cosmos convey
+common sense to conspiracy.
+HARMONIOUSLY
+let light commence.</p>
+                    <p class="lyric">"you are the last falling star
+savior memoir avatar
+you are the last of that dying breed"
+(for you to believe)...</p>
+                    <p class="lyric">you are the last falling star
+savior memoir avatar
+you are the last of that dying breed
+(for you to believe)...</p>
+                    <p class="lyric">Sleep in a canopy of forgotten sea stars.
+IMPRISONMENTS OF SCIENCE
+deface the monument
+stone-hedge student.
+light basic pyramid.
+Rest when descend.</p>
+                    <p class="lyric">Forgiving foe and friend.
+Family everlasting.
+achieve sun status on different types of planets.
+Angel speak frequent frequencies.
+def to homosapien.</p>
+                    <p class="lyric">torch is now lit.
+Set the earth ablaze.
+born head first scorch.
+intense biblical portions
+and pardon the pagans.
+missions in ruins.
+hold visions of weapons.</p>
+                    <p class="lyric">you are the last falling star
+savior memoir avatar
+you are the last of that dying breed
+for you to believe...</p>
+                    <p class="lyric">no love no light kills the seed.
+photo-copied bottle feed centipede.
+bruised and bleeding with the rivers of gold.
+strolled through the ice cold.
+bankrolled a thousand hands hold.
+The ugliest soberest centerfold.
+undersold souls with a diffused glow.</p>
+                    <p class="lyric">at the point of a broken threshold.
+pigeonholed. egos turn right and white.
+doves and crows cry back in black.
+dirty banjos sing.
+rusty gob irons ring.</p>
+                    <p class="lyric">Music on the mountain makes any devil retire.
+mellow desperados veto deprived bravados.
+sopranos tempt volcanoes with blazing arrows.
+throwing roses at the poses.
+for the dogma and divas.
+devices and vices.
+vodka and bourbon.
+pills and cigarettes kill the
+kids and the vets.</p>
+                    <p class="lyric">a reason to live with a reason to write.
+holy ghost some damn fight same night.
+good day and good night same damn fight.
+holy ghost.
+LOOK AT ALL THE STARS OUT TONIGHT.</p>
+                </div>
+                <button class="see-more" type="button" data-toggle="expand" data-target="#poem-extra">See more...</button>
+            </div>
+        </aside>
+        <section class="main-content">
             {% for post in posts %}
-            <div class="post">
-                <div class="post-header">
+            <article class="post">
+                <header class="post-header">
                     <a href="{% url 'munkz:artist-detail' post.author.id %}"><img src="{{ post.author.profile_pic.url }}" alt="{{ post.author.display_name }}" class="profile-pic"></a>
                     <div class="post-info">
                         <a href="{% url 'munkz:artist-detail' post.author.id %}"><div class="post-author">{{ post.author.display_name }}</div></a>
                         <span class="post-date">{{ post.created_at|date:"M d, Y H:i" }}</span>
                     </div>
-                    {% if post.text %}
-                        {% with words=post.text.split %}
-                            {% if words|length > 10 %}
-                                <p class="post-text">
-                                    {{ post.text|truncatewords:10 }} 
-                                </p></div>
-                                <div class="expandable" id="expandSection">   
-                                    <p class="post-text">{{ words|slice:"10:"|join:" " }}</p>
-                                </div>
-                                <span class="see-more" onclick="toggleExpand()">See More...</span>
-                            {% else %}
-                                <p class="post-text">{{ post.text }}</p></div>
-                            {% endif %}
-                        {% endwith %}
-                    {% endif %}
-                
-
+                </header>
+                {% if post.text %}
+                    {% with words=post.text.split %}
+                        {% if words|length > 40 %}
+                            <p class="post-text">{{ post.text|truncatewords:40 }}</p>
+                            <div class="expandable" id="post-{{ forloop.counter }}-extra">
+                                <p class="post-text">{{ words|slice:"40:"|join:" " }}</p>
+                            </div>
+                            <button class="see-more" type="button" data-toggle="expand" data-target="#post-{{ forloop.counter }}-extra">See more...</button>
+                        {% else %}
+                            <p class="post-text">{{ post.text }}</p>
+                        {% endif %}
+                    {% endwith %}
+                {% endif %}
                 {% if post.youtube_url %}
-                <div class="post-media">
-                    <iframe width="100%" height="315" src="https://www.youtube.com/embed/{{ post.youtube_url|slice:'-11:' }}" frameborder="0" allowfullscreen></iframe>
+                <div class="responsive-video post-media">
+                    <iframe src="https://www.youtube.com/embed/{{ post.youtube_url|slice:'-11:' }}" title="{{ post.author.display_name }} on YouTube" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
                 {% endif %}
-        
                 {% if post.images.all %}
                 <div class="post-gallery">
                     {% for image in post.images.all %}
-                    <img src="{{ image.image.url }}" alt="Post Image">
+                    <img src="{{ image.image.url }}" alt="Post image">
                     {% endfor %}
                 </div>
                 {% endif %}
-        
                 {% if post.video %}
                 <video controls>
                     <source src="{{ post.video.video.url }}" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
                 {% endif %}
-        
                 {% if post.audio %}
                 <audio controls>
                     <source src="{{ post.audio.audio.url }}" type="audio/mpeg">
                     Your browser does not support the audio tag.
                 </audio>
                 {% endif %}
-        
                 <div class="post-actions">
                     <a href="{% url 'posts:post_like' post.id %}" class="like-btn">❤️ {{ post.likes.count }}</a>
                     <a href="" class="comment-btn">💬 {{ post.comments.count }}</a>
                     <a href="{% url 'posts:post_share' post.id %}" class="share-btn">🔄 Share</a>
                 </div>
-            </div>
+            </article>
             {% empty %}
             <p>No posts yet. Be the first to post!</p>
             {% endfor %}
-        </div>
-        
-        <div class="right-sidebar">
+        </section>
+        <aside class="right-sidebar">
             <div class="card">
-                <div class="controls">  
-                    <button style="width: 100%; margin: -4px auto;" id="songTitle">{{ doll_hair.0.title}}</button>
+                <div class="controls">
+                    <button class="song-title-btn" id="songTitle">{{ doll_hair.0.title }}</button>
                 </div>
                 <div class="controls">
-                    <a class="music-art" href="{% url 'group:album-detail' doll_hair.0.group_album.pk %}"> {{ doll_hair.0.group_album }}</a>  - {{ doll_hair.0.group_album.group }}
+                    <a class="music-art" href="{% url 'group:album-detail' doll_hair.0.group_album.pk %}">{{ doll_hair.0.group_album }}</a>  - {{ doll_hair.0.group_album.group }}
                 </div>
                 <div class="custom-audio-player">
-                    <span id="currentTime">0:00</span> <input type="range"  class="custom-range" id="seekBar" value="0" max="100"> <span id="duration">0:00</span>
+                    <span id="currentTime">0:00</span>
+                    <input type="range" class="custom-range" id="seekBar" value="0" max="100">
+                    <span id="duration">0:00</span>
                 </div>
                 <div class="music-player">
                     <audio id="audioPlayer" controls hidden>
-                        <source id="audioSource" src="{{ doll_hair.0.audio_file.url}}" type="audio/mpeg">
+                        <source id="audioSource" src="{{ doll_hair.0.audio_file.url }}" type="audio/mpeg">
                         Your browser does not support the audio element.
                     </audio>
-                    <div class="controls" style="width:54%; margin: 0 auto;">  
+                    <div class="controls" style="width:54%; margin: 0 auto;">
                         <button id="prevBtn"><i class="fas fa-backward"></i></button>
                         <button id="playPauseBtn"><i class="fas fa-play"></i></button>
                         <button id="nextBtn"><i class="fas fa-forward"></i></button>
                     </div>
                     <div class="custom-audio-player">
-                        Volume <input type="range"  class="custom-range" id="volumeBar" min="0" max="1" step="0.1" value="1">
+                        Volume <input type="range" class="custom-range" id="volumeBar" min="0" max="1" step="0.1" value="1">
                     </div>
-                    <div class="playlist">    
+                    <div class="playlist">
                         {% if doll_hair %}
                             <ul id="playlist">
                                 {% for song in doll_hair %}
                                 <div class="song-list">
                                     <div class="song-list-left">{{ song.track_number }}</div>
                                     <div class="song-list-center">
-                                        <li data-src="{{ song.audio_file.url }}" 
-                                            songTitle="{{ song.title }}" 
-                                            songAlbum="{{ song.group_album }}" 
-                                            songArtist="{{ song.group_album.group }}" 
+                                        <li data-src="{{ song.audio_file.url }}"
+                                            songTitle="{{ song.title }}"
+                                            songAlbum="{{ song.group_album }}"
+                                            songArtist="{{ song.group_album.group }}"
                                             songArt="{{ song.group_album.cover_art.url }}">
-                                        {{ song.title }}
+                                            {{ song.title }}
                                         </li>
                                     </div>
                                 </div>
@@ -328,16 +275,33 @@
                             </ul>
                         {% else %}
                         There are no SONGS to list sorry!
-                        {% endif %} 
-                        </div>  
+                        {% endif %}
+                        </div>
                     <div class="music-player-bott">
                         {{ doll_hair.0.group_album.release_date }} <br> {{ doll_hair.0.group_album.duration }}
                     </div>
                 </div>
             </div>
-        </div>
+        </aside>
     </div>
-</main>
+</div>
 {% endblock %}
 
-
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const toggles = document.querySelectorAll('[data-toggle="expand"]');
+        toggles.forEach(function (button) {
+            const target = document.querySelector(button.dataset.target);
+            if (!target) {
+                return;
+            }
+            button.addEventListener('click', function () {
+                target.classList.toggle('is-expanded');
+                const expanded = target.classList.contains('is-expanded');
+                button.textContent = expanded ? 'Show less' : 'See more...';
+            });
+        });
+    });
+</script>
+{% endblock %}
