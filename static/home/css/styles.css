@@ -350,6 +350,139 @@ nav a:hover {
     flex-direction: column;
     gap: 1.75rem;
 }
+.icon-bar {
+    position: fixed;
+    bottom: 0%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+  
+.icon-bar a {
+display: block;
+text-align: center;
+padding: 6px;
+transition: all 0.3s ease;
+color: white;
+}
+
+.icon-bar a:hover {
+background-color: #000;
+}
+
+.facebook {
+background: #3B5998;
+color: white;
+}
+
+.twitter {
+background: #55ACEE;
+color: white;
+}
+
+.tiktok {
+background: #000000;
+color: white;
+}
+
+.instagram {
+background: #007bb5;
+color: white;
+}
+
+.youtube {
+background: #bb0000;
+color: white;
+}
+
+.spotify {
+background: #00ff15;
+color: white;
+}
+
+.roblox {
+background: #d4d4d4;
+color: white;
+}
+  
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:active {
+    text-decoration: none;
+}
+
+body {
+    font-family: 'LabFont', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('tile23.jpg');
+    background-color: #f0f0f0;
+    justify-self: normal;
+    max-width: 1800px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    align-content: center;
+}
+
+nav a:hover {
+    background-color: #b8722d;
+    border-radius: 4px;
+}
+
+.navbar {
+    position: -webkit-sticky; /* For Safari */
+    position: sticky;
+    top: 0; /* This sets the distance from the top at which the nav will stick */
+    z-index: 1000; /* Ensures it stays on top of other content */
+    width: 100%; /* Make sure it takes up the full width */
+    display: flex;
+    justify-content: space-around;
+    background: url('headermid.jpg');
+    height: 32px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.header {
+    height: 320px;
+    background: url('LabMunkzLogo.jpg') no-repeat center center;
+    background-size: cover;
+    overflow: hidden;
+}
+
+@media (max-width: 742px) {
+    header {
+        height: 420px; /* Adjusted height for smaller screens */
+    }
+}
+
+@media (max-width: 432px) {
+    header {
+        height: 140px; /* Further adjusted for the smallest screens */
+    }
+}
+
+main {
+    padding: 0rem 0rem;
+}
+
+.logo img {
+    position: sticky;
+    height: 100px;
+}
 .profile-banner {
     position: relative;
     width: 100%;
@@ -558,6 +691,118 @@ nav a:hover {
         height: 38px;
     }
 }
+.container-home {
+    display: grid;
+    justify-content: space-between;
+    padding: 14px;
+    gap: 20px;/* 🌟 3-COLUMN LAYOUT max-width: 1200px; display: flex;*/
+    grid-template-columns: 1fr 2fr 1fr; /* Left, Main, Right */
+    margin: auto;
+}
+
+.container-music {
+    display: grid;
+    justify-content: space-between;
+    padding: 14px;
+    gap: 20px;/* 🌟 3-COLUMN LAYOUT max-width: 1200px; display: flex;*/
+    grid-template-columns: 2fr 1fr; /* Left, Main, Right */
+    margin: auto;
+}
+
+.container {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 14px;
+    margin: auto;
+}
+
+/* 🌟 SIDEBARS */
+.left-sidebar,
+.right-sidebar {
+    border-radius: 10px;
+    min-height: 300px;
+}
+
+.main-content {
+    flex: 1;
+    border-radius: 10px;
+    min-height: 400px;
+}
+
+/* 🌟 EXPANDABLE SECTION */
+.expandable {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.4s ease-out;
+}
+
+.expandable.active {
+    max-height: fit-content; /* Adjust as needed */
+}
+
+.see-more {
+    display: block;
+    text-align: center;
+    background: #ff6600;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.see-more:hover {
+    background: #ff4400;
+}
+
+.post {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 15px;
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+}
+
+.profile-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.post-info {
+    font-size: 14px;
+    color: #555;
+}
+
+.post-text {
+    font-size: 22px;
+    margin-top: 0px;
+}
+
+.post-gallery img {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    margin-top: 10px;
+}
+
+.post-actions {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.post-actions a {
+    text-decoration: none;
+    color: #555;
+    font-weight: bold;
+}
 
 .post-author {
     font-size: 20px;
@@ -591,12 +836,7 @@ nav a:hover {
     .container-home {
         display: inline-block;
     }
-
-    /* Stack music cards vertically on small screens */
-    .container-music {
-        grid-template-columns: 1fr;
-    }
-}
+}    
 
 .card {
     flex: 1;
@@ -605,7 +845,7 @@ nav a:hover {
     border: 2px solid #533219;
     border-radius: 15px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    padding: 0px;
+    padding: 12px;
     box-sizing: border-box;
 }
 
@@ -675,7 +915,7 @@ nav a:hover {
     justify-content: space-between;
     padding-left: 0px;
     padding-right: 0px;
-    width: 100%;
+    width: 111%;
 }
 
 .song-list-left {
